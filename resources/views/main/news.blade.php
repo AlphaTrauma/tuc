@@ -29,7 +29,7 @@
 
     </div>
     <aside class="uk-card uk-card-default uk-card-body uk-margin-left" style="width: 25%">
-        <h4>Боковое меню - нафиг не нужно</h4>
+        <h4>Боковое меню - под вопросом</h4>
         <h6></h6>
         <ul class="uk-list uk-list-divider">
             <li>Новости</li>

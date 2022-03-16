@@ -13,11 +13,11 @@ const mix = require('laravel-mix');
 
 mix.js('resources/js/app.js', 'public/js')
     .scripts([
-        'node_modules/uikit/dist/js/uikit.min.js',
-        'node_modules/uikit/dist/js/uikit-icons.min.js'],
+            'node_modules/uikit/dist/js/uikit.min.js',
+            'node_modules/uikit/dist/js/uikit-icons.min.js'],
         'public/js/app.js')
     .styles([
-        'node_modules/uikit/dist/css/uikit.min.css'],
+            'node_modules/uikit/dist/css/uikit.min.css'],
         'public/css/app.css')
     .postCss('resources/css/app.css', 'public/css', [
         //
