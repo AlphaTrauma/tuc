@@ -8,7 +8,7 @@
                 <ul class="uk-nav-sub">
                     <li><a href="#">Зарегистрировать</a></li>
                     <li><a href="#">Управление ролями</a></li>
-                    <li><a href="#">Список</a></li>
+                    <li><a href="{{ route('users') }}">Список</a></li>
                 </ul>
             </li>
             <li class="uk-parent">
@@ -22,7 +22,7 @@
                 <a class="uk-text-bold" href="#"><span class="uk-margin-small-right" uk-icon="icon: world"></span>Контент</a>
                 <ul class="uk-nav-sub">
                     <li><a href="#">Навигация</a></li>
-                    <li><a href="#">Страницы</a></li>
+                    <li><a href="{{ route('pages') }}">Страницы</a></li>
                     <li><a href="#">Новости</a></li>
                 </ul>
             </li>

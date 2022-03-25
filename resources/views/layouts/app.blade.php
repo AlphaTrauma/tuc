@@ -8,10 +8,11 @@
         <title>@yield('title') | Тюменский Учебный Центр</title>
         <link rel="stylesheet" href="{{ asset('css/app.css') }}" />
         <script src="{{ asset('js/app.js') }}"></script>
+        <script src="{{ asset('js/uikit.js') }}"></script>
     </head>
     <body>
     @include('header.head')
-    <div class="uk-container">
+    <div class="uk-container uk-padding uk-padding-remove-horizontal">
         @yield('content')
     </div>
     @include('footer.footer')
