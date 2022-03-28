@@ -37,9 +37,10 @@ class PageController extends Controller
         return Redirect()->route('pages');
     }
 
-    public function edit($id)
+    public function edit($slug)
     {
-        $item = Page::find($id);
+        $item = Page::where('slug', $slug)->first();
+
         return view('dashboard.pages.create', compact('item'));
     }
 
@@ -48,7 +49,7 @@ class PageController extends Controller
         $item = Page::find($id);
         $item->update($request->all());
 
-        return view('dashboard.pages')->with('message', 'Страница успешно изменена');
+        return redirect()->route('pages')->with('message', 'Страница успешно изменена');
     }
 
 

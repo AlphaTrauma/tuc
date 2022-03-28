@@ -27,7 +27,7 @@
                                     <ul class="uk-nav uk-navbar-dropdown-nav">
                                         <li><a href="#">Программы профессионального обучения</a></li>
                                         <li><a href="#">Программы дополнительного профессионального образования</a></li>
-                                        <li><a href="#">График обучения</a></li>
+                                        <li><a href="/{{ $pages['timetable']['slug'] }}">График обучения</a></li>
                                         <li class="uk-nav-divider"></li>
                                         <li><a class="uk-text-bold" href="#">Оставить заявку</a></li>
                                     </ul>
@@ -37,17 +37,17 @@
                                 <a href="#">Сведения об организации</a>
                                 <div class="uk-navbar-dropdown uk-text-normal">
                                     <ul class="uk-nav uk-navbar-dropdown-nav">
-                                        <li><a href="#">Основные сведения</a></li>
-                                        <li><a href="#">Режим работы</a></li>
-                                        <li><a href="#">Структура и органы управления образовательной деятельностью</a></li>
-                                        <li><a href="#">Документы</a></li>
-                                        <li><a href="#">Режим работы</a></li>
-                                        <li><a href="#">Руководство, педагогический состав</a></li>
-                                        <li><a href="#">Финансово-хозяйственная деятельность</a></li>
+                                        <li><a href="{{ $pages['information']['slug'] }}">Основные сведения</a></li>
+                                        <li><a href="/{{ $pages['schedule']['slug'] }}">Режим работы</a></li>
+                                        <li><a href="/{{ $pages['structure']['slug'] }}">Структура и органы управления образовательной деятельностью</a></li>
+                                        <li><a href="/{{ $pages['documents']['slug'] }}">Документы</a></li>
+                                        <li><a href="/{{ $pages['managers']['slug'] }}">Руководство</a></li>
+                                        <li><a href="/{{ $pages['teachers']['slug'] }}">Преподаватели</a></li>
+                                        <li><a href="/{{ $pages['activity']['slug'] }}">Финансово-хозяйственная деятельность</a></li>
                                     </ul>
                                 </div>
                             </li>
-                            <li><a href="#">Контакты</a></li>
+                            <li><a href="/{{ $pages['contacts']['slug'] }}">Контакты</a></li>
                         </ul>
 
                     </div>

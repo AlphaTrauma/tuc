@@ -16,11 +16,16 @@ class CreatePagesTable extends Migration
         Schema::create('pages', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->text('text');
+            $table->integer('navbar_id')->nullable();
+            $table->integer('ordering')->nullable();
+            $table->text('text')->nullable();
             $table->text('html');
             $table->string('title');
             $table->string('slug')->index()->unique();
         });
+
+        $seeder = new \Database\Seeders\PageSeeder();
+        $seeder->run();
     }
 
     /**

@@ -7,7 +7,7 @@
 @section('content')
     <div class="uk-card uk-card-body">
         <h2 class="uk-title">@isset($item)Редактировать@elseСоздать@endisset страницу</h2>
-        <form class="uk-form" method="POST" action="{{ isset($item) ? route('pages.update', ['slug' => $item->slug]) : route('pages.store') }}">
+        <form class="uk-form" method="POST" action="{{ isset($item) ? route('pages.update', ['id' => $item->id]) : route('pages.store') }}">
             @csrf
             <div class="uk-margin uk-flex">
                 <input class="uk-input" value="{{ isset($item) ? $item->title : old('title')}}" name="title" placeholder="Название страницы">

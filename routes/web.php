@@ -13,9 +13,9 @@ Route::get('/dashboard', [\App\Http\Controllers\DashboardController::class, 'ind
 Route::get('/dashboard/users', [\App\Http\Controllers\Auth\RegisteredUserController::class, 'index'])->name('users');
 Route::get('/dashboard/pages', [\App\Http\Controllers\PageController::class, 'index'])->name('pages');
 Route::get('/dashboard/pages/create', [\App\Http\Controllers\PageController::class, 'create'])->name('pages.create');
-Route::get('/dashboard/pages/{slug}/edit', [\App\Http\Controllers\PageController::class, 'update'])->name('pages.edit');
+Route::get('/dashboard/pages/{slug}/edit', [\App\Http\Controllers\PageController::class, 'edit'])->name('pages.edit');
 Route::post('/dashboard/pages/store', [\App\Http\Controllers\PageController::class, 'store'])->name('pages.store');
-Route::post('/dashboard/pages/{slug}/update', [\App\Http\Controllers\PageController::class, 'update'])->name('pages.update');
+Route::post('/dashboard/pages/{id}/update', [\App\Http\Controllers\PageController::class, 'update'])->name('pages.update');
 
 require __DIR__.'/auth.php';
 

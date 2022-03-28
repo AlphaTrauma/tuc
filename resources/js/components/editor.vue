@@ -2,6 +2,7 @@
     <div class="uk-margin">
         <vue-editor class="uk-background-default"
                     @editor-updated="handle"
+                    :editor-content="content"
                     :useSaveButton="false"
                     :editor-toolbar="customToolbar"
                     placeholder="Текст страницы">
@@ -18,8 +19,8 @@
             VueEditor
         },
         props: ['content'],
-        created(){
-            this.html = this.$props.content
+        mounted(){
+            this.html = this.$props.content;
         },
         data: () => ({
                          html: '',
@@ -36,7 +37,6 @@
         methods: {
             handle(value){
                 this.html = value
-                console.log(this.html)
             }
         }
     };
