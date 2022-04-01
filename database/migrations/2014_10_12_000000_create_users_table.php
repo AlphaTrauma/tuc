@@ -19,20 +19,13 @@ class CreateUsersTable extends Migration
             $table->id();
             $table->string('name');
             $table->string('patronymic')->nullable();
-            $table->string('last_name');
+            $table->string('last_name')->nullable();
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();
             $table->timestamps();
         });
-
-        User::create([
-            'name' => 'Николай',
-            'last_name' => 'Филиппов',
-            'email' => 'deloriet@gmail.com',
-            'password' => Hash::make('loriet21'),
-        ]);
     }
 
     /**

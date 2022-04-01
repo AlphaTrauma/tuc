@@ -8,7 +8,7 @@
 </head>
 <body>
 <div class="uk-container-expand" id="app">
-    <div uk-grid>
+    <div class="uk-padding-small" uk-grid>
         @include('dashboard.navigation')
         <div class="uk-width-expand">
             <div class="uk-card uk-card-body">

@@ -13,7 +13,7 @@
     <body>
         <div>
             @include('navigation.navbar')
-            <div class="uk-container uk-padding uk-padding-remove-horizontal">
+            <div class="uk-container uk-padding-small">
                 @yield('content')
                 @include('navigation.mobile')
             </div>

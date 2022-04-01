@@ -8,8 +8,9 @@ Route::get('/', function () {
 })->name('main');
 
 
-Route::get('/dashboard', [\App\Http\Controllers\DashboardController::class, 'index'])->middleware(['auth'])->name('dashboard');
+Route::get('/dashboard', [\App\Http\Controllers\DashboardController::class, 'index'])->name('dashboard');
 
+Route::get('/dashboard/slider', [\App\Http\Controllers\DashboardController::class, 'slider'])->name('slider');
 Route::get('/dashboard/users', [\App\Http\Controllers\Auth\RegisteredUserController::class, 'index'])->name('users');
 Route::get('/dashboard/pages', [\App\Http\Controllers\PageController::class, 'index'])->name('pages');
 Route::get('/dashboard/pages/create', [\App\Http\Controllers\PageController::class, 'create'])->name('pages.create');

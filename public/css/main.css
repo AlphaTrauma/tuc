@@ -13,3 +13,51 @@ body {
 .uk-background-yellow, .uk-card-yellow {
     background-color: #E8BF83;
 }
+.uk-offcanvas-bar-light {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: -270px;
+    box-sizing: border-box;
+    width: 270px;
+    padding: 20px 20px;
+    background: #f8f8f8;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+}
+.uk-offcanvas-bar-animation {
+    transition: left 0.3s ease-out;
+}
+@media (min-width: 960px) {
+    .uk-offcanvas-bar-light {
+        left: -350px;
+        width: 350px;
+        padding: 40px 40px;
+    }
+}
+.uk-offcanvas-flip .uk-offcanvas-bar-light {
+    left: auto;
+    right: -270px;
+}
+.uk-offcanvas-flip .uk-offcanvas-bar-animation {
+    transition-property: right;
+}
+.uk-offcanvas-flip .uk-open > .uk-offcanvas-bar-light {
+    left: auto;
+    right: 0;
+}
+@media (min-width: 960px) {
+    .uk-offcanvas-flip .uk-offcanvas-bar-light {
+        right: -350px;
+    }
+}
+.uk-offcanvas-flip .uk-offcanvas-reveal .uk-offcanvas-bar-light {
+    left: auto;
+    right: 0;
+}
+.uk-offcanvas-reveal .uk-offcanvas-bar-light {
+    left: 0;
+}
+.uk-open > .uk-offcanvas-bar-light {
+    left: 0;
+}
