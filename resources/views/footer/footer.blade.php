@@ -1,7 +1,7 @@
-<footer class="uk-background-secondary uk-section-small uk-position-bottom">
+<footer class="uk-background-secondary uk-section-small">
     <div class="uk-container">
         <div class="uk-flex uk-flex-between">
-            <div class="uk-visible@s">
+            <div>
                 <ul class="uk-nav uk-nav-default">
                     <li class="uk-nav-header">
                         <a href="#">Обучение</a>
@@ -17,7 +17,7 @@
                     </li>
                 </ul>
             </div>
-            <div class="uk-visible@s">
+            <div>
                 <ul class="uk-nav uk-nav-default">
                     <li class="uk-nav-header"><a href="">Об организации</a></li>
                     <li><a href="#">Основные сведения</a></li>
@@ -31,8 +31,8 @@
             </div>
             <div>
                 <ul class="uk-nav uk-nav-default">
-                    <li class="uk-nav-header uk-visible@s">
-                        <div>Контакты</div>
+                    <li class="uk-nav-header">
+                        <a href="">Контакты</a>
                     </li>
                     <li><a href="tel:83452564919">8 (3452) 564-919</a></li>
                     <li><a href="mailto:tuc.tmn@mail.ru">tuc.tmn@mail.ru</a></li>

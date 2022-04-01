@@ -1,9 +1,7 @@
 <?php
 
-use App\Models\User;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Schema;
 
 class CreateUsersTable extends Migration
@@ -18,21 +16,12 @@ class CreateUsersTable extends Migration
         Schema::create('users', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('patronymic')->nullable();
-            $table->string('last_name');
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();
             $table->timestamps();
         });
-
-        User::create([
-            'name' => 'Николай',
-            'last_name' => 'Филиппов',
-            'email' => 'deloriet@gmail.com',
-            'password' => Hash::make('loriet21'),
-        ]);
     }
 
     /**
