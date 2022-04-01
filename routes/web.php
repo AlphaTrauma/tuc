@@ -20,5 +20,5 @@ Route::post('/dashboard/pages/{id}/update', [\App\Http\Controllers\PageControlle
 require __DIR__.'/auth.php';
 
 # default route
-Route::get('/{slug}', [\App\Http\Controllers\PageController::class, 'show'])->name('page');
+Route::get('/{slug}', [\App\Http\Controllers\PageController::class, 'show'])->where('slug', '([a-z-_])+')->name('page');
 

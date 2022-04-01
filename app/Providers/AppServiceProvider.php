@@ -26,10 +26,13 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         Schema::defaultStringLength(191);
-        View::composer('header.head', function($view)
+        View::composer('layouts.app', function($view)
         {
 
-            $pages = \App\Models\Page::query()->select('title', 'slug', 'ordering')->get()->keyBy('slug')->toArray();
+            $pages = [
+                'information' => ['information', 'schedule', 'structure', 'documents', 'managers', 'teachers'],
+                'teaching' => ['timetable']
+            ];
 
             $view->with('pages', $pages);
 
