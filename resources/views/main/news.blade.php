@@ -7,7 +7,7 @@
                 <li>
                     <div class="uk-card uk-card-secondary uk-height-medium" style="background-image: url('https://canada4u.com.ua/images/about-canada/canada_blog6.jpg')">
                         <div class="uk-card-body">
-                            <h3 class="uk-card-title">Слайдер (пока без фото)</h3>
+                            <h3 class="uk-card-title">Слайдер 1</h3>
                             <p>Текст</p>
                         </div>
                     </div>
