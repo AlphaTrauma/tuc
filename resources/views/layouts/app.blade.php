@@ -10,7 +10,7 @@
         <script src="{{ asset('js/app.js') }}"></script>
         <script src="{{ asset('js/uikit.js') }}"></script>
     </head>
-    <body uk-height-viewport="expand: true" class="uk-position-relative">
+    <body>
         <div>
             @include('navigation.navbar')
             <div class="uk-container uk-padding uk-padding-remove-horizontal">

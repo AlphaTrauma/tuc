@@ -1,4 +1,4 @@
-<footer class="uk-background-secondary uk-section-small uk-position-bottom">
+<footer class="uk-background-secondary uk-section-small">
     <div class="uk-container">
         <div class="uk-flex uk-flex-between">
             <div class="uk-visible@s">
