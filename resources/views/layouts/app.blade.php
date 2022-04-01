@@ -10,11 +10,14 @@
         <script src="{{ asset('js/app.js') }}"></script>
         <script src="{{ asset('js/uikit.js') }}"></script>
     </head>
-    <body>
-    @include('header.head')
-    <div class="uk-container uk-padding uk-padding-remove-horizontal">
-        @yield('content')
-    </div>
-    @include('footer.footer')
+    <body uk-height-viewport="expand: true" class="uk-position-relative">
+        <div>
+            @include('navigation.navbar')
+            <div class="uk-container uk-padding uk-padding-remove-horizontal">
+                @yield('content')
+                @include('navigation.mobile')
+            </div>
+            @include('footer.footer')
+        </div>
     </body>
 </html>
