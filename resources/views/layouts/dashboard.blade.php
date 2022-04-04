@@ -4,6 +4,7 @@
     <title>
         @yield('title') | Панель управления сайтом ТУЦ
     </title>
+    <link rel="shortcut icon" href="{{ asset('favicon.ico') }}" type="image/x-icon">
     <link rel="stylesheet" href="{{ asset('css/app.css') }}" />
 </head>
 <body>
