@@ -5266,6 +5266,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+/* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! lodash */ "./node_modules/lodash/lodash.js");
+/* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(lodash__WEBPACK_IMPORTED_MODULE_0__);
 //
 //
 //
@@ -5283,12 +5285,47 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "SliderItem",
   props: {
-    slider: {
+    slide: {
       required: true,
       type: Object
+    }
+  },
+  data: function data() {
+    return {
+      edit: null
+    };
+  },
+  methods: {
+    uploadImage: function uploadImage(e) {
+      var _this = this;
+
+      var image = e.target.files[0],
+          reader = new FileReader();
+      reader.readAsDataURL(image);
+
+      reader.onload = function (e) {
+        _this.slider.image = e.target.result;
+      };
+    },
+    update: function update(slide) {
+      lodash__WEBPACK_IMPORTED_MODULE_0___default()(alert(slide.link), 500);
     }
   }
 });
@@ -5385,6 +5422,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "slider",
@@ -5395,27 +5435,25 @@ __webpack_require__.r(__webpack_exports__);
     return {
       items: [{
         id: 1,
+        ordering: 1,
         title: 'Слайд 1',
         description: 'Описание 1',
-        button_text: 'Заказать',
         link: '#',
         image: 'https://canada4u.com.ua/images/about-canada/canada_blog6.jpg'
-      }, {
-        id: 2,
-        title: 'Слайд 2',
-        description: 'Описание 2',
-        button_text: 'Показать',
-        link: '#',
-        image: 'https://media.list.ly/production/782491/listly-top-5-things-to-do-in-colombo-how-to-explore-the-capital-city-of-the-island-country-to-your-heart-s-content-headline.jpeg'
-      }, {
-        id: 3,
-        title: 'Слайд 3',
-        description: 'Описание 3',
-        button_text: 'Показать',
-        link: '#',
-        image: 'https://c7.uihere.com/files/580/307/643/panorama-lake-panorama-mountain-panorama-reflection-panorama-thumb.jpg'
       }]
     };
+  },
+  methods: {
+    addSlide: function addSlide() {
+      this.items.push({
+        id: 0,
+        ordering: this.items[this.items.length - 1].ordering + 1,
+        title: 'Новый слайд #',
+        description: '',
+        link: '',
+        image: ''
+      });
+    }
   }
 });
 
@@ -28131,8 +28169,13 @@ var render = function () {
           "div",
           {
             staticClass:
-              "js-upload uk-placeholder uk-flex uk-flex-middle uk-flex-center uk-height-medium uk-width-expand uk-transition-toggle",
-            style: "background-image: url(" + _vm.slider.image + ")",
+              "js-upload uk-flex uk-flex-middle uk-flex-center uk-height-medium uk-width-expand uk-transition-toggle uk-background-cover",
+            style:
+              "background-image: url(" +
+              (_vm.slide.image
+                ? _vm.slide.image
+                : "/images/image-not-found.png") +
+              ")",
             attrs: { tabindex: "-1" },
           },
           [
@@ -28140,21 +28183,121 @@ var render = function () {
               "div",
               {
                 staticClass:
-                  "uk-card uk-overlay uk-overlay-default uk-card-body uk-transition-fade",
+                  "uk-position-left uk-overlay uk-overlay-default uk-card-body uk-transition-fade uk-height-1-1 uk-flex uk-flex-middle",
               },
               [
-                _c("span", { staticClass: "uk-text-middle" }, [
-                  _vm._v("Перетащите сюда изображение, чтобы загрузить, или"),
-                ]),
-                _vm._v(" "),
-                _vm._m(0),
-                _vm._v(" "),
-                _c("p", [
-                  _c("span", { attrs: { "uk-icon": "icon: pencil" } }),
-                  _vm._v(" " + _vm._s(_vm.slider.description)),
+                _c("div", { staticClass: "uk-text-large" }, [
+                  _c("b", [_vm._v(_vm._s(_vm.slide.ordering))]),
                 ]),
               ]
             ),
+            _vm._v(" "),
+            _c(
+              "div",
+              {
+                staticClass:
+                  "uk-card uk-overlay uk-overlay-default uk-card-body uk-transition-fade",
+              },
+              [
+                _c("div", { staticClass: "uk-width-medium uk-text-center" }, [
+                  _c("div", { attrs: { "uk-form-custom": "" } }, [
+                    _c("input", {
+                      attrs: { type: "file" },
+                      on: { change: _vm.uploadImage },
+                    }),
+                    _vm._v(" "),
+                    _vm._m(0),
+                  ]),
+                  _vm._v(" "),
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.slide.link,
+                        expression: "slide.link",
+                      },
+                    ],
+                    staticClass: "uk-input uk-margin-small uk-form-small",
+                    attrs: { placeholder: "Ссылка" },
+                    domProps: { value: _vm.slide.link },
+                    on: {
+                      input: [
+                        function ($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.$set(_vm.slide, "link", $event.target.value)
+                        },
+                        function ($event) {
+                          return _vm.update(_vm.slide)
+                        },
+                      ],
+                    },
+                  }),
+                  _vm._v(" "),
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.slide.title,
+                        expression: "slide.title",
+                      },
+                    ],
+                    staticClass: "uk-input uk-margin-small uk-form-small",
+                    attrs: { placeholder: "Заголовок" },
+                    domProps: { value: _vm.slide.title },
+                    on: {
+                      input: [
+                        function ($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.$set(_vm.slide, "title", $event.target.value)
+                        },
+                        function ($event) {
+                          return _vm.update(_vm.slide)
+                        },
+                      ],
+                    },
+                  }),
+                  _vm._v(" "),
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.slide.description,
+                        expression: "slide.description",
+                      },
+                    ],
+                    staticClass: "uk-input uk-margin-small uk-form-small",
+                    attrs: { placeholder: "Описание" },
+                    domProps: { value: _vm.slide.description },
+                    on: {
+                      input: [
+                        function ($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.$set(
+                            _vm.slide,
+                            "description",
+                            $event.target.value
+                          )
+                        },
+                        function ($event) {
+                          return _vm.update(_vm.slide)
+                        },
+                      ],
+                    },
+                  }),
+                ]),
+              ]
+            ),
+            _vm._v(" "),
+            _vm._m(1),
           ]
         ),
       ]),
@@ -28166,14 +28309,50 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { attrs: { "uk-form-custom": "" } }, [
-      _c("input", { attrs: { type: "file" } }),
-      _vm._v(" "),
-      _c("span", { staticClass: "uk-link" }, [
-        _vm._v("нажмите здесь "),
-        _c("span", { attrs: { "uk-icon": "icon: cloud-upload" } }),
-      ]),
+    return _c("a", { staticClass: "uk-link uk-button uk-button-danger" }, [
+      _vm._v("Загрузить изображение"),
+      _c("span", {
+        staticClass: "uk-margin-left",
+        attrs: { "uk-icon": "icon: cloud-upload" },
+      }),
     ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "div",
+      {
+        staticClass:
+          "uk-position-right uk-overlay uk-overlay-default uk-card-body uk-transition-fade uk-height-1-1 uk-flex uk-flex-middle",
+      },
+      [
+        _c("ul", { staticClass: "uk-iconnav uk-iconnav-vertical" }, [
+          _c("li", [
+            _c("a", {
+              staticClass: "uk-text-danger",
+              attrs: {
+                title: "Удалить слайд",
+                href: "#",
+                "uk-icon": "icon: close; ratio: 2",
+              },
+            }),
+          ]),
+          _vm._v(" "),
+          _c("li", [
+            _c("a", {
+              staticClass: "uk-drag",
+              attrs: {
+                title: "Перетащить слайд",
+                href: "#",
+                "uk-icon": "icon: move; ratio: 2",
+              },
+            }),
+          ]),
+        ]),
+      ]
+    )
   },
 ]
 render._withStripped = true
@@ -28247,11 +28426,22 @@ var render = function () {
   return _c("div", [
     _c(
       "div",
-      { attrs: { "uk-sortable": "group: sortable-group" } },
-      _vm._l(_vm.items, function (slider) {
-        return _c("slider-item", { key: slider.id, attrs: { slider: slider } })
+      { attrs: { "uk-sortable": "handle: .uk-drag" } },
+      _vm._l(_vm.items, function (slide) {
+        return _c("slider-item", { key: slide.id, attrs: { slide: slide } })
       }),
       1
+    ),
+    _vm._v(" "),
+    _c(
+      "div",
+      {
+        staticClass:
+          "uk-button uk-button-secondary uk-margin-small uk-width-1-1",
+        attrs: { title: "Новый слайд" },
+        on: { click: _vm.addSlide },
+      },
+      [_c("span", { attrs: { "uk-icon": "icon: plus; ratio: 2" } })]
     ),
   ])
 }

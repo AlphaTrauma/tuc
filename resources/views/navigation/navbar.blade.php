@@ -34,7 +34,7 @@
                                 <li><a href="{{ route('main') }}">Главная</a></li>
                             @endif
                             <li @isset($page) @if(in_array($page->slug, $pages['teaching'])) class="uk-active" @endif @endisset>
-                                <a class="uk-card" href="#">Обучение</a>
+                                <a uk-icon="icon: chevron-down" href="#">Обучение</a>
                                 <div class="uk-navbar-dropdown uk-text-normal">
                                     <ul class="uk-nav uk-navbar-dropdown-nav">
                                         <li><a href="#">Программы профессионального обучения</a></li>
@@ -46,7 +46,7 @@
                                 </div>
                             </li>
                             <li @isset($page) @if(in_array($page->slug, $pages['information'])) class="uk-active" @endif @endisset>
-                                <a>Сведения об организации</a>
+                                <a uk-icon="icon: chevron-down">Сведения об организации</a>
                                 <div class="uk-navbar-dropdown uk-text-normal">
                                     <ul class="uk-nav uk-navbar-dropdown-nav">
                                         <li><a class="" href="/information">Основные сведения</a></li>
@@ -58,6 +58,7 @@
                                     </ul>
                                 </div>
                             </li>
+                            <li><a href="/price">Прайс-лист</a></li>
                             <li @isset($page) @if($page->slug === 'contacts') class="uk-active" @endif @endisset ><a href="/contacts">Контакты</a></li>
                         </ul>
 

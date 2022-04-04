@@ -1,4 +1,4 @@
-<section class="uk-padding uk-padding-remove-horizontal">
+<section>
     <h2 class="uk-title">
         Направления обучения
     </h2>

@@ -5,6 +5,6 @@
 @endsection
 
 @section('content')
-    @include('main.news')
+    @include('main.slider')
     @include('main.courses')
 @endsection

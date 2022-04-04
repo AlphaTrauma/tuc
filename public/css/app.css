@@ -62,3 +62,6 @@ body {
 .uk-open > .uk-offcanvas-bar-light {
     left: 0;
 }
+.text-shadow {
+    text-shadow: 1px 1px 3px #000;
+}

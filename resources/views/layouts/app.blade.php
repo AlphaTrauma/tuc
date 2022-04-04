@@ -14,7 +14,9 @@
         <div>
             @include('navigation.navbar')
             <div class="uk-container uk-padding-small">
-                @yield('content')
+                <div class="uk-padding uk-padding-remove-horizontal">
+                    @yield('content')
+                </div>
                 @include('navigation.mobile')
             </div>
             @include('footer.footer')
