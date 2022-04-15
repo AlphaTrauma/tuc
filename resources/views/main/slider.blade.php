@@ -5,27 +5,27 @@
 
             <ul class="uk-slider-items uk-child-width-1-1@s uk-grid">
                 <li>
-                    <div class="uk-card uk-card-secondary uk-height-medium" style="background-image: url('https://canada4u.com.ua/images/about-canada/canada_blog6.jpg')">
-                        <div class="uk-card-body text-shadow">
-                            <h3 class="uk-card-title">Слайдер 1</h3>
-                            <p>Текст</p>
-                        </div>
+                    <div  class="uk-card uk-card-secondary uk-height-medium" style="background-image: url({{ asset('images/СИЗ.jpg') }})">
+                        <a href="/directions/primenenie-siz" class="uk-card-body uk-link-reset  text-shadow">
+                            <h3 class="uk-card-title">Курсы по применению СИЗ</h3>
+                            <p>(Средств индивидуальной безопасности)</p>
+                        </a>
                     </div>
                 </li>
                 <li>
-                    <div class="uk-card uk-card-secondary uk-height-medium" style="background-image: url('https://media.list.ly/production/782491/listly-top-5-things-to-do-in-colombo-how-to-explore-the-capital-city-of-the-island-country-to-your-heart-s-content-headline.jpeg')">
-                        <div class="uk-card-body text-shadow">
-                            <h3 class="uk-card-title">Акция</h3>
+                    <div class="uk-card uk-card-secondary uk-link-reset uk-height-medium" style="background-image: url({{ asset('images/ТС.jpg') }})">
+                        <a href="/directions/rabocie-specialnosti" class="uk-card-body uk-link-reset text-shadow">
+                            <h3 class="uk-card-title">Обучение рабочим специальностям</h3>
                             <p>10% скидка при единовременной записи от 10 человек</p>
-                        </div>
+                        </a>
                     </div>
                 </li>
                 <li>
-                    <div class="uk-card uk-card-secondary uk-height-medium"  style="background-image: url('https://c7.uihere.com/files/580/307/643/panorama-lake-panorama-mountain-panorama-reflection-panorama-thumb.jpg')">
-                        <div class="uk-card-body text-shadow">
-                            <h3 class="uk-card-title">Новый курс по пожарной безопасности</h3>
-                            <p>Сертификат государственного образца.</p>
-                        </div>
+                    <div class="uk-card uk-card-secondary uk-link-reset uk-height-medium"  style="background-image: url({{ asset('images/ПП.jpg') }})">
+                        <a href="/directions/okazanie-pervoi-pomoshhi" class="uk-card-body text-shadow uk-link-reset">
+                            <h3 class="uk-card-title">Первая помощь</h3>
+                            <p>Обучение с сертификатом государственного образца</p>
+                        </a>
                     </div>
                 </li>
             </ul>
