@@ -8,7 +8,7 @@
                     <div  class="uk-card uk-card-secondary uk-height-medium" style="background-image: url({{ asset('images/СИЗ.jpg') }})">
                         <a href="/directions/primenenie-siz" class="uk-card-body uk-link-reset  text-shadow">
                             <h3 class="uk-card-title">Курсы по применению СИЗ</h3>
-                            <p>(Средств индивидуальной безопасности)</p>
+                            <p>(Средств индивидуальной защиты)</p>
                         </a>
                     </div>
                 </li>
