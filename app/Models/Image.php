@@ -24,7 +24,7 @@ class Image extends Model
     public static function add($file, $path, $model){
         if(isset($model->image->filepath)) $model->image->delete();
         $filename = $file->getClientOriginalName();
-        if(!File::exists($path)) File::makeDirectory($path);
+        if(!File::exists($path)) File::makeDirectory($path, 0777, true);
         $filepath = 'uploads/'.$path.'/'.$filename;
         $file->move(public_path('uploads/'.$path), $filename);
         $model->image()->create(['filepath' => $filepath, 'filename' => $filename]);
