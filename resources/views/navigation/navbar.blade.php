@@ -37,8 +37,9 @@
                                 <a uk-icon="icon: chevron-down" href="#">Обучение</a>
                                 <div class="uk-navbar-dropdown uk-text-normal">
                                     <ul class="uk-nav uk-navbar-dropdown-nav">
-                                        <li><a href="#">Программы профессионального обучения</a></li>
-                                        <li><a href="#">Программы дополнительного профессионального образования</a></li>
+                                        @foreach($directions as $slug => $title)
+                                            <li><a href="{{ asset('directions/'.$slug) }}">{{ $title }}</a></li>
+                                        @endforeach
                                         <li><a href="/timetable">График обучения</a></li>
                                         <li class="uk-nav-divider"></li>
                                         <li><a class="uk-text-bold" href="#">Оставить заявку</a></li>

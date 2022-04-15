@@ -9,7 +9,9 @@
                 @else
                     <li><a class="uk-cover-container" href="{{ route('main') }}">Главная</a></li>
                 @endif
-                <li><a class="uk-cover-container" href="#">Программы обучения</a></li>
+                @foreach($directions as $slug => $title)
+                        <li><a href="{{ asset('directions/'.$slug) }}">{{ $title }}</a></li>
+                @endforeach
                 <li><a href="/contacts">Контакты</a></li>
                 <li><a href="/timetable">График обучения</a></li>
                 <li><a class="" href="/information">Основные сведения</a></li>

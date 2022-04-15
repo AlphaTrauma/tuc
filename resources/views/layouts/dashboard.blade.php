@@ -21,7 +21,6 @@
     </div>
 </div>
 <script src="{{ asset('js/app.js') }}"></script>
-<script src="{{ asset('js/uikit.js') }}"></script>
 
 </body>
 </html>

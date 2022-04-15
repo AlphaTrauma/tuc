@@ -16,11 +16,11 @@ class PageController extends Controller
 
     public function show($slug)
     {
-        $page = Page::where('slug', $slug)->first();
+        $item = Page::where('slug', $slug)->first();
 
-        if(!$page) return abort(404);
+        if(!$item) return abort(404);
 
-        return view('page', compact('page'));
+        return view('page', compact('item'));
     }
 
     public function create()

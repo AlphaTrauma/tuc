@@ -10,4 +10,8 @@ class SliderItem extends Model
     use HasFactory;
 
     protected $fillable = ['ordering', 'description', 'image_id', 'button_text', 'link'];
+
+    public function image(){
+        return $this->morphOne(Image::class, 'entity');
+    }
 }

@@ -16,6 +16,11 @@ class CreateDirectionsTable extends Migration
         Schema::create('directions', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
+            $table->string('title');
+            $table->string('slug');
+            $table->text('description');
+            $table->boolean('status')->default(true);
+            $table->text('html')->nullable();
         });
     }
 

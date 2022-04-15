@@ -3,6 +3,7 @@ body {
     background-color: rgb(250, 250, 250);
     min-height: 100vh;
 }
+textarea { resize: none; }
 .uk-background-primary, .uk-card-primary, .uk-card-primary:hover {
     background-color: #5a7897 !important;
 }
@@ -64,4 +65,9 @@ body {
 }
 .text-shadow {
     text-shadow: 1px 1px 3px #000;
+}
+
+.uk-alert-success {
+    background-color: #7fd584;
+    color: #03660c;
 }

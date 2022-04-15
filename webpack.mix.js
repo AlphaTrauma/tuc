@@ -11,11 +11,7 @@ const mix = require('laravel-mix');
  |
  */
 
-mix.scripts([
-        'node_modules/uikit/dist/js/uikit.min.js',
-        'node_modules/uikit/dist/js/uikit-icons.min.js'],
-    'public/js/uikit.js')
-    .js(['resources/js/app.js'],
+mix.js(['resources/js/app.js'],
         'public/js/app.js')
     .vue()
     .styles([

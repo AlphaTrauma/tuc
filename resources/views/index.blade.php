@@ -6,5 +6,5 @@
 
 @section('content')
     @include('main.slider')
-    @include('main.courses')
+    @include('main.directions')
 @endsection
