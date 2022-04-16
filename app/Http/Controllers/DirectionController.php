@@ -23,6 +23,7 @@ class DirectionController extends Controller
 
     public function show($slug){
         $item = Direction::where('slug', $slug)->first();
+        if(!$item) return abort(404);
 
         return view('direction', compact('item'));
     }

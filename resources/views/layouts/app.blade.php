@@ -12,6 +12,7 @@
     <body>
         <div>
             @include('navigation.navbar')
+            @yield('upper-content')
             <div class="uk-container uk-padding-small">
                 @include('blocks.breadcrumbs')
                 <div class="uk-padding uk-padding-remove-horizontal">

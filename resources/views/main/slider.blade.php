@@ -1,4 +1,4 @@
-<section class="">
+<section>
     <div class="uk-slider-container" uk-slider="autoplay: true">
 
         <div class="uk-position-relative uk-visible-toggle uk-light" tabindex="-1">

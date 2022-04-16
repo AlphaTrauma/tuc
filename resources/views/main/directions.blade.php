@@ -1,7 +1,8 @@
 <section>
-    <h2 class="uk-title">
+    <h2 class="uk-title uk-text-center">
         Направления обучения
     </h2>
+    <hr>
     <div class="uk-child-width-1-3@s uk-grid-match uk-padding uk-padding-remove-horizontal" uk-grid>
         @foreach($items as $item)
             <div>

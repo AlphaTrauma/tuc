@@ -18,6 +18,7 @@ class CreateDirectionsTable extends Migration
             $table->timestamps();
             $table->string('title');
             $table->string('slug');
+            $table->integer('ordering')->default(0);
             $table->text('description');
             $table->boolean('status')->default(true);
             $table->text('html')->nullable();

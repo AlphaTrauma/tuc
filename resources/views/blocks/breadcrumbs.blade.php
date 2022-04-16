@@ -6,6 +6,10 @@
     @endisset
     @isset($item->title)
         <li><a>{{ $item->title }}</a></li>
+    @else
+        @isset($title)
+            <li><a>{{ $title }}</a></li>
+        @endisset
     @endisset
 </ul>
 @endif
