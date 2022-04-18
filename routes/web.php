@@ -22,9 +22,15 @@ Route::get('/dashboard/pages/{slug}/edit', [\App\Http\Controllers\PageController
 Route::post('/dashboard/pages/store', [\App\Http\Controllers\PageController::class, 'store'])->name('pages.store');
 Route::post('/dashboard/pages/{id}/update', [\App\Http\Controllers\PageController::class, 'update'])->name('pages.update');
 
-Route::resource('/dashboard/courses', \App\Http\Controllers\CourseController::class);
+
 Route::resource('/dashboard/directions', \App\Http\Controllers\DirectionController::class);
 Route::get('directions/{slug}', [\App\Http\Controllers\DirectionController::class, 'show'])->name('direction.show');
+
+Route::get('dashboard/directions/{id}/create', [\App\Http\Controllers\CourseController::class, 'create'])->name('course.create');
+Route::post('dashboard/courses/create', [\App\Http\Controllers\CourseController::class, 'store'])->name('course.store');
+Route::patch('dashboard/courses/{id}/update', [\App\Http\Controllers\CourseController::class, 'update'])->name('course.update');
+
+Route::get('dashboard/files/images', [\App\Http\Controllers\ImageController::class, 'index'])->name('images.index');
 
 require __DIR__.'/auth.php';
 

@@ -17,7 +17,7 @@
                     <div class="uk-card-title uk-text-center uk-width-3-4">{{ $item->title }}</div>
                     <div class="uk-width-1-4">
                         <ul class="uk-iconnav uk-float-right">
-                            <li><a href="#" title="Добавить курс" uk-icon="icon: plus"></a></li>
+                            <li><a href="{{ route('course.create', ['id' => $item->id]) }}" title="Добавить курс" uk-icon="icon: plus"></a></li>
                             <li><a title="Редактировать направление" href="{{ route('directions.edit', ['direction' => $item]) }}" uk-icon="icon: file-edit"></a></li>
                             <li><a title="Удалить направление"  href="{{ route('directions.destroy', ['direction' => $item]) }}" uk-icon="icon: trash"></a></li>
                         </ul>

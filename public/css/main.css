@@ -3,7 +3,7 @@ body {
     min-height: 100vh;
 }
 textarea { resize: none; }
-.uk-background-primary, .uk-card-primary, .uk-card-primary:hover {
+.uk-background-primary, .uk-card-primary, .uk-button-primary, .uk-card-primary:hover {
     background-color: #5a7897 !important;
 }
 

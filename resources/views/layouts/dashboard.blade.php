@@ -9,7 +9,7 @@
 </head>
 <body>
 <div class="uk-container-expand" id="app">
-    <div class="uk-padding-small" uk-grid>
+    <div uk-grid>
         @include('dashboard.navigation')
         <div class="uk-width-expand">
             <div class="uk-card uk-card-body">
@@ -20,6 +20,7 @@
         </div>
     </div>
 </div>
+@include('blocks.modal')
 <script src="{{ asset('js/app.js') }}"></script>
 
 </body>

@@ -20,7 +20,7 @@ class Direction extends Model
     public function getAliasAttribute(){
         return [
             'title' => 'Направления обучения',
-            'path' => '/directions'
+            'path' => '/all_directions'
         ];
     }
 

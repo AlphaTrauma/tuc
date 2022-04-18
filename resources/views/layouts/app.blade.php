@@ -21,6 +21,7 @@
                 @include('navigation.mobile')
             </div>
             @include('footer.footer')
+            @include('blocks.modal')
         </div>
     </body>
 </html>

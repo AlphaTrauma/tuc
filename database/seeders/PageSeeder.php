@@ -60,6 +60,11 @@ class PageSeeder extends Seeder
                 'html' => 'Текст по умолчанию',
                 'slug' => 'timetable'
             ],
+            [
+                'title' => 'Все направления',
+                'html' => 'Текст по умолчанию',
+                'slug' => 'all_directions'
+            ],
 
         ];
 

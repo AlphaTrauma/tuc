@@ -4,12 +4,14 @@
             <span class="uk-visible@s"><b>Открытое акционерное общество «Тюменский Учебный Центр»</b></span>
         </div>
         <div class="uk-flex uk-flex-right">
-            @auth
+            {{--
+             @auth
                 <a href="{{ route('dashboard') }}" class="uk-button">ЛК ({{ Auth::user()->name }})<span class="uk-margin-left" uk-icon="icon: sign-in"></span></a>
             @else
                 <a href="/login" class="uk-button uk-button-small">Вход<span class="uk-margin-left" uk-icon="icon: sign-in"></span></a>
             @endauth
-
+             --}}
+            <a href="/dashboard" class="uk-button uk-button-small">Администрирование<span class="uk-margin-left" uk-icon="icon: sign-in"></span></a>
         </div>
     </div>
     <div class="uk-container-expand">
@@ -42,7 +44,7 @@
                                         @endforeach
                                         <li><a href="/timetable">График обучения</a></li>
                                         <li class="uk-nav-divider"></li>
-                                        <li><a class="uk-text-bold" href="#">Оставить заявку</a></li>
+                                        <li><a class="uk-text-bold" uk-toggle href="#modal-request">Оставить заявку</a></li>
                                     </ul>
                                 </div>
                             </li>
@@ -52,20 +54,24 @@
                                     <ul class="uk-nav uk-navbar-dropdown-nav">
                                         <li><a class="" href="/information">Основные сведения</a></li>
                                         <li><a href="/schedule">Режим работы</a></li>
-                                        <li><a href="/structure">Структура и органы управления образовательной деятельностью</a></li>
                                         <li><a href="/documents">Документы</a></li>
                                         <li><a href="/managers">Руководство</a></li>
                                         <li><a href="/teachers">Преподаватели</a></li>
                                     </ul>
                                 </div>
                             </li>
-                            <li><a href="/price">Прайс-лист</a></li>
+                            <li><a uk-toggle href="#modal-disabled">Прайс-лист</a></li>
                             <li @isset($page) @if($page->slug === 'contacts') class="uk-active" @endif @endisset ><a href="/contacts">Контакты</a></li>
                         </ul>
 
                     </div>
 
                     <div class="uk-navbar-right">
+                        {{--
+                         <div class="uk-navbar-item">
+                            <a href="" class="uk-button">Позвоните мне</a>
+                        </div>
+                         --}}
                         <div class="uk-navbar-item">
                             <ul class="uk-list">
                                 <li><a href="tel:8 (3452) 564-919">8 (3452) 564-919</a></li>

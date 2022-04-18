@@ -34,11 +34,9 @@ class AppServiceProvider extends ServiceProvider
                 'information' => ['information', 'schedule', 'structure', 'documents', 'managers', 'teachers'],
                 'teaching' => ['timetable']
             ];
+            $directions = Direction::where('status', 1)->pluck('title', 'slug')->toArray();
 
-            $view->with('pages', $pages);
-        });
-        View::composer('navigation.*', function($view){
-            $view->with('directions', Direction::where('status', 1)->pluck('title', 'slug')->toArray());
+            $view->with(compact('pages', 'directions'));
         });
     }
 }

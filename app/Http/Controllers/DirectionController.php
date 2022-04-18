@@ -16,6 +16,13 @@ class DirectionController extends Controller
         return view('dashboard.directions.index', compact('items'));
     }
 
+    public function page()
+    {
+        $items = Direction::query()->get();
+
+        return view('directions', compact('items'));
+    }
+
     public function create()
     {
         return view('dashboard.directions.create');
