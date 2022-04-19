@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\CreateSlide;
+use App\Http\Requests\UpdateSlide;
 use App\Models\Image;
 use App\Models\SliderItem;
 use Illuminate\Http\Request;
@@ -31,13 +32,16 @@ class SliderItemController extends Controller
         return back()->with('message', 'Новый слайд успешно добавлен');
     }
 
-    public function update(Request $request, $id){
-        return response($request);
-        $slide = SliderItem::with('image')->find($id);
-        if(!$slide) return response(['error' => 'Обновляемый слайд не найден']);
-        $slide->update($request->all());
+    public function update(UpdateSlide $request, $id){
+        $item = SliderItem::with('image')->find($id);
+        if(!$item) return back()->with('error', 'Обновляемый слайд не найден');
 
-        return response($slide);
+        if($request->hasFile('file')):
+            Image::add($request->file('file'), 'slides/'.$item->id, $item);
+        endif;
+        $item->update($request->all());
+
+        return back()->with('message', 'Слайд изменён');
     }
 
     public function updateImage($data){

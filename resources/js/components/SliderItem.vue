@@ -8,23 +8,26 @@
                         <div class="uk-text-large"><b>{{ slide.ordering }}</b></div>
                     </div>
                     <div class="uk-card uk-overlay uk-overlay-default uk-card-body uk-transition-fade">
-                        <form class="uk-width-large uk-text-center" enctype="multipart/form-data" method="POST" action="/dashboard/slider">
+                        <form class="uk-width-large uk-text-center" enctype="multipart/form-data" method="POST"
+                              :action="slide.id ? `/dashboard/slider/${slide.id}` : '/dashboard/slider'">
                             <div class="uk-grid-small uk-flex-middle uk-margin-small-bottom" uk-grid>
                                 <div class="uk-width-3-5">
-                                    <input class="uk-input uk-form-small" name="link" required placeholder="Ссылка" :value="slide.link">
+                                    <input class="uk-input uk-form-small" name="link" @input="edit = true" required placeholder="Ссылка" :value="slide.link">
                                 </div>
                                 <div class="uk-width-2-5" uk-form-custom>
-                                    <input required type="file" accept=".png, .jpg, .jpeg" name="file" @change="uploadImage">
+                                    <input type="file" accept=".png, .jpg, .jpeg" name="file" @change="uploadImage">
                                     <a class="uk-link uk-button uk-button-small uk-button-text">Изображение<span uk-icon="icon: cloud-upload" class="uk-margin-left"></span></a>
                                 </div>
                             </div>
-                            <input class="uk-input uk-form-small uk-margin-small-bottom" name="title" placeholder="Заголовок" :value="slide.title">
-                            <input class="uk-input uk-form-small uk-margin-small-bottom" name="description" placeholder="Описание" :value="slide.description">
+                            <input @input="edit = true" class="uk-input uk-form-small uk-margin-small-bottom" name="title" placeholder="Заголовок" :value="slide.title">
+                            <input @input="edit = true" class="uk-input uk-form-small uk-margin-small-bottom" name="description" placeholder="Описание" :value="slide.description">
                             <input type="hidden" name="ordering" :value="slide.ordering">
                             <input type="hidden" name="_token" :value="token">
-                            <button v-if="!slide.id" type="submit" class="uk-button uk-button-small uk-width-1-1 uk-button-success">
-                                <span class="uk-margin-small-right" uk-icon="check"></span>Сохранить
-                            </button>
+                            <transition name="fade">
+                                <button v-if="edit" type="submit" class="uk-button uk-button-small uk-width-1-1 uk-button-success">
+                                    <span class="uk-margin-small-right" uk-icon="check"></span>Сохранить
+                                </button>
+                            </transition>
                         </form>
                     </div>
                     <div class="uk-position-right uk-overlay uk-overlay-default uk-card-body uk-transition-fade uk-height-1-1 uk-flex uk-flex-middle">
@@ -52,11 +55,13 @@
         },
         mounted(){
             this.token = this.$root.$data.token;
+            if(!this.slide.id) this.edit = true;
             this.slide.image.filepath = this.slide.id ? `/${this.slide.image.filepath}` : '/images/image-not-found.png';
         },
         data(){
             return {
-                token: null
+                token: null,
+                edit: false
             }
         },
         methods: {
@@ -68,16 +73,14 @@
             uploadImage(e){
                 let file = e.target.files[0];
                 if (file) {
-                    if(file.type.split('/')[0] === 'image') this.slide.image.filepath = URL.createObjectURL(file)
+                    if(file.type.split('/')[0] === 'image') this.slide.image.filepath = URL.createObjectURL(file);
+                    this.edit = true;
                 } else {
                     this.message({type: 'danger', message: 'Ошибка при загрузке файла'})
                 }
             },
             whereAmI(){
                 this.slide.ordering = this.getIndex(this.$el) + 1;
-            },
-            sendMessage(){
-                this.message({type: 'success', message: 'Что-то получилось!'})
             }
         }
     }

@@ -5529,6 +5529,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -5541,11 +5544,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   },
   mounted: function mounted() {
     this.token = this.$root.$data.token;
+    if (!this.slide.id) this.edit = true;
     this.slide.image.filepath = this.slide.id ? "/".concat(this.slide.image.filepath) : '/images/image-not-found.png';
   },
   data: function data() {
     return {
-      token: null
+      token: null,
+      edit: false
     };
   },
   methods: _objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_1__.mapActions)({
@@ -5558,6 +5563,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
       if (file) {
         if (file.type.split('/')[0] === 'image') this.slide.image.filepath = URL.createObjectURL(file);
+        this.edit = true;
       } else {
         this.message({
           type: 'danger',
@@ -5567,12 +5573,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     },
     whereAmI: function whereAmI() {
       this.slide.ordering = this.getIndex(this.$el) + 1;
-    },
-    sendMessage: function sendMessage() {
-      this.message({
-        type: 'success',
-        message: 'Что-то получилось!'
-      });
     }
   })
 });
@@ -41919,7 +41919,9 @@ var render = function () {
                       attrs: {
                         enctype: "multipart/form-data",
                         method: "POST",
-                        action: "/dashboard/slider",
+                        action: _vm.slide.id
+                          ? "/dashboard/slider/" + _vm.slide.id
+                          : "/dashboard/slider",
                       },
                     },
                     [
@@ -41940,6 +41942,11 @@ var render = function () {
                                 placeholder: "Ссылка",
                               },
                               domProps: { value: _vm.slide.link },
+                              on: {
+                                input: function ($event) {
+                                  _vm.edit = true
+                                },
+                              },
                             }),
                           ]),
                           _vm._v(" "),
@@ -41952,7 +41959,6 @@ var render = function () {
                             [
                               _c("input", {
                                 attrs: {
-                                  required: "",
                                   type: "file",
                                   accept: ".png, .jpg, .jpeg",
                                   name: "file",
@@ -41984,6 +41990,11 @@ var render = function () {
                           "uk-input uk-form-small uk-margin-small-bottom",
                         attrs: { name: "title", placeholder: "Заголовок" },
                         domProps: { value: _vm.slide.title },
+                        on: {
+                          input: function ($event) {
+                            _vm.edit = true
+                          },
+                        },
                       }),
                       _vm._v(" "),
                       _c("input", {
@@ -41991,6 +42002,11 @@ var render = function () {
                           "uk-input uk-form-small uk-margin-small-bottom",
                         attrs: { name: "description", placeholder: "Описание" },
                         domProps: { value: _vm.slide.description },
+                        on: {
+                          input: function ($event) {
+                            _vm.edit = true
+                          },
+                        },
                       }),
                       _vm._v(" "),
                       _c("input", {
@@ -42003,24 +42019,29 @@ var render = function () {
                         domProps: { value: _vm.token },
                       }),
                       _vm._v(" "),
-                      !_vm.slide.id
-                        ? _c(
-                            "button",
-                            {
-                              staticClass:
-                                "uk-button uk-button-small uk-width-1-1 uk-button-success",
-                              attrs: { type: "submit" },
-                            },
-                            [
-                              _c("span", {
-                                staticClass: "uk-margin-small-right",
-                                attrs: { "uk-icon": "check" },
-                              }),
-                              _vm._v("Сохранить\n                        "),
-                            ]
-                          )
-                        : _vm._e(),
-                    ]
+                      _c("transition", { attrs: { name: "fade" } }, [
+                        _vm.edit
+                          ? _c(
+                              "button",
+                              {
+                                staticClass:
+                                  "uk-button uk-button-small uk-width-1-1 uk-button-success",
+                                attrs: { type: "submit" },
+                              },
+                              [
+                                _c("span", {
+                                  staticClass: "uk-margin-small-right",
+                                  attrs: { "uk-icon": "check" },
+                                }),
+                                _vm._v(
+                                  "Сохранить\n                            "
+                                ),
+                              ]
+                            )
+                          : _vm._e(),
+                      ]),
+                    ],
+                    1
                   ),
                 ]
               ),
