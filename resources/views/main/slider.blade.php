@@ -7,9 +7,9 @@
                 <ul class="uk-slider-items uk-child-width-1-1@s uk-grid">
                     @foreach($slides as $item)
                         <li>
-                            <a class="uk-link-reset uk-card uk-height-medium uk-position-relative" href="{{ $item->link }}">
+                            <a class="uk-link-reset uk-card uk-position-relative" href="{{ $item->link }}">
                                 <div class="uk-panel">
-                                    <img uk-img src="{{ asset($item->image->filepath) }}" alt="{{ $item->title }}">
+                                    <img uk-img class="uk-height-medium uk-object-cover uk-object-top-center" src="{{ asset($item->image->filepath) }}" alt="{{ $item->title }}">
                                     <div  class="uk-position-bottom-left uk-padding">
                                         <h2 uk-slider-parallax="y: -50, 50; x: 50, -50" class="uk-heading text-shadow ">{{ $item->title }}</h2>
                                         @if($item->description)
