@@ -5458,7 +5458,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     load: 'slider/load',
     create: 'slider/create'
   })), {}, {
-    foo: function foo() {
+    getPosition: function getPosition() {
       this.$children.forEach(function (el) {
         setTimeout(el.whereAmI(), 500);
       });
@@ -5520,6 +5520,15 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -5530,27 +5539,31 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       type: Object
     }
   },
-  mounted: function mounted() {},
+  mounted: function mounted() {
+    this.token = this.$root.$data.token;
+    this.slide.image.filepath = this.slide.id ? "/".concat(this.slide.image.filepath) : '/images/image-not-found.png';
+  },
   data: function data() {
     return {
-      loadedImage: null
+      token: null
     };
   },
   methods: _objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_1__.mapActions)({
     remove: 'slider/remove',
     message: 'alerts/add',
-    create: 'slider/create',
-    update: 'slider/update',
-    updateImage: 'slider/updateImage'
+    create: 'slider/create'
   })), {}, {
     uploadImage: function uploadImage(e) {
-      this.updateImage({
-        slide: this.slide,
-        image: e.target.files[0]
-      });
-    },
-    updateSlide: function updateSlide() {
-      lodash__WEBPACK_IMPORTED_MODULE_0___default()(this.update(this.slide), 500);
+      var file = e.target.files[0];
+
+      if (file) {
+        if (file.type.split('/')[0] === 'image') this.slide.image.filepath = URL.createObjectURL(file);
+      } else {
+        this.message({
+          type: 'danger',
+          message: 'Ошибка при загрузке файла'
+        });
+      }
     },
     whereAmI: function whereAmI() {
       this.slide.ordering = this.getIndex(this.$el) + 1;
@@ -5931,16 +5944,19 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     },
     remove: function remove(state, payload) {
       state.slides.splice(state.slides.indexOf(payload), 1);
+      state.last--;
     },
-    create: function create(state, payload) {
+    create: function create(state) {
       state.last++;
       state.slides.push({
-        id: payload,
+        id: null,
         ordering: state.last,
         title: null,
         description: null,
-        link: '#',
-        image: null
+        link: null,
+        image: {
+          filepath: ''
+        }
       });
     },
     update: function update(state, payload) {
@@ -5974,31 +5990,17 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         }, _callee);
       }))();
     },
-    update: function update(_ref2, payload) {
+    create: function create(_ref2) {
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee2() {
-        var commit, response;
+        var commit;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee2$(_context2) {
           while (1) {
             switch (_context2.prev = _context2.next) {
               case 0:
                 commit = _ref2.commit;
+                commit('create');
 
-                if (!(payload.link && payload.image)) {
-                  _context2.next = 6;
-                  break;
-                }
-
-                _context2.next = 4;
-                return axios.post("/dashboard/slider/".concat(payload.id), payload);
-
-              case 4:
-                response = _context2.sent;
-                commit('update', {
-                  item: payload,
-                  response: response
-                });
-
-              case 6:
+              case 2:
               case "end":
                 return _context2.stop();
             }
@@ -6006,7 +6008,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         }, _callee2);
       }))();
     },
-    updateImage: function updateImage(_ref3, payload) {
+    remove: function remove(_ref3, payload) {
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee3() {
         var commit;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee3$(_context3) {
@@ -6014,18 +6016,19 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             switch (_context3.prev = _context3.next) {
               case 0:
                 commit = _ref3.commit;
-                axios.post("/dashboard/slider/image", {
-                  id: payload.slide.id,
-                  image: payload.image
-                }).then(function (response) {
-                  console.log(response.data);
-                  commit('updateImage', {
-                    response: response,
-                    payload: payload.slide
-                  });
-                });
 
-              case 2:
+                if (!payload.id) {
+                  _context3.next = 4;
+                  break;
+                }
+
+                _context3.next = 4;
+                return axios["delete"]("/dashboard/slider/".concat(payload.id));
+
+              case 4:
+                commit('remove', payload);
+
+              case 5:
               case "end":
                 return _context3.stop();
             }
@@ -6033,56 +6036,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         }, _callee3);
       }))();
     },
-    create: function create(_ref4, payload) {
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee4() {
-        var commit, response;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee4$(_context4) {
-          while (1) {
-            switch (_context4.prev = _context4.next) {
-              case 0:
-                commit = _ref4.commit;
-                _context4.next = 3;
-                return axios.post('/dashboard/slider', {
-                  ordering: payload
-                });
-
-              case 3:
-                response = _context4.sent;
-                commit('create', response);
-
-              case 5:
-              case "end":
-                return _context4.stop();
-            }
-          }
-        }, _callee4);
-      }))();
-    },
-    remove: function remove(_ref5, payload) {
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee5() {
-        var commit, response;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee5$(_context5) {
-          while (1) {
-            switch (_context5.prev = _context5.next) {
-              case 0:
-                commit = _ref5.commit;
-                _context5.next = 3;
-                return axios["delete"]("/dashboard/slider/".concat(payload.id));
-
-              case 3:
-                response = _context5.sent;
-                if (response.status) commit('remove', payload);
-
-              case 5:
-              case "end":
-                return _context5.stop();
-            }
-          }
-        }, _callee5);
-      }))();
-    },
-    count: function count(_ref6) {
-      var commit = _ref6.commit;
+    count: function count(_ref4) {
+      var commit = _ref4.commit;
       commit('count');
     }
   }
@@ -29810,7 +29765,7 @@ module.exports = function (list, options) {
   \***************************************************/
 /***/ (function(module) {
 
-/*! UIkit 3.13.1 | https://www.getuikit.com | (c) 2014 - 2022 YOOtheme | MIT License */
+/*! UIkit 3.13.7 | https://www.getuikit.com | (c) 2014 - 2022 YOOtheme | MIT License */
 
 (function (global, factory) {
      true ? module.exports = factory() :
@@ -29987,7 +29942,7 @@ module.exports = function (list, options) {
   \*********************************************/
 /***/ (function(module) {
 
-/*! UIkit 3.13.1 | https://www.getuikit.com | (c) 2014 - 2022 YOOtheme | MIT License */
+/*! UIkit 3.13.7 | https://www.getuikit.com | (c) 2014 - 2022 YOOtheme | MIT License */
 
 (function (global, factory) {
      true ? module.exports = factory() :
@@ -30755,21 +30710,22 @@ module.exports = function (list, options) {
           property = propName(property);
 
           if (isUndefined(value)) {
-            return getStyle(element, property);
-          } else if (!value && !isNumber(value)) {
-            element.style.removeProperty(property);
+            return getComputedStyle(element).getPropertyValue(property);
           } else {
             element.style.setProperty(
             property,
-            isNumeric(value) && !cssNumber[property] ? value + "px" : value,
+            isNumeric(value) && !cssNumber[property] ?
+            value + "px" :
+            value || isNumber(value) ?
+            value :
+            '',
             priority);
 
           }
         } else if (isArray(property)) {
-          const styles = getStyles(element);
           const props = {};
           for (const prop of property) {
-            props[prop] = styles[propName(prop)];
+            props[prop] = css(element, prop);
           }
           return props;
         } else if (isObject(property)) {
@@ -30780,19 +30736,9 @@ module.exports = function (list, options) {
       return elements[0];
     }
 
-    function getStyles(element, pseudoElt) {
-      return toWindow(element).getComputedStyle(element, pseudoElt);
-    }
-
-    function getStyle(element, property, pseudoElt) {
-      return getStyles(element, pseudoElt)[property];
-    }
-
     const propertyRe = /^\s*(["'])?(.*?)\1\s*$/;
-    function getCssVar(name) {
-      return getStyles(document.documentElement).
-      getPropertyValue("--uk-" + name).
-      replace(propertyRe, '$2');
+    function getCssVar(name, element) {if (element === void 0) {element = document.documentElement;}
+      return css(element, "--uk-" + name).replace(propertyRe, '$2');
     }
 
     // https://drafts.csswg.org/cssom/#dom-cssstyledeclaration-setproperty
@@ -30801,6 +30747,10 @@ module.exports = function (list, options) {
     const cssPrefixes = ['webkit', 'moz'];
 
     function vendorPropName(name) {
+      if (name[0] === '-') {
+        return name;
+      }
+
       name = hyphenate(name);
 
       const { style } = document.documentElement;
@@ -31007,8 +30957,8 @@ module.exports = function (list, options) {
         const offsetBy = { height: scrollY, width: scrollX };
 
         for (const dir in dirs$1) {
-          for (const i in dirs$1[dir]) {
-            currentOffset[dirs$1[dir][i]] += offsetBy[dir];
+          for (const prop of dirs$1[dir]) {
+            currentOffset[prop] += offsetBy[dir];
           }
         }
       }
@@ -31452,9 +31402,7 @@ module.exports = function (list, options) {
     }
 
     function observeIntersection(targets, cb, options, intersecting) {if (intersecting === void 0) {intersecting = true;}
-      return observe(
-      IntersectionObserver,
-      targets,
+      const observer = new IntersectionObserver(
       intersecting ?
       (entries, observer) => {
         if (entries.some((entry) => entry.isIntersecting)) {
@@ -31464,9 +31412,14 @@ module.exports = function (list, options) {
       cb,
       options);
 
+      for (const el of toNodes(targets)) {
+        observer.observe(el);
+      }
+
+      return observer;
     }
 
-    const hasResizeObserver = window.ResizeObserver;
+    const hasResizeObserver = inBrowser && window.ResizeObserver;
     function observeResize(targets, cb, options) {if (options === void 0) {options = { box: 'border-box' };}
       if (hasResizeObserver) {
         return observe(ResizeObserver, targets, cb, options);
@@ -32882,7 +32835,7 @@ module.exports = function (list, options) {
     UIkit.data = '__uikit__';
     UIkit.prefix = 'uk-';
     UIkit.options = {};
-    UIkit.version = '3.13.1';
+    UIkit.version = '3.13.7';
 
     globalAPI(UIkit);
     hooksAPI(UIkit);
@@ -33374,7 +33327,7 @@ module.exports = function (list, options) {
           mute(this.$el);
         }
 
-        this.registerObserver(observeIntersection(this.$el, () => this.$emit('scroll'), {}, false));
+        this.registerObserver(observeIntersection(this.$el, () => this.$emit(), {}, false));
       },
 
       update: {
@@ -33419,7 +33372,7 @@ module.exports = function (list, options) {
 
 
       events: {
-        load() {
+        'load loadedmetadata'() {
           this.$emit('resize');
         } },
 
@@ -33485,15 +33438,13 @@ module.exports = function (list, options) {
       props: {
         pos: String,
         offset: null,
-        flip: Boolean,
-        clsPos: String },
+        flip: Boolean },
 
 
       data: {
         pos: "bottom-" + (isRtl ? 'right' : 'left'),
         flip: true,
-        offset: false,
-        clsPos: '' },
+        offset: false },
 
 
       connected() {
@@ -33504,13 +33455,11 @@ module.exports = function (list, options) {
 
       methods: {
         positionAt(element, target, boundary) {
-          removeClasses(element, this.clsPos + "-(top|bottom|left|right)(-[a-z]+)?");
-
-          let { offset: offset$1 } = this;
           const axis = this.getAxis();
           const dir = this.pos[0];
           const align = this.pos[1];
 
+          let { offset: offset$1 } = this;
           if (!isNumeric(offset$1)) {
             const node = $(offset$1);
             offset$1 = node ?
@@ -33518,6 +33467,7 @@ module.exports = function (list, options) {
             offset(target)[axis === 'x' ? 'right' : 'bottom'] :
             0;
           }
+          offset$1 = toPx(offset$1) + toPx(getCssVar('position-offset', element));
 
           const { x, y } = positionAt(
           element,
@@ -33534,8 +33484,6 @@ module.exports = function (list, options) {
 
           this.dir = axis === 'x' ? x : y;
           this.align = axis === 'x' ? y : x;
-
-          toggleClass(element, this.clsPos + "-" + this.dir + "-" + this.align, this.offset === false);
         },
 
         getAxis() {
@@ -33577,7 +33525,7 @@ module.exports = function (list, options) {
       },
 
       connected() {
-        this.clsPos = this.clsDrop = this.$props.clsDrop || "uk-" + this.$options.name;
+        this.clsDrop = this.$props.clsDrop || "uk-" + this.$options.name;
         addClass(this.$el, this.clsDrop);
 
         if (this.toggle && !this.target) {
@@ -33643,7 +33591,7 @@ module.exports = function (list, options) {
           if (this.isToggled()) {
             this.hide(false);
           } else {
-            this.show(toggle.$el, false);
+            this.show(toggle == null ? void 0 : toggle.$el, false);
           }
         } },
 
@@ -33655,7 +33603,7 @@ module.exports = function (list, options) {
 
         handler(e, toggle) {
           e.preventDefault();
-          this.show(toggle.$el);
+          this.show(toggle == null ? void 0 : toggle.$el);
         } },
 
 
@@ -33866,23 +33814,20 @@ module.exports = function (list, options) {
         },
 
         position() {
-          const boundary = this.boundary === true ? window : query(this.boundary, this.$el);
+          const boundary = query(this.boundary, this.$el) || window;
           removeClass(this.$el, this.clsDrop + "-stack");
           toggleClass(this.$el, this.clsDrop + "-boundary", this.boundaryAlign);
 
           const boundaryOffset = offset(boundary);
-          const alignTo = this.boundaryAlign ? boundaryOffset : offset(this.target);
+          const targetOffset = offset(this.target);
+          const alignTo = this.boundaryAlign ? boundaryOffset : targetOffset;
 
-          if (this.align === 'justify') {
+          if (this.pos[1] === 'justify') {
             const prop = this.getAxis() === 'y' ? 'width' : 'height';
             css(this.$el, prop, alignTo[prop]);
           } else if (
-          boundary &&
           this.$el.offsetWidth >
-          Math.max(
-          boundaryOffset.right - alignTo.left,
-          alignTo.right - boundaryOffset.left))
-
+          Math.max(boundaryOffset.right - alignTo.left, alignTo.right - boundaryOffset.left))
           {
             addClass(this.$el, this.clsDrop + "-stack");
           }
@@ -34275,6 +34220,8 @@ module.exports = function (list, options) {
     }
 
     var heightMatch = {
+      mixins: [Resize],
+
       args: 'target',
 
       props: {
@@ -34392,11 +34339,13 @@ module.exports = function (list, options) {
           const box = boxModelAdjust(this.$el, 'height', 'content-box');
 
           if (this.expand) {
-            minHeight =
+            minHeight = Math.max(
             height(window) - (
             dimensions$1(document.documentElement).height -
             dimensions$1(this.$el).height) -
-            box || '';
+            box,
+            0);
+
           } else {
             // on mobile devices (iOS and Android) window.innerHeight !== 100vh
             minHeight = 'calc(100vh';
@@ -34817,7 +34766,7 @@ module.exports = function (list, options) {
       return isRtl ? swap(swap(icon, 'left', 'right'), 'previous', 'next') : icon;
     }
 
-    const nativeLazyLoad = ('loading' in HTMLImageElement.prototype);
+    const nativeLazyLoad = inBrowser && 'loading' in HTMLImageElement.prototype;
 
     var img = {
       args: 'dataSrc',
@@ -34881,25 +34830,6 @@ module.exports = function (list, options) {
           this._data.image.onload = '';
         }
       },
-
-      update: {
-        write(store) {
-          if (!this.observer || isImg(this.$el)) {
-            return false;
-          }
-
-          const srcset = data(this.$el, 'data-srcset');
-          if (srcset && window.devicePixelRatio !== 1) {
-            const bgSize = css(this.$el, 'backgroundSize');
-            if (bgSize.match(/^(auto\s?)+$/) || toFloat(bgSize) === store.bgSize) {
-              store.bgSize = getSourceSize(srcset, data(this.$el, 'sizes'));
-              css(this.$el, 'backgroundSize', store.bgSize + "px");
-            }
-          }
-        },
-
-        events: ['resize'] },
-
 
       methods: {
         load() {
@@ -34988,43 +34918,6 @@ module.exports = function (list, options) {
       }
 
       return sources.filter((source) => !isEmpty(source));
-    }
-
-    const sizesRe = /\s*(.*?)\s*(\w+|calc\(.*?\))\s*(?:,|$)/g;
-    function sizesToPixel(sizes) {
-      let matches;
-
-      sizesRe.lastIndex = 0;
-
-      while (matches = sizesRe.exec(sizes)) {
-        if (!matches[1] || window.matchMedia(matches[1]).matches) {
-          matches = evaluateSize(matches[2]);
-          break;
-        }
-      }
-
-      return matches || '100vw';
-    }
-
-    const sizeRe = /\d+(?:\w+|%)/g;
-    const additionRe = /[+-]?(\d+)/g;
-    function evaluateSize(size) {
-      return startsWith(size, 'calc') ?
-      size.
-      slice(5, -1).
-      replace(sizeRe, (size) => toPx(size)).
-      replace(/ /g, '').
-      match(additionRe).
-      reduce((a, b) => a + +b, 0) :
-      size;
-    }
-
-    const srcSetRe = /\s+\d+w\s*(?:,|$)/g;
-    function getSourceSize(srcset, sizes) {
-      const srcSize = toPx(sizesToPixel(sizes));
-      const descriptors = (srcset.match(srcSetRe) || []).map(toFloat).sort((a, b) => a - b);
-
-      return descriptors.filter((size) => size >= srcSize)[0] || descriptors.pop() || '';
     }
 
     function ensureSrcAttribute(el) {
@@ -35544,7 +35437,6 @@ module.exports = function (list, options) {
         delayShow: Number,
         delayHide: Number,
         dropbar: Boolean,
-        dropbarMode: String,
         dropbarAnchor: Boolean,
         duration: Number },
 
@@ -35561,7 +35453,6 @@ module.exports = function (list, options) {
         flip: 'x',
         boundary: true,
         dropbar: false,
-        dropbarMode: 'slide',
         dropbarAnchor: false,
         duration: 200,
         forceHeight: true,
@@ -35570,8 +35461,8 @@ module.exports = function (list, options) {
 
 
       computed: {
-        boundary(_ref, $el) {let { boundary, boundaryAlign } = _ref;
-          return boundary === true || boundaryAlign ? $el : boundary;
+        boundary(_ref, $el) {let { boundary } = _ref;
+          return boundary === true ? $el : boundary;
         },
 
         dropbarAnchor(_ref2, $el) {let { dropbarAnchor } = _ref2;
@@ -35778,10 +35669,16 @@ module.exports = function (list, options) {
           return this.dropbar;
         },
 
-        handler() {
+        handler(_, _ref9) {let { $el } = _ref9;
+          if (!hasClass($el, this.clsDrop)) {
+            return;
+          }
+
           if (!parent(this.dropbar)) {
             after(this.dropbarAnchor || this.$el, this.dropbar);
           }
+
+          addClass($el, this.clsDrop + "-dropbar");
         } },
 
 
@@ -35796,21 +35693,15 @@ module.exports = function (list, options) {
           return this.dropbar;
         },
 
-        handler(_, _ref9) {let { $el, dir } = _ref9;
+        handler(_, _ref10) {let { $el, dir } = _ref10;
           if (!hasClass($el, this.clsDrop)) {
             return;
           }
 
-          if (this.dropbarMode === 'slide') {
-            addClass(this.dropbar, 'uk-navbar-dropbar-slide');
-          }
-
-          this.clsDrop && addClass($el, this.clsDrop + "-dropbar");
-
           if (dir === 'bottom') {
             this.transitionTo(
-            $el.offsetHeight +
-            toFloat(css($el, 'marginTop')) +
+            offset($el).bottom -
+            offset(this.dropbar).top +
             toFloat(css($el, 'marginBottom')),
             $el);
 
@@ -35829,7 +35720,7 @@ module.exports = function (list, options) {
           return this.dropbar;
         },
 
-        handler(e, _ref10) {let { $el } = _ref10;
+        handler(e, _ref11) {let { $el } = _ref11;
           const active = this.getActive();
 
           if (
@@ -35853,7 +35744,7 @@ module.exports = function (list, options) {
           return this.dropbar;
         },
 
-        handler(_, _ref11) {let { $el } = _ref11;
+        handler(_, _ref12) {let { $el } = _ref12;
           if (!hasClass($el, this.clsDrop)) {
             return;
           }
@@ -36277,7 +36168,7 @@ module.exports = function (list, options) {
         events: ['resize'] } };
 
     var responsive = {
-      mixin: [Resize],
+      mixins: [Resize],
 
       props: ['width', 'height'],
 
@@ -37045,27 +36936,21 @@ module.exports = function (list, options) {
 
         show(item) {
           const prev = this.index();
-          const next = getIndex(
-          this.children[getIndex(item, this.toggles, prev)],
-          children(this.$el));
-
-
-          if (prev === next) {
-            return;
-          }
-
+          const next = getIndex(item, this.toggles, prev);
+          const active = getIndex(this.children[next], children(this.$el));
           children(this.$el).forEach((child, i) => {
-            toggleClass(child, this.cls, next === i);
-            attr(this.toggles[i], 'aria-expanded', next === i);
+            toggleClass(child, this.cls, active === i);
+            attr(this.toggles[i], 'aria-expanded', active === i);
           });
 
+          const animate = prev >= 0 && prev !== next;
           this.connects.forEach(async (_ref4) => {let { children } = _ref4;
             await this.toggleElement(
             toNodes(children).filter((child) => hasClass(child, this.cls)),
             false,
-            prev >= 0);
+            animate);
 
-            await this.toggleElement(children[next], true, prev >= 0);
+            await this.toggleElement(children[active], true, animate);
           });
         } } };
 
@@ -40080,7 +39965,7 @@ module.exports = function (list, options) {
         selItem: '!li' },
 
 
-      connected() {
+      beforeConnect() {
         this.item = query(this.selItem, this.$el);
       },
 
@@ -40720,8 +40605,7 @@ module.exports = function (list, options) {
         delay: 0,
         animation: ['uk-animation-scale-up'],
         duration: 100,
-        cls: 'uk-active',
-        clsPos: 'uk-tooltip' },
+        cls: 'uk-active' },
 
 
       beforeConnect() {
@@ -40776,9 +40660,9 @@ module.exports = function (list, options) {
 
         _show() {
           this.tooltip = append(
-          this.container, "<div class=\"" +
-          this.clsPos + "\"> <div class=\"" +
-          this.clsPos + "-inner\">" + this.title + "</div> </div>");
+          this.container, "<div class=\"uk-" +
+          this.$options.name + "\"> <div class=\"uk-" +
+          this.$options.name + "-inner\">" + this.title + "</div> </div>");
 
 
 
@@ -40923,6 +40807,8 @@ module.exports = function (list, options) {
 
       methods: {
         async upload(files) {
+          files = toArray(files);
+
           if (!files.length) {
             return;
           }
@@ -41009,7 +40895,6 @@ module.exports = function (list, options) {
     }
 
     function chunk(files, size) {
-      files = toArray(files);
       const chunks = [];
       for (let i = 0; i < files.length; i += size) {
         chunks.push(files.slice(i, i + size));
@@ -41805,25 +41690,27 @@ var render = function () {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    { staticClass: "uk-padding uk-position-bottom uk-position-fixed" },
-    [
-      _c(
-        "transition-group",
-        { attrs: { name: "list", tag: "div" } },
-        _vm._l(_vm.alerts, function (alert) {
-          return _c("alert", {
-            key: alert.key,
-            staticClass: "list-item",
-            attrs: { alert: alert },
-          })
-        }),
+  return _vm.alerts.length > 0
+    ? _c(
+        "div",
+        { staticClass: "uk-padding uk-position-bottom uk-position-fixed" },
+        [
+          _c(
+            "transition-group",
+            { attrs: { name: "list", tag: "div" } },
+            _vm._l(_vm.alerts, function (alert) {
+              return _c("alert", {
+                key: alert.key,
+                staticClass: "list-item",
+                attrs: { alert: alert },
+              })
+            }),
+            1
+          ),
+        ],
         1
-      ),
-    ],
-    1
-  )
+      )
+    : _vm._e()
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -41937,7 +41824,7 @@ var render = function () {
         attrs: { "uk-sortable": "handle: .uk-drag" },
         on: {
           moved: function ($event) {
-            return _vm.foo()
+            return _vm.getPosition()
           },
         },
       },
@@ -42001,12 +41888,7 @@ var render = function () {
             {
               staticClass:
                 "js-upload uk-flex uk-flex-middle uk-flex-center uk-height-medium uk-width-expand uk-transition-toggle uk-background-cover",
-              style:
-                "background-image: url(" +
-                (_vm.slide.image
-                  ? _vm.slide.image
-                  : "/images/image-not-found.png") +
-                ")",
+              style: "background-image: url(" + _vm.slide.image.filepath + ")",
               attrs: { tabindex: "-1" },
             },
             [
@@ -42030,99 +41912,116 @@ var render = function () {
                     "uk-card uk-overlay uk-overlay-default uk-card-body uk-transition-fade",
                 },
                 [
-                  _c("div", { staticClass: "uk-width-medium uk-text-center" }, [
-                    _c("div", { attrs: { "uk-form-custom": "" } }, [
-                      _c("input", {
-                        attrs: { type: "file", accept: ".png, .jpg, .jpeg" },
-                        on: { change: _vm.uploadImage },
-                      }),
-                      _vm._v(" "),
+                  _c(
+                    "form",
+                    {
+                      staticClass: "uk-width-large uk-text-center",
+                      attrs: {
+                        enctype: "multipart/form-data",
+                        method: "POST",
+                        action: "/dashboard/slider",
+                      },
+                    },
+                    [
                       _c(
-                        "a",
-                        { staticClass: "uk-link uk-button uk-button-danger" },
+                        "div",
+                        {
+                          staticClass:
+                            "uk-grid-small uk-flex-middle uk-margin-small-bottom",
+                          attrs: { "uk-grid": "" },
+                        },
                         [
-                          _vm._v("Загрузить изображение"),
-                          _c("span", {
-                            staticClass: "uk-margin-left",
-                            attrs: { "uk-icon": "icon: cloud-upload" },
-                          }),
+                          _c("div", { staticClass: "uk-width-3-5" }, [
+                            _c("input", {
+                              staticClass: "uk-input uk-form-small",
+                              attrs: {
+                                name: "link",
+                                required: "",
+                                placeholder: "Ссылка",
+                              },
+                              domProps: { value: _vm.slide.link },
+                            }),
+                          ]),
+                          _vm._v(" "),
+                          _c(
+                            "div",
+                            {
+                              staticClass: "uk-width-2-5",
+                              attrs: { "uk-form-custom": "" },
+                            },
+                            [
+                              _c("input", {
+                                attrs: {
+                                  required: "",
+                                  type: "file",
+                                  accept: ".png, .jpg, .jpeg",
+                                  name: "file",
+                                },
+                                on: { change: _vm.uploadImage },
+                              }),
+                              _vm._v(" "),
+                              _c(
+                                "a",
+                                {
+                                  staticClass:
+                                    "uk-link uk-button uk-button-small uk-button-text",
+                                },
+                                [
+                                  _vm._v("Изображение"),
+                                  _c("span", {
+                                    staticClass: "uk-margin-left",
+                                    attrs: { "uk-icon": "icon: cloud-upload" },
+                                  }),
+                                ]
+                              ),
+                            ]
+                          ),
                         ]
                       ),
-                    ]),
-                    _vm._v(" "),
-                    _c("input", {
-                      directives: [
-                        {
-                          name: "model",
-                          rawName: "v-model",
-                          value: _vm.slide.link,
-                          expression: "slide.link",
-                        },
-                      ],
-                      staticClass: "uk-input uk-margin-small uk-form-small",
-                      attrs: { placeholder: "Ссылка" },
-                      domProps: { value: _vm.slide.link },
-                      on: {
-                        change: _vm.updateSlide,
-                        input: function ($event) {
-                          if ($event.target.composing) {
-                            return
-                          }
-                          _vm.$set(_vm.slide, "link", $event.target.value)
-                        },
-                      },
-                    }),
-                    _vm._v(" "),
-                    _c("input", {
-                      directives: [
-                        {
-                          name: "model",
-                          rawName: "v-model",
-                          value: _vm.slide.title,
-                          expression: "slide.title",
-                        },
-                      ],
-                      staticClass: "uk-input uk-margin-small uk-form-small",
-                      attrs: { placeholder: "Заголовок" },
-                      domProps: { value: _vm.slide.title },
-                      on: {
-                        change: _vm.updateSlide,
-                        input: function ($event) {
-                          if ($event.target.composing) {
-                            return
-                          }
-                          _vm.$set(_vm.slide, "title", $event.target.value)
-                        },
-                      },
-                    }),
-                    _vm._v(" "),
-                    _c("input", {
-                      directives: [
-                        {
-                          name: "model",
-                          rawName: "v-model",
-                          value: _vm.slide.description,
-                          expression: "slide.description",
-                        },
-                      ],
-                      staticClass: "uk-input uk-margin-small uk-form-small",
-                      attrs: { placeholder: "Описание" },
-                      domProps: { value: _vm.slide.description },
-                      on: {
-                        change: _vm.updateSlide,
-                        input: function ($event) {
-                          if ($event.target.composing) {
-                            return
-                          }
-                          _vm.$set(
-                            _vm.slide,
-                            "description",
-                            $event.target.value
+                      _vm._v(" "),
+                      _c("input", {
+                        staticClass:
+                          "uk-input uk-form-small uk-margin-small-bottom",
+                        attrs: { name: "title", placeholder: "Заголовок" },
+                        domProps: { value: _vm.slide.title },
+                      }),
+                      _vm._v(" "),
+                      _c("input", {
+                        staticClass:
+                          "uk-input uk-form-small uk-margin-small-bottom",
+                        attrs: { name: "description", placeholder: "Описание" },
+                        domProps: { value: _vm.slide.description },
+                      }),
+                      _vm._v(" "),
+                      _c("input", {
+                        attrs: { type: "hidden", name: "ordering" },
+                        domProps: { value: _vm.slide.ordering },
+                      }),
+                      _vm._v(" "),
+                      _c("input", {
+                        attrs: { type: "hidden", name: "_token" },
+                        domProps: { value: _vm.token },
+                      }),
+                      _vm._v(" "),
+                      !_vm.slide.id
+                        ? _c(
+                            "button",
+                            {
+                              staticClass:
+                                "uk-button uk-button-small uk-width-1-1 uk-button-success",
+                              attrs: { type: "submit" },
+                            },
+                            [
+                              _c("span", {
+                                staticClass: "uk-margin-small-right",
+                                attrs: { "uk-icon": "check" },
+                              }),
+                              _vm._v("Сохранить\n                        "),
+                            ]
                           )
-                        },
-                      },
-                    }),
-                  ]),
+                        : _vm._e(),
+                    ]
+                  ),
                 ]
               ),
               _vm._v(" "),
@@ -55960,6 +55859,9 @@ var app = new Vue({
     return {
       token: ''
     };
+  },
+  created: function created() {
+    this.token = document.head.querySelector('meta[name="csrf-token"]').getAttribute('content');
   },
   store: _store__WEBPACK_IMPORTED_MODULE_2__["default"]
 });

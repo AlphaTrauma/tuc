@@ -2,9 +2,9 @@
 
 namespace App\Http\Requests;
 
-use Illuminate\Http\Request;
+use Illuminate\Foundation\Http\FormRequest;
 
-class CreateSlide extends Request
+class CreateSlide extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -13,7 +13,7 @@ class CreateSlide extends Request
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -25,10 +25,11 @@ class CreateSlide extends Request
     {
         return [
             'title' => 'string|nullable',
+            'ordering' => 'integer|required',
             'description' => 'string|nullable',
-            'image' => 'image|required',
+            'file' => 'image|required',
             'button_text' => 'string|nullable',
-            'link' => 'string|url|required'
+            'link' => 'string|required'
         ];
     }
 
@@ -37,8 +38,8 @@ class CreateSlide extends Request
         return [
             'title.string' => 'Некорректный заголовок слайда',
             'description.string' => 'Некорректное описание слайда',
-            'image.required' => 'Изображение слайда не загружено',
-            'image.image' => 'Загруженное изображение имеет неправильное расширение',
+            'file.required' => 'Изображение слайда не загружено',
+            'file.image' => 'Загруженное изображение имеет неправильное расширение',
             'link.required' => 'Не указана ссылка для слайда',
             'link.url' => 'Указана ссылка в некорректном формате'
         ];

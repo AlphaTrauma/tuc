@@ -15,17 +15,20 @@ class SliderItemController extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()):
-            $slides = SliderItem::all();
+            $slides = SliderItem::with('image')->orderBy('ordering')->get();
             return response($slides);
         endif;
         return view('dashboard.slider');
     }
 
-    public function store(Request $request)
+    public function store(CreateSlide $request)
     {
-        $slide = SliderItem::create(['ordering'=> $request['ordering'] + 1, 'link' => '#']);
+        $item = SliderItem::create($request->except('_token'));
+        if($request->hasFile('file')):
+            Image::add($request->file('file'), 'slides/'.$item->id, $item);
+        endif;
 
-        return response($slide);
+        return back()->with('message', 'Новый слайд успешно добавлен');
     }
 
     public function update(Request $request, $id){

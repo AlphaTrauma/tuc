@@ -18,6 +18,7 @@ class CreateSliderItemsTable extends Migration
             $table->timestamps();
             $table->integer('ordering');
             $table->tinyText('description')->nullable();
+            $table->string('title')->nullable();
             $table->string('button_text')->nullable();
             $table->string('link');
         });

@@ -10,7 +10,7 @@
         <script src="{{ asset('js/app.js') }}"></script>
     </head>
     <body>
-        <div>
+        <div id="app">
             @include('navigation.navbar')
             @yield('upper-content')
             <div class="uk-container uk-padding-small">

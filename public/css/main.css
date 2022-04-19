@@ -66,14 +66,22 @@ textarea { resize: none; }
     text-shadow: 1px 1px 3px #000;
 }
 
+.slider-text {
+    background-color: #E8D483;
+    color: rgba(0, 0, 0, 0.6);
+}
+
 .uk-alert-success {
     background-color: #7fd584;
     color: #03660c;
 }
 
-#preloader {
-    width: 100vw;
-    height: 100vh;
-    overflow: hidden;
-    background-color: #fff;
+.uk-button-success {
+    background-color: #04820f;
+    color: #fff;
+}
+
+.uk-button-success:hover {
+    background-color: #026509;
+    color: #fff;
 }

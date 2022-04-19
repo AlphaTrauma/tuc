@@ -31,6 +31,9 @@ const app = new Vue({
     data(){
         return {token: ''}
     },
+    created(){
+        this.token = document.head.querySelector('meta[name="csrf-token"]').getAttribute('content');
+    },
     store
 });
 

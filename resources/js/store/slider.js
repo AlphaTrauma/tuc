@@ -19,16 +19,17 @@ export default {
         },
         remove(state, payload){
             state.slides.splice(state.slides.indexOf(payload), 1);
+            state.last--;
         },
-        create(state, payload){
+        create(state){
             state.last++;
             state.slides.push({
-                id: payload,
+                id: null,
                 ordering: state.last,
                 title: null,
                 description: null,
-                link: '#',
-                image: null
+                link: null,
+                image: {filepath: ''}
             });
         },
         update(state, payload){
@@ -43,26 +44,12 @@ export default {
             const response = await axios.get(`/dashboard/slider`);
             commit('load', response.data);
         },
-        async update({commit}, payload){
-            if(payload.link && payload.image){
-                const response = await axios.post(`/dashboard/slider/${payload.id}`, payload)
-                commit('update', {item: payload, response: response});
-            }
-        },
-        async updateImage({commit}, payload){
-            axios.post(`/dashboard/slider/image`, {id: payload.slide.id, image: payload.image}).then((response) => {
-                console.log(response.data);
-                commit('updateImage', {response: response, payload: payload.slide});
-            });
-
-        },
-        async create({commit}, payload) {
-            const response = await axios.post('/dashboard/slider', {ordering: payload});
-            commit('create', response);
+        async create({commit}) {
+            commit('create');
         },
         async remove({commit}, payload) {
-            const response = await axios.delete(`/dashboard/slider/${payload.id}`);
-            if(response.status) commit('remove', payload);
+            if(payload.id) await axios.delete(`/dashboard/slider/${payload.id}`);
+            commit('remove', payload);
         },
         count({commit}) {
             commit('count');

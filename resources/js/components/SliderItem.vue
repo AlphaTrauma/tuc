@@ -3,20 +3,29 @@
         <div class="uk-card uk-card-default uk-card-small uk-margin">
             <div class="uk-card-media-top">
                 <div class="js-upload uk-flex uk-flex-middle uk-flex-center uk-height-medium uk-width-expand uk-transition-toggle uk-background-cover"
-                     tabindex="-1" :style="`background-image: url(${slide.image ? slide.image: '/images/image-not-found.png'})`">
+                     tabindex="-1" :style="`background-image: url(${slide.image.filepath})`">
                     <div class="uk-position-left uk-overlay uk-overlay-default uk-card-body uk-transition-fade uk-height-1-1 uk-flex uk-flex-middle">
                         <div class="uk-text-large"><b>{{ slide.ordering }}</b></div>
                     </div>
                     <div class="uk-card uk-overlay uk-overlay-default uk-card-body uk-transition-fade">
-                        <div class="uk-width-medium uk-text-center">
-                            <div uk-form-custom>
-                                <input type="file" accept=".png, .jpg, .jpeg" @change="uploadImage">
-                                <a class="uk-link uk-button uk-button-danger">Загрузить изображение<span uk-icon="icon: cloud-upload" class="uk-margin-left"></span></a>
+                        <form class="uk-width-large uk-text-center" enctype="multipart/form-data" method="POST" action="/dashboard/slider">
+                            <div class="uk-grid-small uk-flex-middle uk-margin-small-bottom" uk-grid>
+                                <div class="uk-width-3-5">
+                                    <input class="uk-input uk-form-small" name="link" required placeholder="Ссылка" :value="slide.link">
+                                </div>
+                                <div class="uk-width-2-5" uk-form-custom>
+                                    <input required type="file" accept=".png, .jpg, .jpeg" name="file" @change="uploadImage">
+                                    <a class="uk-link uk-button uk-button-small uk-button-text">Изображение<span uk-icon="icon: cloud-upload" class="uk-margin-left"></span></a>
+                                </div>
                             </div>
-                            <input class="uk-input uk-margin-small uk-form-small" placeholder="Ссылка" @change="updateSlide" v-model="slide.link">
-                            <input class="uk-input uk-margin-small uk-form-small" placeholder="Заголовок" @change="updateSlide" v-model="slide.title">
-                            <input class="uk-input uk-margin-small uk-form-small" placeholder="Описание" @change="updateSlide" v-model="slide.description">
-                        </div>
+                            <input class="uk-input uk-form-small uk-margin-small-bottom" name="title" placeholder="Заголовок" :value="slide.title">
+                            <input class="uk-input uk-form-small uk-margin-small-bottom" name="description" placeholder="Описание" :value="slide.description">
+                            <input type="hidden" name="ordering" :value="slide.ordering">
+                            <input type="hidden" name="_token" :value="token">
+                            <button v-if="!slide.id" type="submit" class="uk-button uk-button-small uk-width-1-1 uk-button-success">
+                                <span class="uk-margin-small-right" uk-icon="check"></span>Сохранить
+                            </button>
+                        </form>
                     </div>
                     <div class="uk-position-right uk-overlay uk-overlay-default uk-card-body uk-transition-fade uk-height-1-1 uk-flex uk-flex-middle">
                         <ul class="uk-iconnav uk-iconnav-vertical">
@@ -42,10 +51,12 @@
             }
         },
         mounted(){
+            this.token = this.$root.$data.token;
+            this.slide.image.filepath = this.slide.id ? `/${this.slide.image.filepath}` : '/images/image-not-found.png';
         },
         data(){
             return {
-                loadedImage: null
+                token: null
             }
         },
         methods: {
@@ -53,14 +64,14 @@
                 remove: 'slider/remove',
                 message: 'alerts/add',
                 create: 'slider/create',
-                update: 'slider/update',
-                updateImage: 'slider/updateImage'
             }),
             uploadImage(e){
-                this.updateImage({slide: this.slide, image: e.target.files[0]});
-            },
-            updateSlide(){
-                _debounce(this.update(this.slide), 500);
+                let file = e.target.files[0];
+                if (file) {
+                    if(file.type.split('/')[0] === 'image') this.slide.image.filepath = URL.createObjectURL(file)
+                } else {
+                    this.message({type: 'danger', message: 'Ошибка при загрузке файла'})
+                }
             },
             whereAmI(){
                 this.slide.ordering = this.getIndex(this.$el) + 1;

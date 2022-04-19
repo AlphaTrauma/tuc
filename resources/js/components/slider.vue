@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div v-on:moved="foo()" uk-sortable="handle: .uk-drag">
+        <div v-on:moved="getPosition()" uk-sortable="handle: .uk-drag">
              <slider-item class="slide" v-for="slide in slides" :slide="slide" :key="slide.id"></slider-item>
         </div>
         <div title="Новый слайд" class="uk-button uk-button-secondary uk-margin-small uk-width-1-1" @click="create(last)">
@@ -31,7 +31,7 @@
                 load: 'slider/load',
                 create: 'slider/create'
             }),
-            foo(){
+            getPosition(){
                 this.$children.forEach(el => {
                     setTimeout(el.whereAmI(), 500);
                 })
