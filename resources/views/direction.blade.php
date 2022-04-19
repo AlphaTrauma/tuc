@@ -31,7 +31,7 @@
                                 <img src="/images/placeholder.png" uk-img/>
                                 <div class="uk-overlay uk-overlay-primary uk-position-bottom">
                                     <p>Курс {{ $i + 1 }}</p>
-                                    <a class="uk-button uk-button-default" href="#modal-{{ $i }}" uk-toggle>Подробнee</a>
+                                    <a class="uk-button uk-button-small uk-button-default" href="#modal-{{ $i }}" uk-toggle>Подробнee</a>
                                 </div>
                             </div>
                             <div class="uk-card-body">

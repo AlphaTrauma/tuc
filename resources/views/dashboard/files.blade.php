@@ -9,9 +9,10 @@
                 </div>
                 <div class="uk-card-body">
                     @isset($item->entity->alias)
-                        <p>{{ $item->entity->alias['title'] }}: <b>{{ $item->entity->title }}</b></p>
+                        <div>{{ $item->entity->alias['title'] }}: <b>{{ $item->entity->title }}</b></div>
                     @endisset
-                    <p>{{ $item->filename }}</p>
+                    <div>{{ $item->filename }}</div>
+                    <div><b>{{ $item->readableSize() }}</b></div>
                 </div>
             </div>
         @endforeach

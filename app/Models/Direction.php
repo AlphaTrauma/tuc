@@ -17,6 +17,11 @@ class Direction extends Model
         return $this->morphOne(Image::class, 'entity');
     }
 
+    public function courses()
+    {
+        return $this->hasMany(Course::class);
+    }
+
     public function getAliasAttribute(){
         return [
             'title' => 'Направления обучения',

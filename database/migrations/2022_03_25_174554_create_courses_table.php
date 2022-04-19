@@ -18,9 +18,10 @@ class CreateCoursesTable extends Migration
             $table->timestamps();
             $table->integer('teacher_id')->nullable();
             $table->integer('length')->nullable();
+            $table->integer('direction_id');
             $table->string('title');
             $table->text('description');
-            $table->text('html');
+            $table->text('html')->nullable();
         });
     }
 

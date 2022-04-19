@@ -62,4 +62,15 @@ class DirectionController extends Controller
         $item = Direction::with('image')->find($id);
         return view('dashboard.directions.create', compact('item'));
     }
+
+    public function destroy($id)
+    {
+        $item = Direction::with('image', 'courses')->find($id);
+        if($item->courses->count() > 0) return back()->with('error', 'Нельзя удалить направление, содержащее курсы');
+
+        $item->image()->delete();
+        $item->delete();
+
+        return back()->with('message', 'Направление успешно удалено');
+    }
 }

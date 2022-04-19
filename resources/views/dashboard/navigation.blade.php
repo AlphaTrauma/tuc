@@ -14,7 +14,7 @@
                 <a class="uk-text-bold" href="#"><span class="uk-margin-small-right" uk-icon="icon: table"></span>Обучение</a>
                 <ul class="uk-nav-sub">
                     <li><a href="{{ route('directions.index') }}">Список направлений</a></li>
-                    <li><a href="{{ route('directions.index') }}">Список курсов</a></li>
+                    <li><a href="{{ route('courses.index') }}">Список курсов</a></li>
                     <li><a uk-toggle href="#modal-disabled">Статистика</a></li>
                 </ul>
             </li>

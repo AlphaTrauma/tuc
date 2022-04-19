@@ -5,7 +5,7 @@
 @endsection
 
 @section('content')
-    @include('dashboard.errors')
+    @include('blocks.errors')
     <h2 class="uk-title">@isset($item)Редактировать@elseСоздать@endisset направление</h2>
     <form class="uk-form" enctype=multipart/form-data method="POST" action="{{ isset($item) ? route('directions.update', $item->id) : route('directions.store') }}">
         @isset($item)

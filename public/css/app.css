@@ -71,3 +71,10 @@ textarea { resize: none; }
     background-color: #7fd584;
     color: #03660c;
 }
+
+#preloader {
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+    background-color: #fff;
+}

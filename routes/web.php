@@ -24,17 +24,18 @@ Route::post('/dashboard/pages/{id}/update', [\App\Http\Controllers\PageControlle
 
 
 Route::resource('/dashboard/directions', \App\Http\Controllers\DirectionController::class);
-Route::get('directions/{slug}', [\App\Http\Controllers\DirectionController::class, 'show'])->name('direction.show');
+Route::get('/dashboard/directions/{id}/delete', [\App\Http\Controllers\DirectionController::class, 'destroy'])->name('directions.delete');
 
+Route::resource('/dashboard/courses', \App\Http\Controllers\CourseController::class);
+Route::get('/dashboard/courses/{id}/delete', [\App\Http\Controllers\CourseController::class, 'destroy'])->name('courses.delete');
 Route::get('dashboard/directions/{id}/create', [\App\Http\Controllers\CourseController::class, 'create'])->name('course.create');
-Route::post('dashboard/courses/create', [\App\Http\Controllers\CourseController::class, 'store'])->name('course.store');
-Route::patch('dashboard/courses/{id}/update', [\App\Http\Controllers\CourseController::class, 'update'])->name('course.update');
+
 
 Route::get('dashboard/files/images', [\App\Http\Controllers\ImageController::class, 'index'])->name('images.index');
 
 require __DIR__.'/auth.php';
 
-
+Route::get('directions/{slug}', [\App\Http\Controllers\DirectionController::class, 'show'])->name('direction.show');
 # default route
 Route::get('/{slug}', [\App\Http\Controllers\PageController::class, 'show'])->where('slug', '([a-z-_])+')->name('page');
 

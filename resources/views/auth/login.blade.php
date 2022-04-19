@@ -5,6 +5,7 @@
 @endsection
 
 @section('content')
+    @include('blocks.errors')
     <div class="uk-flex uk-flex-around">
         <div class="uk-card uk-card-body uk-width-large">
             <form method="POST" action="{{ route('login') }}">
@@ -14,7 +15,7 @@
                         Войти в систему
                     </legend>
                     <div class="uk-margin">
-                        <input class="uk-input" type="text" required placeholder="E-mail">
+                        <input class="uk-input" type="text" name="email" required placeholder="E-mail">
                     </div>
                     <div class="uk-margin">
                         <input class="uk-input" type="password" name="password" placeholder="Пароль"

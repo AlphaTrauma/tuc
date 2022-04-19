@@ -23,5 +23,6 @@
             @include('footer.footer')
             @include('blocks.modal')
         </div>
+    {{-- @include('blocks.preloader') --}}
     </body>
 </html>
