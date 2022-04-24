@@ -19,9 +19,10 @@ class CreatePagesTable extends Migration
             $table->integer('navbar_id')->nullable();
             $table->integer('ordering')->nullable();
             $table->text('text')->nullable();
-            $table->text('html');
+            $table->text('html')->nullable();
+            $table->boolean('deletable')->default(true);
             $table->string('title');
-            $table->string('slug')->index()->unique();
+            $table->string('slug')->index()->unique()->nullable();
         });
 
         $seeder = new \Database\Seeders\PageSeeder();

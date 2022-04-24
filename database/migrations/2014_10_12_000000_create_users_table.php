@@ -21,11 +21,18 @@ class CreateUsersTable extends Migration
             $table->string('patronymic')->nullable();
             $table->string('last_name')->nullable();
             $table->string('email')->unique();
+            $table->string('phone')->nullable();
+            $table->string('position')->nullable();
+            $table->string('organization')->nullable();
+            $table->string('role')->default('student');
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();
             $table->timestamps();
         });
+
+        $seeder = new \Database\Seeders\UserSeeder();
+        $seeder->run();
     }
 
     /**

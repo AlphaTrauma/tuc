@@ -85,3 +85,6 @@ textarea { resize: none; }
     background-color: #026509;
     color: #fff;
 }
+.documents img {
+    display: none;
+}

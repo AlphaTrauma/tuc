@@ -29,6 +29,6 @@
     },
     "dependencies": {
         "uikit": "^3.2.4",
-        "vue2-editor": "^1.0.1"
+        "vue2-editor": "^2.0.42-images"
     }
 }

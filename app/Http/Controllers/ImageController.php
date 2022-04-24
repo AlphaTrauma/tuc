@@ -11,6 +11,7 @@ class ImageController extends Controller
     {
         $items = Image::with('entity')->paginate(50);
 
-        return view('dashboard.files', compact('items'));
+        return view('dashboard.files.images', compact('items'));
     }
+
 }

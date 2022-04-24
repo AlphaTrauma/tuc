@@ -18,52 +18,50 @@ class PageSeeder extends Seeder
             [
                 'title' => 'Контакты',
                 'html' => 'Текст по умолчанию',
-                'slug' => 'contacts'
+                'slug' => 'contacts',
+                'deletable' => false
             ],
             [
                 'title' => 'Основные сведения',
                 'html' => 'Текст по умолчанию',
-                'slug' => 'information'
-            ],
-            [
-                'title' => 'Структура и органы управления образовательной деятельностью',
-                'html' => 'Текст по умолчанию',
-                'slug' => 'structure'
+                'slug' => 'information',
+                'deletable' => false
             ],
             [
                 'title' => 'Документы',
                 'html' => 'Текст по умолчанию',
-                'slug' => 'documents'
+                'slug' => 'documents',
+                'deletable' => false
             ],
             [
                 'title' => 'Руководство',
                 'html' => 'Текст по умолчанию',
-                'slug' => 'managers'
+                'slug' => 'managers',
+                'deletable' => false
             ],
             [
                 'title' => 'Преподавательский состав',
                 'html' => 'Текст по умолчанию',
-                'slug' => 'teachers'
-            ],
-            [
-                'title' => 'Финансово-хозяйственная деятельность',
-                'html' => 'Текст по умолчанию',
-                'slug' => 'activity'
+                'slug' => 'teachers',
+                'deletable' => false
             ],
             [
                 'title' => 'График работы',
                 'html' => 'Текст по умолчанию',
-                'slug' => 'schedule'
+                'slug' => 'schedule',
+                'deletable' => false
             ],
             [
                 'title' => 'График обучения',
                 'html' => 'Текст по умолчанию',
-                'slug' => 'timetable'
+                'slug' => 'timetable',
+                'deletable' => false
             ],
             [
                 'title' => 'Все направления',
                 'html' => 'Текст по умолчанию',
-                'slug' => 'all_directions'
+                'slug' => 'all_directions',
+                'deletable' => false
             ],
 
         ];

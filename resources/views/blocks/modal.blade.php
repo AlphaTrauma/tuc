@@ -2,23 +2,36 @@
     <div class="uk-modal-dialog uk-margin-auto-vertical">
         <button class="uk-modal-close-default" type="button" uk-close></button>
         <div class="uk-modal-header">
-            <h2 class="uk-modal-title">Заявка на обучение</h2>
+            <h2 class="uk-modal-title">Оставить заявку</h2>
         </div>
         <div class="uk-modal-body">
-            <form action="" class="uk-form">
+            <form action="{{ route('lead.store') }}" method="POST" class="uk-form">
+                @csrf
                 <div class="uk-margin-small">
-                    <input type="text" placeholder="Телефон" class="uk-input">
+                    <input type="text" placeholder="Телефон (обязательно)" name="phone" required class="uk-input">
                 </div>
                 <div class="uk-margin-small">
-                    <input type="text" placeholder="E-Mail" class="uk-input">
+                    <div uk-grid class="uk-grid-small uk-child-width-1-2@s">
+                        <div>
+                            <input type="text" placeholder="Имя" name="name" class="uk-input">
+                        </div>
+                        <div>
+                            <input type="text" placeholder="E-Mail" name="email" class="uk-input">
+                        </div>
+                    </div>
+
                 </div>
                 <div class="uk-margin-small">
-                    <textarea name="" placeholder="Комментарий" id="" cols="30" rows="10" class="uk-textarea"></textarea>
+
+                </div>
+                <div class="uk-margin-small">
+                    <textarea placeholder="Комментарий" id="" cols="30" rows="10" class="uk-textarea" name="comment"></textarea>
+                </div>
+                <input type="hidden" name="page" value="{{ request()->url() }}">
+                <div class="uk-margin-small">
+                    <input type="submit" value="Отправить" class="uk-button uk-button-primary uk-width-1-1">
                 </div>
             </form>
-        </div>
-        <div class="uk-modal-footer">
-            <button class="uk-button uk-button-primary uk-align-center" type="button">Отправить</button>
         </div>
     </div>
 </div>

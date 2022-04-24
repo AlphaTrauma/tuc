@@ -31,21 +31,21 @@
                     <li class="uk-nav-header uk-visible@s">
                         <a href="/contacts">Контакты</a>
                     </li>
-                    <li><a href="tel:83452564919">8 (3452) 564-919</a></li>
-                    <li><a href="mailto:tuc.tmn@mail.ru">tuc.tmn@mail.ru</a></li>
-                    <li>Российская Федерация, г. Тюмень, ул. Одесская, д. 48-А/2</li>
-                    <li>ООО «Тюменский Учебный Центр»</li>
-                    <li>ИНН: 7203459280</li>
-                    <li>ОГРН: 1187232024154</li>
-                    <li>Лицензия: 456783568-45673</li>
-                    <li>Приём претензий по адресу: г. Тюмень, ул. Одесская, д. 48-А/2</li>
+                    <li><a href="tel:{{ $contacts['phone'] }}">{{ $contacts['phone'] }}</a></li>
+                    <li><a href="mailto:{{ $contacts['email'] }}">{{ $contacts['email'] }}</a></li>
+                    <li>{{ $contacts['address'] }}</li>
+                    <li>{{ $contacts['shortname'] }}</li>
+                    <li>ИНН: {{ $contacts['INN'] }}</li>
+                    <li>ОГРН: {{ $contacts['OGRN'] }}</li>
+                    <li>Лицензия: {{ $contacts['license'] }}</li>
+                    <li>Приём претензий по адресу:<br>{{ $contacts['post'] }}</li>
                 </ul>
             </div>
         </div>
 
     </div>
-    <div class="uk-container">
-        <div class="uk-float-right uk-flex uk-flex-center">
+    <div class="uk-container uk-padding-small uk-padding-remove-horizontal">
+        <div class="uk-float-right uk-flex uk-flex-middle">
             @if(Route::currentRouteName() === 'main')
                 <div class="uk-logo"><img style="max-height: 35px;"  src="https://imageup.ru/img6/3890887/logo.png" alt=""></div>
             @else

@@ -7,7 +7,7 @@
 @section('content')
     <h1 class="uk-title uk-margin-bottom">{{ $item->title }}</h1>
     <section class="uk-padding uk-padding-remove-horizontal">
-        <div class="uk-card-default uk-card-body">
+        <div class="uk-card-default uk-card-body @if($item->slug === 'documents') documents @endif">
             {!! $item->html  !!}
         </div>
         @switch($item->slug)
@@ -21,6 +21,9 @@
                     $items = App\Models\Direction::query()->get();
                 @endphp
                 @include('main.directions')
+            @break
+            @case('documents')
+                @include('blocks.gallery')
             @break
         @endswitch
     </section>

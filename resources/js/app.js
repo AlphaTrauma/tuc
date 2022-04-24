@@ -7,7 +7,7 @@ UIkit.use(Icons);
 window.UIkit = UIkit;
 import store from './store';
 
-Vue.component('editor', require('./components/editor.vue').default);
+Vue.component('editor', require('./components/Editor.vue').default);
 Vue.component('slider', require('./components/Slider.vue').default);
 Vue.component('courses', require('./components/courses.vue').default);
 Vue.component('alerts', require('./components/Alerts.vue').default);

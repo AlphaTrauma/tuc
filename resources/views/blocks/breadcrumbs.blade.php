@@ -2,7 +2,9 @@
 <ul class="uk-breadcrumb">
         <li><a href="{{ route('main') }}">Тюменский учебный центр</a></li>
     @isset($item->alias)
-        <li><a href="{{ $item->alias['path'] }}">{{ $item->alias['title'] }}</a></li>
+        @if($item->alias['path'])
+            <li><a href="{{ $item->alias['path'] }}">{{ $item->alias['title'] }}</a></li>
+        @endif
     @endisset
     @isset($item->title)
         <li><a>{{ $item->title }}</a></li>

@@ -8,5 +8,4 @@
     @include('blocks.errors')
     <h2 class="uk-title">Управление слайдером</h2>
     <slider></slider>
-    <alerts></alerts>
 @endsection

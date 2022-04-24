@@ -58,4 +58,11 @@ class RegisteredUserController extends Controller
 
         return view('dashboard.users.index', compact('users'));
     }
+
+    public function show($id)
+    {
+        $item = User::find($id);
+
+        return view('dashboard.users.show', compact('item'));
+    }
 }

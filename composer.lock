@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "12cfa4e8a465a0c6c54862bc7d2f5797",
+    "content-hash": "bcc2e50e44d61f8d63a4565555c2ffbf",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -4925,6 +4925,43 @@
             "time": "2021-12-08T09:12:39+00:00"
         },
         {
+            "name": "ultramsg/whatsapp-php-sdk",
+            "version": "2.0.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/ultramsg/whatsapp-php-sdk.git",
+                "reference": "5d64b56c69ba5c7f5ed661f7221c26eb69bdd50f"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/ultramsg/whatsapp-php-sdk/zipball/5d64b56c69ba5c7f5ed661f7221c26eb69bdd50f",
+                "reference": "5d64b56c69ba5c7f5ed661f7221c26eb69bdd50f",
+                "shasum": ""
+            },
+            "type": "library",
+            "autoload": {
+                "classmap": [
+                    "ultramsg.class.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "ultramsg.com",
+                    "email": "info@ultramsg.com"
+                }
+            ],
+            "description": "Lightweight PHP library for WhatsApp API to send the whatsappp messages in PHP provided by ultramsg.com",
+            "support": {
+                "issues": "https://github.com/ultramsg/whatsapp-php-sdk/issues",
+                "source": "https://github.com/ultramsg/whatsapp-php-sdk/tree/2.0.3"
+            },
+            "time": "2022-04-04T19:49:16+00:00"
+        },
+        {
             "name": "vlucas/phpdotenv",
             "version": "v5.4.1",
             "source": {
@@ -7711,5 +7748,5 @@
         "php": "^7.3|^8.0"
     },
     "platform-dev": [],
-    "plugin-api-version": "2.2.0"
+    "plugin-api-version": "2.3.0"
 }

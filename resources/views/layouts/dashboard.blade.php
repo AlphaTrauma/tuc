@@ -15,11 +15,13 @@
         <div class="uk-width-expand">
             <div class="uk-card uk-card-body">
                 @yield('content')
+                <alerts></alerts>
             </div>
         </div>
         <div class="uk-width-medium">
         </div>
     </div>
+
 </div>
 @include('blocks.modal')
 <script src="{{ asset('js/app.js') }}"></script>

@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\CreateDirection;
+use Illuminate\Http\Request;
 use App\Http\Requests\UpdateDirection;
 use App\Models\Direction;
 use Illuminate\Support\Str;
@@ -25,7 +25,8 @@ class DirectionController extends Controller
 
     public function create()
     {
-        return view('dashboard.directions.create');
+        $direction = Direction::create(['title' => 'Новое направление']);
+        return redirect()->route('directions.edit', compact('direction'));
     }
 
     public function show($slug){
@@ -33,16 +34,6 @@ class DirectionController extends Controller
         if(!$item) return abort(404);
 
         return view('direction', compact('item'));
-    }
-
-    public function store(CreateDirection $request)
-    {
-        $data = $request->except('_token');
-        $data['slug'] =  Str::slug($data['title']);
-        $item = Direction::create($data);
-        Image::add($request->file('file'), 'directions/'.$item->id, $item);
-
-        return redirect()->route('directions.index')->with('message', 'Направление успешно сохранено');
     }
 
     public function update(UpdateDirection $request, $id) {

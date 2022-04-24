@@ -26,11 +26,20 @@
                     <li><a uk-toggle href="#modal-disabled">Новости</a></li>
                 </ul>
             </li>
-            <li>
-                <a class="uk-text-bold" href="{{ route('images.index') }}"><span class="uk-margin-small-right" uk-icon="icon: folder"></span>Файлы</a>
+            <li class="uk-parent">
+                <a class="uk-text-bold"><span class="uk-margin-small-right" uk-icon="icon: folder"></span>Файлы</a>
+                <ul class="uk-nav-sub">
+                    <li><a href="{{ route('images.index') }}">Изображения</a></li>
+                    <li><a href="">Документы</a></li>
+                </ul>
             </li>
-            <li><a uk-toggle href="#modal-disabled" class="uk-text-bold"><span class="uk-margin-small-right" uk-icon="icon: social"></span>Контакты</a></li>
-            <li><a uk-toggle href="#modal-disabled" class="uk-text-bold"><span class="uk-margin-small-right" uk-icon="icon: cog"></span>Настройки</a></li>
+            <li><a href="{{ route('leads') }}" class="uk-text-bold"><span class="uk-margin-small-right" uk-icon="icon: commenting"></span>
+                    Заявки
+                    @if($leads_count > 0)
+                        <div class="uk-inline-block uk-width-expand"><span class="uk-badge uk-label-danger uk-float-right">{{$leads_count}}</span></div>
+                    @endif
+                </a></li>
+            <li><a href="{{ route('settings') }}" class="uk-text-bold"><span class="uk-margin-small-right" uk-icon="icon: cog"></span>Настройки</a></li>
         </ul>
     </div>
 </div>

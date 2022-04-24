@@ -21,6 +21,7 @@ class Image extends Model
         });
     }
 
+    // Добавление изображения к модели
     public static function add($file, $path, $model){
         if(isset($model->image->filepath)) $model->image->delete();
         $filename = $file->getClientOriginalName();
@@ -28,7 +29,18 @@ class Image extends Model
         $filepath = 'uploads/'.$path.'/'.$filename;
         $size = $file->getSize();
         $file->move(public_path('uploads/'.$path), $filename);
-        $model->image()->create(['filepath' => $filepath, 'filename' => $filename, 'size' => $size]);
+        $item = $model->image()->create(['filepath' => $filepath, 'filename' => $filename, 'size' => $size]);
+        return $item;
+    }
+
+    public static function addTo($file, $path, $model){
+        $filename = $file->getClientOriginalName();
+        if(!File::exists($path)) File::makeDirectory($path, 0777, true);
+        $filepath = 'uploads/'.$path.'/'.$filename;
+        $size = $file->getSize();
+        $file->move(public_path('uploads/'.$path), $filename);
+        $item = $model->images()->create(['filepath' => $filepath, 'filename' => $filename, 'size' => $size]);
+        return $item;
     }
 
     public function entity()

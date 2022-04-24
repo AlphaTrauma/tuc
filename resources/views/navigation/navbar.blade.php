@@ -1,7 +1,7 @@
 <header class="">
     <div class="uk-flex uk-flex-between uk-flex-middle uk-padding-small uk-container">
         <div>
-            <span class="uk-visible@s"><b>Открытое акционерное общество «Тюменский Учебный Центр»</b></span>
+            <span class="uk-visible@s"><b>{{ $contacts['name'] }}</b></span>
         </div>
         <div class="uk-flex uk-flex-right">
             {{--
@@ -74,8 +74,8 @@
                          --}}
                         <div class="uk-navbar-item">
                             <ul class="uk-list">
-                                <li><a href="tel:8 (3452) 564-919">8 (3452) 564-919</a></li>
-                                <li><a href="mailto:tuc.tmn@mail.ru">tuc.tmn@mail.ru</a></li>
+                                <li><a href="tel:{{ $contacts['phone'] }}">{{ $contacts['phone'] }}</a></li>
+                                <li><a href="mailto:{{ $contacts['email'] }}">{{ $contacts['email'] }}</a></li>
                             </ul>
                         </div>
                     </div>
