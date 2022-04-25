@@ -44,7 +44,7 @@
         </div>
         <div class=" uk-width-1-3@s">
             <div class="uk-background-center-center uk-background-cover"
-                 style="background-image: url({{ asset($item->image->filepath) }});
+                 style="background-image: url({{ isset($item->image->filepath) ? asset($item->image->filepath) : '' }});
                      width: 300px;
                      height: 400px;
                      ">
