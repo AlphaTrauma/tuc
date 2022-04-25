@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\Image;
 use App\Models\User;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Auth\Events\Registered;
@@ -64,5 +65,25 @@ class RegisteredUserController extends Controller
         $item = User::find($id);
 
         return view('dashboard.users.show', compact('item'));
+    }
+
+    public function edit($id)
+    {
+        $item = User::find($id);
+
+        return view('dashboard.users.edit', compact('item'));
+    }
+
+    public function update(Request $request, $id)
+    {
+        $item = User::find($id);
+
+        $data = $request->except('_token');
+        $item->update($data);
+        if($request->hasFile('file')):
+            Image::add($request->file('file'), 'users/'.$item->id, $item);
+        endif;
+
+        return redirect()->route('users')->with('message', 'Направление успешно отредактировано');
     }
 }

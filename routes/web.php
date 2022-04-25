@@ -17,6 +17,8 @@ Route::delete('/dashboard/slider/{id}', [\App\Http\Controllers\SliderItemControl
 
 Route::get('/dashboard/users', [\App\Http\Controllers\Auth\RegisteredUserController::class, 'index'])->name('users');
 Route::get('/dashboard/users/{id}', [\App\Http\Controllers\Auth\RegisteredUserController::class, 'show'])->name('user.show');
+Route::get('/dashboard/users/{id}/edit', [\App\Http\Controllers\Auth\RegisteredUserController::class, 'edit'])->name('user.edit');
+Route::post('/dashboard/users/{id}/update', [\App\Http\Controllers\Auth\RegisteredUserController::class, 'update'])->name('user.update');
 
 Route::get('/dashboard/pages', [\App\Http\Controllers\PageController::class, 'index'])->name('pages');
 Route::get('/dashboard/pages/create', [\App\Http\Controllers\PageController::class, 'create'])->name('pages.create');
