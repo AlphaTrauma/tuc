@@ -7,7 +7,7 @@
         <link rel="shortcut icon" href="{{ asset('favicon.ico') }}" type="image/x-icon">
         <title>@yield('title') | Тюменский Учебный Центр</title>
         <link rel="stylesheet" href="{{ asset('css/app.css') }}" />
-        <script src="{{ asset('js/app.js') }}"></script>
+        <script src="{{ asset('js/main.js') }}"></script>
     </head>
     <body>
         <div id="app">
@@ -22,6 +22,7 @@
             </div>
             @include('footer.footer')
             @include('blocks.modal')
+            @include('blocks.lead')
         </div>
     {{-- @include('blocks.preloader') --}}
     </body>

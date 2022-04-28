@@ -3,25 +3,16 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Traits\FileTrait;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\File;
 
 class Image extends Model
 {
-    use HasFactory;
+    use HasFactory, FileTrait;
 
     protected $fillable = ['filepath', 'filename', 'size'];
 
-    public static function boot()
-    {
-        parent::boot();
-
-        static::deleted(function ($item) {
-            File::deleteDirectory($item->filepath);
-        });
-    }
-
-    // Добавление изображения к модели
     public static function add($file, $path, $model){
         if(isset($model->image->filepath)) $model->image->delete();
         $filename = $file->getClientOriginalName();
@@ -29,8 +20,8 @@ class Image extends Model
         $filepath = 'uploads/'.$path.'/'.$filename;
         $size = $file->getSize();
         $file->move(public_path('uploads/'.$path), $filename);
-        $item = $model->image()->create(['filepath' => $filepath, 'filename' => $filename, 'size' => $size]);
-        return $item;
+
+        return $model->image()->create(['filepath' => $filepath, 'filename' => $filename, 'size' => $size]);
     }
 
     public static function addTo($file, $path, $model){
@@ -39,23 +30,12 @@ class Image extends Model
         $filepath = 'uploads/'.$path.'/'.$filename;
         $size = $file->getSize();
         $file->move(public_path('uploads/'.$path), $filename);
-        $item = $model->images()->create(['filepath' => $filepath, 'filename' => $filename, 'size' => $size]);
-        return $item;
+        return $model->images()->create(['filepath' => $filepath, 'filename' => $filename, 'size' => $size]);
     }
 
     public function entity()
     {
         return $this->morphTo();
-    }
-
-    public function readableSize()
-    {
-        if ( $this->size > 0 ):
-            $size = (int) $this->size;
-            $base = log($size) / log(1024);
-            $suffixes = array(' Байт', ' КБ', ' МБ', ' ГБ', ' ТБ');
-            return round(pow(1024, $base - floor($base)), 2) . $suffixes[floor($base)];
-        endif;
     }
 
 }

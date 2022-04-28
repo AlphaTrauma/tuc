@@ -26,5 +26,6 @@
                 </tr>
             @endforelse
         </table>
+        {{ $items->links('blocks.pagination') }}
     </div>
 @endsection

@@ -33,7 +33,7 @@ class PageSeeder extends Seeder
                 'slug' => 'documents',
                 'deletable' => false
             ],
-            [
+            /*[
                 'title' => 'Руководство',
                 'html' => 'Текст по умолчанию',
                 'slug' => 'managers',
@@ -44,7 +44,7 @@ class PageSeeder extends Seeder
                 'html' => 'Текст по умолчанию',
                 'slug' => 'teachers',
                 'deletable' => false
-            ],
+            ],*/
             [
                 'title' => 'График работы',
                 'html' => 'Текст по умолчанию',

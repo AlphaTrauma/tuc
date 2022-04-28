@@ -7,7 +7,7 @@
 @section('content')
         <h2 class="uk-title">Управление страницами</h2>
         @include('blocks.errors')
-        <a href="{{ route('pages.create') }}" class="uk-button uk-button-primary">+</a>
+        <a href="{{ route('pages.create') }}" class="uk-button uk-button-primary">Создать новую страницу</a>
         <div>
             @foreach($pages as $page)
                 <div class="uk-card uk-card-default uk-padding-small uk-card-body uk-margin-top uk-width-1-1">
@@ -24,4 +24,5 @@
                 </div>
             @endforeach
         </div>
+    {{ $pages->links('blocks.pagination') }}
 @endsection

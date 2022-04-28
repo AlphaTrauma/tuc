@@ -89,3 +89,18 @@ textarea { resize: none; }
 .documents img {
     display: none;
 }
+
+.lead-button {
+    background-color: #5a7897;
+    color: #fff;
+    right: 100px;
+    bottom: 0;
+    width: 60px;
+    height: 60px;
+    border-radius: 15px 15px 0 0;
+    cursor: pointer;
+    transition: 0.3s ease-out;
+}
+.lead-button:hover span{
+    opacity: 0.8;
+}

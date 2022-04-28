@@ -52,6 +52,7 @@
                                 <a uk-icon="icon: chevron-down">Сведения об организации</a>
                                 <div class="uk-navbar-dropdown uk-text-normal">
                                     <ul class="uk-nav uk-navbar-dropdown-nav">
+                                        <li><a class="" href="{{ route('news.main') }}">Новости и акции</a></li>
                                         <li><a class="" href="/information">Основные сведения</a></li>
                                         <li><a href="/schedule">Режим работы</a></li>
                                         <li><a href="/documents">Документы</a></li>

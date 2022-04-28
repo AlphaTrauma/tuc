@@ -1,5 +1,5 @@
 @if($slides->count() > 0)
-    <section>
+    <section class="uk-margin-bottom">
         <div class="uk-slider-container" uk-slider="autoplay: true">
 
             <div class="uk-position-relative uk-visible-toggle uk-light" tabindex="-1">

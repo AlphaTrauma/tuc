@@ -11,7 +11,7 @@ use App\Models\Image;
 class DirectionController extends Controller
 {
     public function index(){
-        $items = Direction::query()->get();
+        $items = Direction::query()->paginate(30);
 
         return view('dashboard.directions.index', compact('items'));
     }
@@ -33,7 +33,7 @@ class DirectionController extends Controller
         $item = Direction::where('slug', $slug)->first();
         if(!$item) return abort(404);
 
-        return view('direction', compact('item'));
+        return view('courses.direction', compact('item'));
     }
 
     public function update(UpdateDirection $request, $id) {

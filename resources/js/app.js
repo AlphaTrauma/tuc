@@ -9,9 +9,10 @@ import store from './store';
 
 Vue.component('editor', require('./components/Editor.vue').default);
 Vue.component('slider', require('./components/Slider.vue').default);
-Vue.component('courses', require('./components/courses.vue').default);
+
 Vue.component('alerts', require('./components/Alerts.vue').default);
 Vue.component('upload', require('./components/Upload.vue').default);
+Vue.component('courses-select', require('./components/CoursesSelect.vue').default);
 
 Vue.mixin({
     methods: {

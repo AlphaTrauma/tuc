@@ -27,7 +27,7 @@
                 <ul class="uk-nav-sub">
                     <li><a href="{{ route('slider') }}">Слайдер</a></li>
                     <li><a href="{{ route('pages') }}">Страницы</a></li>
-                    <li><a uk-toggle href="#modal-disabled">Новости</a></li>
+                    <li><a href="{{ route('news.index') }}">Новости и акции</a></li>
                 </ul>
             </li>
             <li class="uk-parent">

@@ -15,5 +15,6 @@
                 </div>
             </div>
         @endforeach
+            {{ $items->links('blocks.pagination') }}
     </div>
 @endsection

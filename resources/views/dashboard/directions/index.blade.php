@@ -52,5 +52,6 @@
         @empty
             <p>Направления обучения не найдены</p>
         @endforelse
+            {{ $items->links('blocks.pagination') }}
     </div>
 @endsection

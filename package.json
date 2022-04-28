@@ -29,6 +29,7 @@
     },
     "dependencies": {
         "uikit": "^3.2.4",
+        "vue-multiselect": "^2.1.6",
         "vue2-editor": "^2.0.42-images"
     }
 }

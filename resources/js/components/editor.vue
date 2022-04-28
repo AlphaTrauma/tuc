@@ -8,7 +8,7 @@
                     :use-custom-image-handler="true"
                     @image-added="handleImageAdded"
                     @image-removed="handleImageRemoved"
-                    placeholder="Текст страницы">
+                    placeholder="Текст">
         </vue-editor>
         <input type="hidden" name="html" :value="html">
     </div>

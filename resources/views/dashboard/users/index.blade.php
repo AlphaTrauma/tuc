@@ -17,4 +17,5 @@
             </ul>
         </div>
     @endforeach
+    {{ $users->links('blocks.pagination') }}
 @endsection

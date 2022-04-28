@@ -7,14 +7,20 @@ use App\Http\Requests\UpdateCourse;
 use App\Models\Direction;
 use App\Models\Course;
 use App\Models\Image;
+use Illuminate\Http\Request;
 
 class CourseController extends Controller
 {
     public function index()
     {
-        $items = Course::with('direction')->latest()->paginate(50);
+        $items = Course::with('direction')->latest()->paginate(30);
 
         return view('dashboard.courses.index', compact('items'));
+    }
+
+    public function show()
+    {
+        //
     }
 
     public function create($id)
@@ -60,4 +66,12 @@ class CourseController extends Controller
 
         return back()->with('message', 'Курс успешно удалён');
     }
+
+    public function getSelectData(Request $request, $id)
+    {
+        $options = Direction::with('courses:id,title,direction_id')->get(['id', 'title'])->toArray();
+        $selected = \App\Models\News::with('courses:id,title,direction_id')->find($id)->courses->toArray();
+        return response(['options' => $options, 'selected' => $selected]);
+    }
+
 }
