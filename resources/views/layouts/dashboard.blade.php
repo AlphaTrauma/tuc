@@ -10,6 +10,7 @@
 </head>
 <body>
 <div class="uk-container-expand" id="app">
+    @include('blocks.preloader')
     <div uk-grid>
         @include('dashboard.navigation')
         <div class="uk-width-expand">

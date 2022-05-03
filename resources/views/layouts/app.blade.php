@@ -11,6 +11,7 @@
     </head>
     <body>
         <div id="app">
+            @include('blocks.preloader')
             @include('navigation.navbar')
             @yield('upper-content')
             <div class="uk-container uk-padding-small">

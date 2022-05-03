@@ -53,4 +53,9 @@ class User extends Authenticatable
     {
         return $this->morphOne(Image::class, 'entity');
     }
+
+    public function isAdmin()
+    {
+        return $this->role === 'admin';
+    }
 }

@@ -4,14 +4,11 @@
             <span class="uk-visible@s"><b>{{ $contacts['name'] }}</b></span>
         </div>
         <div class="uk-flex uk-flex-right">
-            {{--
              @auth
                 <a href="{{ route('dashboard') }}" class="uk-button">ЛК ({{ Auth::user()->name }})<span class="uk-margin-left" uk-icon="icon: sign-in"></span></a>
             @else
                 <a href="/login" class="uk-button uk-button-small">Вход<span class="uk-margin-left" uk-icon="icon: sign-in"></span></a>
             @endauth
-             --}}
-            <a href="/dashboard" class="uk-button uk-button-small">Администрирование<span class="uk-margin-left" uk-icon="icon: sign-in"></span></a>
         </div>
     </div>
     <div class="uk-container-expand">
@@ -56,8 +53,10 @@
                                         <li><a class="" href="/information">Основные сведения</a></li>
                                         <li><a href="/schedule">Режим работы</a></li>
                                         <li><a href="/documents">Документы</a></li>
-                                        <li><a href="/managers">Руководство</a></li>
+                                        {{--
+                                         <li><a href="/managers">Руководство</a></li>
                                         <li><a href="/teachers">Преподаватели</a></li>
+                                         --}}
                                     </ul>
                                 </div>
                             </li>

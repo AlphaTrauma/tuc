@@ -33,6 +33,12 @@ const app = new Vue({
         return {token: ''}
     },
     created(){
+        const {$,once,remove,transition,} = UIkit.util;
+        window.onload = () => {
+            const loader = $('#preloader');
+            transition(loader, { opacity: 0 });
+            once(loader, 'transitionend', () => remove(loader));
+        };
         this.token = document.head.querySelector('meta[name="csrf-token"]').getAttribute('content');
     },
     store

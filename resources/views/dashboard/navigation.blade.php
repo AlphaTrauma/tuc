@@ -34,7 +34,9 @@
                 <a class="uk-text-bold"><span class="uk-margin-small-right" uk-icon="icon: folder"></span>Файлы</a>
                 <ul class="uk-nav-sub">
                     <li><a href="{{ route('images.index') }}">Изображения</a></li>
-                    <li><a href="">Документы</a></li>
+                    {{-- TODO
+                     <li><a href="">Документы</a></li>
+                     --}}
                 </ul>
             </li>
             <li><a href="{{ route('leads') }}" class="uk-text-bold"><span class="uk-margin-small-right" uk-icon="icon: commenting"></span>
@@ -44,6 +46,23 @@
                     @endif
                 </a></li>
             <li><a href="{{ route('settings') }}" class="uk-text-bold"><span class="uk-margin-small-right" uk-icon="icon: cog"></span>Настройки</a></li>
+
+            <li class="uk-grid-small uk-flex-middle uk-padding-small" uk-grid>
+                <div>
+                    <div class="uk-background-center-center uk-background-cover uk-border-circle"
+                         style="background-image: url({{ isset(Auth::user()->image->filepath) ? asset(Auth::user()->image->filepath) : '' }});
+                             width: 50px;
+                             height: 50px;
+                             ">
+
+                    </div>
+                </div>
+                <div class="uk-width-expand">
+                    <p class="uk-comment-meta uk-margin-remove"><a class="uk-link-reset" href="{{ route('user.show', Auth::id()) }}">{{ Auth::user()->name }}</a></p>
+                    <p class="uk-comment-meta uk-margin-remove"><a class="uk-link-reset" href="{{ route('user.show', Auth::id()) }}">{{ Auth::user()->email }}</a></p>
+                </div>
+            </li>
+
         </ul>
     </div>
 </div>

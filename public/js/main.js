@@ -11272,6 +11272,21 @@ __webpack_require__.r(__webpack_exports__);
 
 uikit__WEBPACK_IMPORTED_MODULE_0___default().use((uikit_dist_js_uikit_icons__WEBPACK_IMPORTED_MODULE_1___default()));
 window.UIkit = (uikit__WEBPACK_IMPORTED_MODULE_0___default());
+var _UIkit$util = (uikit__WEBPACK_IMPORTED_MODULE_0___default().util),
+    $ = _UIkit$util.$,
+    once = _UIkit$util.once,
+    remove = _UIkit$util.remove,
+    transition = _UIkit$util.transition;
+
+window.onload = function () {
+  var loader = $('#preloader');
+  transition(loader, {
+    opacity: 0
+  });
+  once(loader, 'transitionend', function () {
+    return remove(loader);
+  });
+};
 })();
 
 /******/ })()

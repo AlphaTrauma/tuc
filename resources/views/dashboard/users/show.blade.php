@@ -27,6 +27,7 @@
                 <p class="uk-text-bold">Имя</p>
                 <p class="uk-text-bold">Отчество</p>
                 <p class="uk-text-bold">Фамилия</p>
+                <p class="uk-text-bold">Дата регистрации</p>
                 <p class="uk-text-bold">Организация</p>
                 <p class="uk-text-bold">Должность</p>
                 <p class="uk-text-bold">Электронная почта</p>
@@ -36,6 +37,7 @@
                 <p>{{ $item->name ? $item->name : '-' }}</p>
                 <p>{{ $item->patronymic ? $item->patronymic : '-' }}</p>
                 <p>{{ $item->last_name ? $item->last_name : '-' }}</p>
+                <p>{{ $item->created_at->format('d.m.Y') }}</p>
                 <p>{{ $item->organization ? $item->organization : '-' }}</p>
                 <p>{{ $item->position ? $item->position : '-' }}</p>
                 <p>{{ $item->email ? $item->email : '-' }}</p>

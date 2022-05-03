@@ -7,7 +7,7 @@
 @section('content')
     <div class="uk-card uk-card-body">
         <h2 class="uk-title">Редактирование страницы</h2>
-        <form class="uk-form" method="POST" action="{{ route('pages.update' }}">
+        <form class="uk-form" method="POST" action="{{ route('pages.update', $item) }}">
             @csrf
             <div class="uk-margin uk-flex">
                 <input class="uk-input" value="{{ $item->title }}" name="title" placeholder="Название страницы">

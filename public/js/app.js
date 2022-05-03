@@ -70354,6 +70354,22 @@ var app = new Vue({
     };
   },
   created: function created() {
+    var _UIkit$util = (uikit__WEBPACK_IMPORTED_MODULE_0___default().util),
+        $ = _UIkit$util.$,
+        once = _UIkit$util.once,
+        remove = _UIkit$util.remove,
+        transition = _UIkit$util.transition;
+
+    window.onload = function () {
+      var loader = $('#preloader');
+      transition(loader, {
+        opacity: 0
+      });
+      once(loader, 'transitionend', function () {
+        return remove(loader);
+      });
+    };
+
     this.token = document.head.querySelector('meta[name="csrf-token"]').getAttribute('content');
   },
   store: _store__WEBPACK_IMPORTED_MODULE_2__["default"]
