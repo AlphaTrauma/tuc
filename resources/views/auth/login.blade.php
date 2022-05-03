@@ -18,7 +18,7 @@
                         <input class="uk-input" type="text" name="email" required placeholder="E-mail">
                     </div>
                     <div class="uk-margin">
-                        <input class="uk-input" type="password" name="password" placeholder="Пароль"
+                        <input class="uk-input" type="string" name="password" placeholder="Пароль"
                                required autocomplete="current-password">
                     </div>
 

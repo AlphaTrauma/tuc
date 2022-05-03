@@ -57,9 +57,25 @@
 
                     </div>
                 </div>
-                <div class="uk-width-expand">
-                    <p class="uk-comment-meta uk-margin-remove"><a class="uk-link-reset" href="{{ route('user.show', Auth::id()) }}">{{ Auth::user()->name }}</a></p>
-                    <p class="uk-comment-meta uk-margin-remove"><a class="uk-link-reset" href="{{ route('user.show', Auth::id()) }}">{{ Auth::user()->email }}</a></p>
+                <div class="uk-width-expand uk-position-relative">
+                    <p class="uk-comment-meta uk-margin-remove">{{ Auth::user()->name }}</p>
+                    <p class="uk-comment-meta uk-margin-remove">{{ Auth::user()->email }}</p>
+                <div class="uk-position-center-right uk-inline">
+                    <a class="uk-link-reset"><span uk-icon="triangle-down"></span></a>
+                    <div uk-dropdown="mode:click; offset: 10; pos: bottom-right;" class="uk-padding-small">
+                        <ul uk-nav class="uk-dropdown-nav uk-nav">
+                            <li>
+                                <a class="uk-flex-center" href="{{ route('user.show', Auth::id()) }}">Профиль</a>
+                            </li>
+                            <li>
+                                <form method="POST" action="{{ route('logout') }}">
+                                    @csrf
+                                    <button class="uk-button uk-button-link uk-text-capitalize uk-width-1-1" type="submit">Выйти</button>
+                                </form>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
                 </div>
             </li>
 
