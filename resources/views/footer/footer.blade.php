@@ -22,8 +22,6 @@
                     <li><a href="/information">Основные сведения</a></li>
                     <li><a href="/schedule">Режим работы</a></li>
                     <li><a href="/documents">Документы</a></li>
-                    <li><a href="/managers">Руководство</a></li>
-                    <li><a href="/teachers">Преподаватели</a></li>
                 </ul>
             </div>
             <div>
