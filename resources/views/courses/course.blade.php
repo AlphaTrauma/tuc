@@ -14,7 +14,7 @@
                 <div class="uk-modal-dialog uk-modal-body uk-margin-auto-vertical">
 
                     <button class="uk-modal-close-default" type="button" uk-close></button>
-                    <h2 class="uk-modal-title">Название курса</h2>
+                    <h2 class="uk-modal-title">{{ $course->title }}</h2>
 
                     <div class="uk-grid-smaill" uk-grid>
                         <div class="uk-width-1-2@l uk-flex-last@l uk-text-center">
