@@ -3,6 +3,8 @@
         <ul class="uk-nav-default uk-nav-parent-icon" uk-nav>
             <li><a class="uk-text-bold" href="{{ route('main') }}"><span class="uk-margin-small-right" uk-icon="icon: home"></span>На сайт</a></li>
             <li class="uk-nav-divider"></li>
+            <li><a href="{{ route('dashboard') }}" class="uk-text-bold"><span class="uk-margin-small-right" uk-icon="icon: settings"></span>Панель</a>
+            </li>
             <li class="uk-parent">
                 <a class="uk-text-bold" href="#"><span class="uk-margin-small-right" uk-icon="icon: users"></span>Пользователи</a>
                 <ul class="uk-nav-sub">
@@ -54,7 +56,6 @@
                              width: 50px;
                              height: 50px;
                              ">
-
                     </div>
                 </div>
                 <div class="uk-width-expand uk-position-relative">

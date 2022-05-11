@@ -2,7 +2,7 @@
     <div class="uk-card uk-card-default uk-text-center uk-height-large uk-card-hover-small">
         <div class="uk-card-media uk-height-1-1">
             <div class="uk-background-center-center uk-background-cover uk-overflow-hidden uk-height-1-1"
-                 style="background-image: url({{ asset($course->image->filepath) }})"></div>
+                 style='background-image: url("{{ asset($course->image->filepath)}}")'></div>
             <div class="uk-overlay uk-overlay-primary uk-position-bottom uk-height-small">
                 <p>{{ $course->title }}</p>
                 <a class="uk-button uk-button-small uk-button-default" href="#modal-{{ $course->id }}" uk-toggle>Подробнee</a>
