@@ -11,7 +11,7 @@ class Course extends Model
 
     protected $appends = ['alias'];
 
-    protected $fillable = ['title', 'description', 'length', 'html', 'slug', 'teacher_id', 'direction_id'];
+    protected $fillable = ['title', 'description', 'length', 'price', 'html', 'slug', 'teacher_id', 'direction_id'];
 
     public function image(){
         return $this->morphOne(Image::class, 'entity');

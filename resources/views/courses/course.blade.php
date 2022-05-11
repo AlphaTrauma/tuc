@@ -21,7 +21,14 @@
                             <img class="uk-object-contain" src="{{ asset($course->image->filepath) }}" uk-img/>
                         </div>
                         <div class="uk-width-1-2@l">
-                            {{ $course->description }}
+                            @if($course->length)
+                                <p><b>Продолжительность, ч.: {{ $course->length }}</b></p>
+                            @endif
+
+                            @if($course->price)
+                                <p><b>Стоимость обучения: {{ $course->price }} руб.</b></p>
+                            @endif
+                            <p>{{ $course->description }}</p>
                         </div>
                     </div>
                         <div class="uk-margin-small">
