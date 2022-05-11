@@ -12,7 +12,7 @@
                     <div class="uk-card-media-top">
                         <div class="uk-overflow-hidden" tabindex="0">
                             <div class=" uk-transition-scale-up uk-transition-opaque uk-height-medium uk-width-expand uk-background-cover uk-background-center-center"
-                                 style="background-image: url({{ asset($item->image->filepath) }});">
+                                 style='background-image: url("{{ asset($item->image->filepath) }}");'>
                             </div>
                         </div>
 
