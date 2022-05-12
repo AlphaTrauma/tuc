@@ -9,7 +9,7 @@
             <div class="uk-background-center-center uk-background-cover uk-overflow-hidden uk-height-1-1"
                  style='background-image: url("{{ asset($course->image->filepath)}}")'></div>
             <div class="uk-overlay uk-overlay-primary uk-position-bottom uk-height-small uk-flex uk-flex-middle">
-                <p>{{ $course->title }}</p>
+                <p class="uk-text-center">{{ $course->title }}</p>
             </div>
         </a>
         <div id="modal-{{ $course->id }}" class="uk-flex-top" uk-modal>
