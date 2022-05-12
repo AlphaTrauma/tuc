@@ -1,5 +1,5 @@
 <div>
-    <div class="uk-card uk-card-default uk-text-center uk-height-medium uk-card-hover-small">
+    <div class="uk-card uk-card-default uk-card-hover uk-text-center uk-height-medium uk-card-hover-small">
         <a href="#modal-{{ $course->id }}" uk-toggle class="uk-card-media uk-height-1-1">
             @if($course->price)
                 <div class="uk-card-badge uk-label uk-label-warning uk-text-bold">
