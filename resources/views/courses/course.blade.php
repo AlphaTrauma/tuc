@@ -1,5 +1,5 @@
 <div>
-    <div class="uk-card uk-card-default uk-card-hover uk-text-center uk-height-medium uk-card-hover-small">
+    <div uk-toggle="target: .button-{{ $course->id }}; mode: hover; animation: uk-animation-scale-up; queued: true; duration: 100" class="uk-card uk-card-default uk-card-hover uk-text-center uk-height-medium uk-card-hover-small">
         <a href="#modal-{{ $course->id }}" uk-toggle class="uk-card-media uk-height-1-1 uk-link-reset">
             @if($course->price)
                 <div class="uk-card-badge uk-label uk-label-warning uk-text-bold">
@@ -9,7 +9,10 @@
             <div class="uk-background-center-center uk-background-cover uk-overflow-hidden uk-height-1-1"
                  style='background-image: url("{{ asset($course->image->filepath)}}")'></div>
             <div class="uk-overlay uk-overlay-primary uk-position-bottom uk-height-small uk-flex uk-flex-middle uk-flex-center">
-                <p>{{ $course->title }}</p>
+                <div>
+                    <p class="button-{{ $course->id }}">{{ $course->title }}</p>
+                    <a hidden href="#modal-{{ $course->id }}" uk-toggle class="uk-button uk-button-default button-{{ $course->id }}">Подробности</a>
+                </div>
             </div>
         </a>
         <div id="modal-{{ $course->id }}" class="uk-flex-top" uk-modal>
