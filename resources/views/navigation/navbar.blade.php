@@ -60,7 +60,7 @@
                                     </ul>
                                 </div>
                             </li>
-                            <li><a uk-toggle href="#modal-disabled">Прайс-лист</a></li>
+                            <li><a target="_blank" href="{{ asset('/uploads/documents/Прайс-лист, Тюменский учебный центр.pdf') }}" uk-icon="icon: download">Прайс-лист</a></li>
                             <li @isset($page) @if($page->slug === 'contacts') class="uk-active" @endif @endisset ><a href="/contacts">Контакты</a></li>
                         </ul>
 

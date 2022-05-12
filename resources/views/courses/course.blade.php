@@ -1,6 +1,11 @@
 <div>
     <div class="uk-card uk-card-default uk-text-center uk-height-large uk-card-hover-small">
         <div class="uk-card-media uk-height-1-1">
+            @if($course->price)
+                <div class="uk-card-badge uk-label uk-label-warning uk-text-bold">
+                    {{ $course->price }} ₽
+                </div>
+            @endif
             <div class="uk-background-center-center uk-background-cover uk-overflow-hidden uk-height-1-1"
                  style='background-image: url("{{ asset($course->image->filepath)}}")'></div>
             <div class="uk-overlay uk-overlay-primary uk-position-bottom uk-height-small">
