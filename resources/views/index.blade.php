@@ -4,8 +4,11 @@
     Главная
 @endsection
 
-@section('upper-content')
+@section('description')
+    Тюменский Учебный Центр. Курсы повышения квалификации, профориентация, дополнительное образование.
+@endsection
 
+@section('upper-content')
 @endsection
 
 @section('content')

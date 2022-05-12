@@ -4,6 +4,10 @@
     {{ $item->title }}
 @endsection
 
+@section('description')
+    Тюменский Учебный Центр. {{ $item->title }}
+@endsection
+
 @section('content')
     <h1 class="uk-title uk-margin-bottom">{{ $item->title }}</h1>
     <section class="uk-padding uk-padding-remove-horizontal">

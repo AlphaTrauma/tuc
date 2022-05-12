@@ -5,6 +5,7 @@
 @endsection
 
 @section('description')
+    {{ $item->title }}, курсы Тюменского Учебного Центра.
 @endsection
 
 @section('content')
@@ -29,7 +30,7 @@
     <section>
         <h2>{{ $item->title }}, все курсы:</h2>
         <div class="uk-padding uk-padding-remove-horizontal">
-            <div class="uk-child-width-1-3@m uk-grid uk-grid-match" uk-grid>
+            <div class="uk-child-width-1-4@m uk-grid uk-grid-match" uk-grid>
                 @foreach($item->courses as $course)
                     @include('courses.course')
                 @endforeach
