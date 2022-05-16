@@ -6,6 +6,10 @@
         <div class="uk-flex uk-flex-right">
              @auth
                 <a href="{{ route('dashboard') }}" class="uk-button">ЛК ({{ Auth::user()->name }})<span class="uk-margin-left" uk-icon="icon: sign-in"></span></a>
+                <form method="POST" class="uk-flex uk-flex-middle" action="{{ route('logout') }}">
+                    @csrf
+                    <button class="uk-button uk-button-link uk-text-capitalize uk-width-1-1" title="Выйти" type="submit">ВЫХОД</button>
+                </form>
             @else
                 <a href="/login" class="uk-button uk-button-small">Вход<span class="uk-margin-left" uk-icon="icon: sign-in"></span></a>
             @endauth
