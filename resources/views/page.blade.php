@@ -11,7 +11,7 @@
 @section('content')
     <h1 class="uk-title uk-margin-bottom">{{ $item->title }}</h1>
     <section class="uk-padding uk-padding-remove-horizontal">
-        <div class="uk-card-default uk-card-body uk-box-shadow-small @if($item->slug === 'documents') documents @endif">
+        <div class="uk-card-default uk-card-body uk-box-shadow-small @if($item->slug === 'documents' || $item->slug === 'thanks') documents @endif">
             {!! $item->html  !!}
         </div>
         @switch($item->slug)
@@ -27,6 +27,7 @@
                 @include('main.directions')
             @break
             @case('documents')
+            @case('thanks')
                 @include('blocks.gallery')
             @break
         @endswitch

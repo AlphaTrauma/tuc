@@ -2,8 +2,8 @@
     <div uk-toggle="target: .button-{{ $course->id }}; mode: hover; animation: uk-animation-scale-up; queued: true; duration: 100" class="uk-card uk-card-default uk-card-hover uk-text-center uk-height-medium uk-card-hover-small">
         <a href="#modal-{{ $course->id }}" uk-toggle class="uk-card-media uk-height-1-1 uk-link-reset">
             @if($course->price)
-                <div class="uk-card-badge uk-label uk-label-warning uk-text-bold">
-                    {{ $course->price }} ₽
+                <div class="uk-card-badge uk-label uk-label-warning uk-text-bold uk-text-lowercase">
+                   от {{ $course->price }} ₽
                 </div>
             @endif
             <div class="uk-background-center-center uk-background-cover uk-overflow-hidden uk-height-1-1"

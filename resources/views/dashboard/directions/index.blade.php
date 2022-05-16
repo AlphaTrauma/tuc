@@ -31,9 +31,10 @@
                     @forelse($item->courses as $course)
                         <tr class="">
                             <td><b>{{ $course->title }}</b></td>
-                            <td>{{ $course->length }} часов</td>
+                            <td>{{ $course->length }}ч</td>
+                            <td>{{ $course->price ? $course->price.'₽' : '' }}</td>
                             <td>
-                                <ul class="uk-iconnav uk-flex-right">
+                                <ul class="uk-iconnav uk-flex-right uk-flex-nowrap">
                                     <li><a title="Редактировать курс" href="{{ route('courses.edit', ['course' => $course]) }}" uk-icon="icon: file-edit"></a></li>
                                     <li><a title="Удалить курс"  href="{{ route('courses.delete', ['id' => $course->id]) }}" uk-icon="icon: trash"></a></li>
                                 </ul>
