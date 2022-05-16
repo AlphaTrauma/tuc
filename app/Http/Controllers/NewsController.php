@@ -53,7 +53,7 @@ class NewsController extends Controller
         $data = $request->except("_token");
         if(!$data['slug']) $data['slug'] = Str::slug($data['title']);
         $item->update($data);
-        if($data['courses']):
+        if(isset($data['courses'])):
             foreach($item->courses as $course):
                 if(!in_array($course->id, $data['courses'])) $item->courses()->detach($course->id);
             endforeach;
