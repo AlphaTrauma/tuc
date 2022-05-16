@@ -53,12 +53,14 @@ class NewsController extends Controller
         $data = $request->except("_token");
         if(!$data['slug']) $data['slug'] = Str::slug($data['title']);
         $item->update($data);
-        foreach($item->courses as $course):
-            if(!in_array($course->id, $data['courses'])) $item->courses()->detach($course->id);
-        endforeach;
-        foreach($data['courses'] as $id):
-            if(!$item->courses->find($id)) $item->courses()->attach($id);
-        endforeach;
+        if($data['courses']):
+            foreach($item->courses as $course):
+                if(!in_array($course->id, $data['courses'])) $item->courses()->detach($course->id);
+            endforeach;
+            foreach($data['courses'] as $id):
+                if(!$item->courses->find($id)) $item->courses()->attach($id);
+            endforeach;
+        endif;
 
         return redirect()->route('news.index')->with('message', 'Новость успешно сохранена');
     }
@@ -68,7 +70,7 @@ class NewsController extends Controller
         $news->courses_links()->delete();
         $news->images()->delete();
         $news->delete();
-        
+
         return redirect()->route('news.index')->with('message', 'Новость успешно удалена');
     }
 
