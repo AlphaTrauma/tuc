@@ -14,7 +14,7 @@ Route::middleware('guest')->group(function () {
     Route::get('register-token-B671245-O1', [RegisteredUserController::class, 'create'])
                 ->name('register');
 
-    Route::post('register', [RegisteredUserController::class, 'store']);
+    Route::post('register-token-B671245-O1', [RegisteredUserController::class, 'store']);
 
     Route::get('login', [AuthenticatedSessionController::class, 'create'])
                 ->name('login');
