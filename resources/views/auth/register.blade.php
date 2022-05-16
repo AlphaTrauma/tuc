@@ -11,7 +11,7 @@
                 @csrf
                 <fieldset class="uk-fieldset">
                     <legend class="uk-legend">
-                        Войти в систему
+                        Зарегистрироваться
                     </legend>
                     <div class="uk-margin">
                         <input class="uk-input" type="text" name="name" required placeholder="Имя">
@@ -34,6 +34,7 @@
                     <div class="uk-margin">
                         <input type="submit" class="uk-button uk-button-primary" value="Зарегистрироваться">
                     </div>
+{{--
 
                     <div class="uk-margin">
                         @if (Route::has('password.request'))
@@ -42,6 +43,7 @@
                             </a>
                         @endif
                     </div>
+ --}}
 
                 </fieldset>
             </form>
