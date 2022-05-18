@@ -24,15 +24,16 @@ class LeadController extends Controller
     {
         $data = $request->all();
         Lead::create($data);
-        $lead = 'Новая заявка с сайта: '.
-                '*Телефон:* '.$data['phone'].PHP_EOL.
-                '*E-mail:* '.$data['email'].PHP_EOL.
-                '*Имя:* '.$data['name'].PHP_EOL.
-                '*Страница:* '.$data['page'].PHP_EOL.
-                '*Курс:* '.$data['course'].PHP_EOL.
-                '*Сообщение:* '.$data['comment'];
+        $lead = 'Новая заявка с сайта'.PHP_EOL.
+            (isset($data['phone']) ? '<b>Телефон:</b> '.$data['phone'].PHP_EOL : '').
+            (isset($data['email']) ? '<b>E-mail:</b> '.$data['email'].PHP_EOL : '').
+            (isset($data['name']) ? '<b>Имя:</b> '.$data['name'].PHP_EOL : '').
+            (isset($data['page']) ? '<b>Страница:</b> '.$data['page'].PHP_EOL : '').
+            (isset($data['course']) ? '<b>Курс:</b> '.$data['course'].PHP_EOL : '').
+            (isset($data['comment']) ? '<b>Комментарий:</b> '.$data['comment'] : '');
         $data = [
             'chat_id' => '-1001708032534',
+            'parse_mode' => 'HTML',
             'text' => $lead
         ];
         $response = file_get_contents("https://api.telegram.org/bot5344836009:AAGH0z3JJdlfN10sNjK_457a_2C_mFrNc1k/sendMessage?".
