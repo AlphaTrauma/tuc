@@ -18,7 +18,7 @@
     <div class="uk-container-expand">
         <div uk-sticky="sel-target: .uk-navbar-container; cls-active: uk-navbar-sticky;">
             <div class="uk-background-primary">
-                <nav class="uk-container uk-light" uk-navbar>
+                <nav class="uk-container uk-light" uk-navbar itemscope itemtype="http://schema.org/SiteNavigationElement">
                     <div class="uk-navbar-left uk-hidden@s">
                         <a title="Меню" class="uk-navbar-item" href="#mobile-menu" uk-toggle><span uk-icon="menu"></span></a>
                     </div>
@@ -26,7 +26,7 @@
                         @if(Route::currentRouteName() === 'main')
                             <div class="uk-navbar-item uk-logo"><img style="max-height: 55px;" src="https://imageup.ru/img6/3890887/logo.png" alt=""></div>
                         @else
-                            <a class="uk-navbar-item uk-logo" href="{{ route('main') }}"><img style="max-height: 55px;" src="https://imageup.ru/img6/3890887/logo.png" alt=""></a>
+                            <a class="uk-navbar-item uk-logo" itemprop="url" href="{{ route('main') }}"><img style="max-height: 55px;" src="https://imageup.ru/img6/3890887/logo.png" alt=""></a>
                         @endif
                     </div>
                     <div class="uk-navbar-left uk-visible@s">
@@ -34,16 +34,16 @@
                             @if(Route::currentRouteName() === 'main')
                                 <li class="uk-active"><a>Главная</a></li>
                             @else
-                                <li><a href="{{ route('main') }}">Главная</a></li>
+                                <li><a itemprop="url" href="{{ route('main') }}">Главная</a></li>
                             @endif
                             <li @isset($page) @if(in_array($page->slug, $pages['teaching'])) class="uk-active" @endif @endisset>
                                 <a uk-icon="icon: chevron-down" href="#">Обучение</a>
                                 <div class="uk-navbar-dropdown uk-text-normal">
                                     <ul class="uk-nav uk-navbar-dropdown-nav">
                                         @foreach($directions as $slug => $title)
-                                            <li><a href="{{ asset('directions/'.$slug) }}">{{ $title }}</a></li>
+                                            <li><a itemprop="url" href="{{ asset('directions/'.$slug) }}">{{ $title }}</a></li>
                                         @endforeach
-                                        <li><a href="/timetable">График обучения</a></li>
+                                        <li><a itemprop="url" href="/timetable">График обучения</a></li>
                                         <li class="uk-nav-divider"></li>
                                         <li><a class="uk-text-bold" uk-toggle href="#modal-request">Оставить заявку</a></li>
                                     </ul>
@@ -53,11 +53,11 @@
                                 <a uk-icon="icon: chevron-down">Сведения об организации</a>
                                 <div class="uk-navbar-dropdown uk-text-normal">
                                     <ul class="uk-nav uk-navbar-dropdown-nav">
-                                        <li><a class="" href="{{ route('news.main') }}">Новости и акции</a></li>
-                                        <li><a class="" href="/information">Основные сведения</a></li>
-                                        <li><a href="/schedule">Режим работы</a></li>
-                                        <li><a href="/documents">Документы</a></li>
-                                        <li><a href="/thanks">Благодарности</a></li>
+                                        <li><a itemprop="url" href="{{ route('news.main') }}">Новости и акции</a></li>
+                                        <li><a itemprop="url" href="/information">Основные сведения</a></li>
+                                        <li><a itemprop="url" href="/schedule">Режим работы</a></li>
+                                        <li><a itemprop="url" href="/documents">Документы</a></li>
+                                        <li><a itemprop="url" href="/thanks">Благодарности</a></li>
                                         {{--
                                          <li><a href="/managers">Руководство</a></li>
                                         <li><a href="/teachers">Преподаватели</a></li>
@@ -66,7 +66,7 @@
                                 </div>
                             </li>
                             <li><a target="_blank" href="{{ asset('/uploads/documents/Прайс-лист, Тюменский учебный центр.pdf') }}" uk-icon="icon: download">Прайс-лист</a></li>
-                            <li @isset($page) @if($page->slug === 'contacts') class="uk-active" @endif @endisset ><a href="/contacts">Контакты</a></li>
+                            <li @isset($page) @if($page->slug === 'contacts') class="uk-active" @endif @endisset ><a itemprop="url" href="/contacts">Контакты</a></li>
                         </ul>
 
                     </div>

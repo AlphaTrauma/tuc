@@ -24,15 +24,15 @@
                     <li><a href="/documents">Документы</a></li>
                 </ul>
             </div>
-            <div>
+            <div itemscope itemtype="http://schema.org/Organization">
                 <ul class="uk-nav uk-nav-default">
                     <li class="uk-nav-header uk-visible@s">
                         <a href="/contacts">Контакты</a>
                     </li>
-                    <li><a href="tel:{{ $contacts['phone'] }}">{{ $contacts['phone'] }}</a></li>
-                    <li><a href="mailto:{{ $contacts['email'] }}">{{ $contacts['email'] }}</a></li>
-                    <li>{{ $contacts['address'] }}</li>
-                    <li>{{ $contacts['shortname'] }}</li>
+                    <li><a itemprop="telephone" href="tel:{{ $contacts['phone'] }}">{{ $contacts['phone'] }}</a></li>
+                    <li><a itemprop="email" href="mailto:{{ $contacts['email'] }}">{{ $contacts['email'] }}</a></li>
+                    <li itemprop="address" itemscope itemtype="https://schema.org/PostalAddress">{{ $contacts['address'] }}</li>
+                    <li itemprop="name">{{ $contacts['shortname'] }}</li>
                     <li>ИНН: {{ $contacts['INN'] }}</li>
                     <li>ОГРН: {{ $contacts['OGRN'] }}</li>
                     <li>Лицензия: {{ $contacts['license'] }}</li>

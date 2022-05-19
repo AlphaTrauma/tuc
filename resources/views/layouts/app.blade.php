@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-    <head>
+    <head itemscope itemtype="http://schema.org/WPHeader">
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="csrf-token" content="{{ csrf_token() }}">
         <link rel="shortcut icon" href="{{ asset('favicon.ico') }}" type="image/x-icon">
-        <title>@yield('title') | Тюменский Учебный Центр</title>
-        <meta name="description" content="@yield('description')">
+        <title itemprop="headline">@yield('title') | Тюменский Учебный Центр</title>
+        <meta itemprop="description" name="description" content="@yield('description')">
         <link rel="stylesheet" href="{{ asset('css/app.css') }}" />
         <script src="{{ asset('js/main.js') }}"></script>
     </head>
