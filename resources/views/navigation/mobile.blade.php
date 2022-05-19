@@ -12,12 +12,13 @@
                 @foreach($directions as $slug => $title)
                         <li><a href="{{ asset('directions/'.$slug) }}">{{ $title }}</a></li>
                 @endforeach
+
+                <li><a href="/news">Новости</a></li>
                 <li><a href="/contacts">Контакты</a></li>
                 <li><a href="/timetable">График обучения</a></li>
                 <li><a class="" href="/information">Основные сведения</a></li>
                 <li><a href="/documents">Документы</a></li>
-                <li><a href="/managers">Руководство</a></li>
-                <li><a href="/teachers">Преподаватели</a></li>
+                <li><a href="/thanks">Благодарности</a></li>
             </ul>
         </div>
     </div>
