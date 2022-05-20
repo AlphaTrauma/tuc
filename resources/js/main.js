@@ -4,9 +4,10 @@ UIkit.use(Icons);
 window.UIkit = UIkit;
 
 const {$,once,remove,transition,} = UIkit.util;
-const loader = $('#preloader');
-loader.onscroll = e => false;
+
+
 window.onload = () => {
+    const loader = $('#preloader');
     transition(loader, { opacity: 0 });
     once(loader, 'transitionend', () => remove(loader));
 };
