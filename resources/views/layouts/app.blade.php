@@ -11,7 +11,7 @@
         <script src="{{ asset('js/main.js') }}"></script>
     </head>
     <body>
-        <div id="app">
+        <div>
             @include('blocks.preloader')
             @include('navigation.navbar')
             @yield('upper-content')

@@ -18,10 +18,11 @@
             </div>
             <div class="uk-visible@s">
                 <ul class="uk-nav uk-nav-default">
-                    <li class="uk-nav-header"><a href="">Об организации</a></li>
-                    <li><a href="/information">Основные сведения</a></li>
+                    <li class="uk-nav-header"><a href="/information">Об организации</a></li>
+                    <li><a href="/news">Новости и акции</a></li>
                     <li><a href="/schedule">Режим работы</a></li>
                     <li><a href="/documents">Документы</a></li>
+                    <li><a href="/thanks">Благодарности</a></li>
                 </ul>
             </div>
             <div itemscope itemtype="http://schema.org/Organization">
