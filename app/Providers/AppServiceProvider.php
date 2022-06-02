@@ -36,7 +36,7 @@ class AppServiceProvider extends ServiceProvider
                 'teaching' => ['timetable']
             ];
             $directions = Direction::where('status', 1)->pluck('title', 'slug')->toArray();
-            $contacts = Settings::where('type', 'contacts')->pluck('value', 'key')->toArray();
+            $contacts = Settings::query()->pluck('value', 'key')->toArray();
 
             $view->with(compact('pages', 'directions', 'contacts'));
         });
