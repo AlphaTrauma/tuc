@@ -9,6 +9,7 @@
         <meta itemprop="description" name="description" content="@yield('description')">
         <link rel="stylesheet" href="{{ asset('css/app.css') }}" />
         <script src="{{ asset('js/main.js') }}"></script>
+        @include('blocks.metric')
     </head>
     <body>
         <div>

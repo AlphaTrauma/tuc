@@ -16,7 +16,7 @@
                 <th>Страница</th>
                 <th>Комментарий</th>
                 <th>Время</th>
-                <th></th>
+                <th style="width: 30px;"></th>
             </tr>
             </thead>
             <tbody>
