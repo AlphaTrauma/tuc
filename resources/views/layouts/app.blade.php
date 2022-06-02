@@ -10,6 +10,7 @@
         <link rel="stylesheet" href="{{ asset('css/app.css') }}" />
         <script src="{{ asset('js/main.js') }}"></script>
         @include('blocks.metric')
+        <meta name="google-site-verification" content="iw4ek7QAeS_EK0frUsz6DM4WT_d27-B24ncMOPyxfgk" />
     </head>
     <body>
         <div>
