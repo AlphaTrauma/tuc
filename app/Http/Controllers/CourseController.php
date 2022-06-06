@@ -7,6 +7,7 @@ use App\Http\Requests\UpdateCourse;
 use App\Models\Direction;
 use App\Models\Course;
 use App\Models\Image;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class CourseController extends Controller
@@ -18,9 +19,11 @@ class CourseController extends Controller
         return view('dashboard.courses.index', compact('items'));
     }
 
-    public function show()
+    public function show($id)
     {
-        //
+        $item = Course::with('blocks')->find($id);
+
+        return view('dashboard.courses.show', compact('item'));
     }
 
     public function create($id)
@@ -72,6 +75,15 @@ class CourseController extends Controller
         $options = Direction::with('courses:id,title,direction_id')->get(['id', 'title'])->toArray();
         $selected = \App\Models\News::with('courses:id,title,direction_id')->find($id)->courses->toArray();
         return response(['options' => $options, 'selected' => $selected]);
+    }
+
+    public function add(Request $request)
+    {
+        $data = $request->except('_token');
+        $user = User::find($data['user_id']);
+        $user->user_courses()->create(['course_id' => $data['course_id']]);
+
+        return back()->with('message', 'Курс успешно добавлен студенту');
     }
 
 }

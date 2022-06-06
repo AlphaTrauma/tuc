@@ -8,10 +8,9 @@
             <li class="uk-parent">
                 <a class="uk-text-bold" href="#"><span class="uk-margin-small-right" uk-icon="icon: users"></span>Пользователи</a>
                 <ul class="uk-nav-sub">
-                    {{-- TODO
                     <li><a>Зарегистрировать</a></li>
-                    --}}
-                    <li><a href="{{ route('users') }}">Список</a></li>
+                    <li><a href="{{ route('students') }}">Студенты</a></li>
+                    <li><a href="{{ route('users') }}">Полный список</a></li>
                 </ul>
             </li>
             <li class="uk-parent">

@@ -17,10 +17,10 @@
                     <div class="uk-card-body uk-flex uk-position-relative">
                         <div class="uk-card-title uk-text-center">{{ $item->title }}</div>
                         <ul class="uk-iconnav uk-position-absolute uk-position-center-right uk-padding-small">
-                            <li><a href="{{ route('course.create', ['id' => $item->id]) }}" title="Добавить курс" uk-icon="icon: plus"></a></li>
-                            <li><a title="Редактировать направление" href="{{ route('directions.edit', ['direction' => $item]) }}" uk-icon="icon: file-edit"></a></li>
+                            <li><a href="{{ route('course.create', ['id' => $item->id]) }}" uk-tooltip="Добавить курс" uk-icon="icon: plus"></a></li>
+                            <li><a uk-tooltip="Редактировать направление" href="{{ route('directions.edit', ['direction' => $item]) }}" uk-icon="icon: file-edit"></a></li>
                             <li>
-                                <a title="Удалить направление"  href="{{ route('directions.delete', ['id' => $item->id]) }}"
+                                <a uk-tooltip="Удалить направление"  href="{{ route('directions.delete', ['id' => $item->id]) }}"
                                    uk-icon="icon: trash">
                                 </a>
                             </li>
@@ -35,8 +35,9 @@
                             <td>{{ $course->price ? $course->price.'₽' : '' }}</td>
                             <td>
                                 <ul class="uk-iconnav uk-flex-right uk-flex-nowrap">
-                                    <li><a title="Редактировать курс" href="{{ route('courses.edit', ['course' => $course]) }}" uk-icon="icon: file-edit"></a></li>
-                                    <li><a title="Удалить курс"  href="{{ route('courses.delete', ['id' => $course->id]) }}" uk-icon="icon: trash"></a></li>
+                                    <li><a href="{{ route('courses.show', ['course' => $course]) }}" uk-tooltip="Конструктор курса" uk-icon="icon: album"></a></li>
+                                    <li><a uk-tooltip="Редактировать курс" href="{{ route('courses.edit', ['course' => $course]) }}" uk-icon="icon: file-edit"></a></li>
+                                    <li><a uk-tooltip="Удалить курс"  href="{{ route('courses.delete', ['id' => $course->id]) }}" uk-icon="icon: trash"></a></li>
                                 </ul>
                             </td>
                         </tr>

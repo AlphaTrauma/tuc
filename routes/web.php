@@ -16,6 +16,12 @@ Route::post('/send', [\App\Http\Controllers\LeadController::class, 'store'])->na
 
 Route::get('directions/{slug}', [\App\Http\Controllers\DirectionController::class, 'show'])->name('direction.show');
 
+# middleware is Student
+Route::get('/personal', [\App\Http\Controllers\PersonalController::class, 'index'])->name('personal');
+Route::get('/personal/active', [\App\Http\Controllers\PersonalController::class, 'active'])->name('personal.active');
+
+Route::get('/personal/material/{id}', [\App\Http\Controllers\MaterialController::class, 'show'])->name('material.show');
+###
 
 Route::middleware([\App\Http\Middleware\IsAdmin::class])->group(function () {
 
@@ -28,9 +34,11 @@ Route::middleware([\App\Http\Middleware\IsAdmin::class])->group(function () {
     Route::delete('/dashboard/slider/{id}', [\App\Http\Controllers\SliderItemController::class, 'delete']);
 
     Route::get('/dashboard/users', [\App\Http\Controllers\Auth\RegisteredUserController::class, 'index'])->name('users');
+    Route::get('/dashboard/students', [\App\Http\Controllers\Auth\RegisteredUserController::class, 'students'])->name('students');
     Route::get('/dashboard/users/{id}', [\App\Http\Controllers\Auth\RegisteredUserController::class, 'show'])->name('user.show');
     Route::get('/dashboard/users/{id}/edit', [\App\Http\Controllers\Auth\RegisteredUserController::class, 'edit'])->name('user.edit');
     Route::post('/dashboard/users/{id}/update', [\App\Http\Controllers\Auth\RegisteredUserController::class, 'update'])->name('user.update');
+    Route::post('/dashboard/users/add', [\App\Http\Controllers\Auth\RegisteredUserController::class, 'add'])->name('users.add');
 
     Route::get('/dashboard/pages', [\App\Http\Controllers\PageController::class, 'index'])->name('pages');
     Route::get('/dashboard/pages/create', [\App\Http\Controllers\PageController::class, 'create'])->name('pages.create');
@@ -49,6 +57,18 @@ Route::middleware([\App\Http\Middleware\IsAdmin::class])->group(function () {
     Route::resource('/dashboard/courses', \App\Http\Controllers\CourseController::class);
     Route::get('/dashboard/courses/{id}/delete', [\App\Http\Controllers\CourseController::class, 'destroy'])->name('courses.delete');
     Route::get('/dashboard/directions/{id}/create', [\App\Http\Controllers\CourseController::class, 'create'])->name('course.create');
+    Route::post('/dashboard/courses/addToUser', [\App\Http\Controllers\CourseController::class, 'add'])->name('courses.add');
+
+    Route::get('/dashboard/courses/{id}/blocks/create', [\App\Http\Controllers\BlockController::class, 'create'])->name('blocks.create');
+    Route::get('/dashboard/courses//blocks/{id}/edit', [\App\Http\Controllers\BlockController::class, 'edit'])->name('blocks.edit');
+    Route::post('/dashboard/courses/blocks/store', [\App\Http\Controllers\BlockController::class, 'store'])->name('blocks.store');
+    Route::post('/dashboard/courses/blocks/{id}/update', [\App\Http\Controllers\BlockController::class, 'update'])->name('blocks.update');
+    Route::get('/dashboard/courses/blocks/{id}/delete', [\App\Http\Controllers\BlockController::class, 'destroy'])->name('blocks.delete');
+
+
+    Route::get('/dashboard/blocks/{id}/material/{type}/create', [\App\Http\Controllers\MaterialController::class, 'create'])->name('materials.create');
+    Route::post('/dashboard/materials/store', [\App\Http\Controllers\MaterialController::class, 'store'])->name('materials.store');
+    Route::post('/dashboard/materials/{id}/update', [\App\Http\Controllers\MaterialController::class, 'update'])->name('materials.update');
 
 
     Route::get('/dashboard/documents', [\App\Http\Controllers\DocumentController::class, 'index'])->name('documents.index');

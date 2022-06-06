@@ -22,6 +22,14 @@ class Course extends Model
         return $this->belongsTo(Direction::class);
     }
 
+    public function teacher(){
+        return $this->belongsTo(User::class, 'teacher_id');
+    }
+
+    public function blocks(){
+        return $this->hasMany(Block::class);
+    }
+
     public function getAliasAttribute(){
         return [
             'title' => 'Курс обучения',

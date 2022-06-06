@@ -54,6 +54,16 @@ class User extends Authenticatable
         return $this->morphOne(Image::class, 'entity');
     }
 
+    public function courses()
+    {
+        return $this->belongsToMany(Course::class, UserCourse::class);
+    }
+
+    public function user_courses()
+    {
+        return $this->hasMany(UserCourse::class);
+    }
+
     public function isAdmin()
     {
         return $this->role === 'admin';

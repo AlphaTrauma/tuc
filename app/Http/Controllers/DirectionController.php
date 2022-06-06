@@ -11,7 +11,9 @@ use App\Models\Image;
 class DirectionController extends Controller
 {
     public function index(){
-        $items = Direction::query()->paginate(30);
+        $items = Direction::with(['courses' => function($q){
+            $q->withCount('blocks');
+        }])->paginate(30);
 
         return view('dashboard.directions.index', compact('items'));
     }

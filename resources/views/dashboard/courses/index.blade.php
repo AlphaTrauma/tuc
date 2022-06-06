@@ -16,8 +16,9 @@
                     <td>{{ $course->direction->title }}</td>
                     <td>
                         <ul class="uk-iconnav uk-flex-right uk-flex-nowrap">
-                            <li><a title="Редактировать курс" href="{{ route('courses.edit', ['course' => $course]) }}" uk-icon="icon: file-edit"></a></li>
-                            <li><a title="Удалить курс"  href="{{ route('courses.delete', ['id' => $course->id]) }}" uk-icon="icon: trash"></a></li>
+                            <li><a href="{{ route('courses.show', ['course' => $course]) }}" uk-tooltip="Конструктор курса" uk-icon="icon: album"></a></li>
+                            <li><a uk-tooltip="Редактировать курс" href="{{ route('courses.edit', ['course' => $course]) }}" uk-icon="icon: file-edit"></a></li>
+                            <li><a uk-tooltip="Удалить курс"  href="{{ route('courses.delete', ['id' => $course->id]) }}" uk-icon="icon: trash"></a></li>
                         </ul>
                     </td>
                 </tr>

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\Course;
 use App\Models\Image;
 use App\Models\User;
 use App\Providers\RouteServiceProvider;
@@ -10,7 +11,9 @@ use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 use Illuminate\Validation\Rules;
+
 
 class RegisteredUserController extends Controller
 {
@@ -53,11 +56,58 @@ class RegisteredUserController extends Controller
         return redirect(RouteServiceProvider::HOME);
     }
 
-    public function index()
+    // Регистрация студента через панель админа
+    public function add(Request $request)
     {
-        $users = User::query()->orderBy('id', 'desc')->paginate(100);
+        $request->validate([
+            'name' => ['required', 'string', 'max:25'],
+            'last_name' => ['required', 'string', 'max:25'],
+            'patronymic' => ['nullable', 'string', 'max:25'],
+            'phone' => ['nullable', 'string', 'max:15'],
+            'organization' => ['nullable', 'string', 'max:255'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users']
+        ]);
+
+        $user = User::create([
+            'name' => $request->name,
+            'last_name' => $request->last_name,
+            'patronymic' => $request->patronymic,
+            'phone' => $request->phone,
+            'organization' => $request->organization,
+            'email' => $request->email,
+            'password' => 'default'
+        ]);
+        $password = Str::slug($user->last_name).Str::slug($user->name)[0].'@'.$user->id;
+        $user->update(['password' => Hash::make($password)]);
+
+        event(new Registered($user));
+
+        return back()->with('message', 'Пользователь успешно зарегистрирован. Логин: '.$user->email.' Пароль: '.$password);
+    }
+
+    public function index(Request $request)
+    {
+        $users = User::query()->orderBy('id', 'desc');
+        if($request->has('search')):
+            $query = $request->input('search');
+            $users->where('email', 'like', '%'.$query.'%')->orWhere('last_name', 'like', '%'.$query.'%');
+        endif;
+        $users = $users->paginate(100);
 
         return view('dashboard.users.index', compact('users'));
+    }
+
+    public function students(Request $request)
+    {
+        $users = User::with('courses')->where('role', 'student')->orderBy('id', 'desc');
+        $courses = Course::query()->orderBy('title')->pluck('title', 'id')->toArray();
+        if($request->has('search')):
+            $query = $request->input('search');
+            $users->where('email', 'like', '%'.$query.'%')->orWhere('last_name', 'like', '%'.$query.'%');
+        endif;
+        $users = $users->paginate(50);
+
+        return view('dashboard.users.students', compact('users', 'courses'));
     }
 
     public function show($id)
