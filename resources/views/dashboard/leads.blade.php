@@ -16,7 +16,7 @@
                 <th>Страница</th>
                 <th>Комментарий</th>
                 <th>Время</th>
-                <th style="width: 30px;"></th>
+                <th style="min-width: 30px;"></th>
             </tr>
             </thead>
             <tbody>
@@ -26,7 +26,7 @@
                     <td>{{ $item->name }}</td>
                     <td>{{ $item->email }}</td>
                     <td>{{ $item->page }}</td>
-                    <td>{{ $item->comment }}</td>
+                    <td style="word-wrap: break-word; max-width: 300px;">{{ $item->comment }}</td>
                     <td>{{ $item->created_at->diffForHumans() }}</td>
                     <td>
                         @if(!$item->status)
