@@ -16,9 +16,9 @@
                     <div class=" uk-position-relative uk-margin-bottom">
                         <span>{{ $block->ordering }}. {{ $block->title }}</span>
                         <ul class="uk-iconnav uk-position-absolute uk-position-center-right uk-padding-small">
-                            <li><a uk-tooltip="Редактировать блок" href="{{ route('blocks.edit', $item->id) }}" uk-icon="icon: file-edit"></a></li>
+                            <li><a uk-tooltip="Редактировать блок" href="{{ route('blocks.edit', $block->id) }}" uk-icon="icon: file-edit"></a></li>
                             <li>
-                                <a uk-tooltip="Удалить блок"  href="{{ route('blocks.delete', ['id' => $item->id]) }}"
+                                <a uk-tooltip="Удалить блок"  href="{{ route('blocks.delete', ['id' => $block->id]) }}"
                                    uk-icon="icon: trash">
                                 </a>
                             </li>

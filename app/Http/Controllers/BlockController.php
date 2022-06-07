@@ -32,10 +32,19 @@ class BlockController extends Controller
         return view('dashboard.blocks.create', compact('item'));
     }
 
+    public function update(Request $request, $id)
+    {
+        $data = $request->except('_token');
+        $material = Block::find($id);
+        $material->update($data);
+
+        return back()->with('message', 'Материал успешно отредактирован');
+    }
+
     public function destroy($id)
     {
-        $item = Block::find($id);
-        #if($item->materials->count() > 0) return back()->with('error', 'Нельзя удалить блок, содержащий материалы');
+        $item = Block::with('materials')->find($id);
+        if($item->materials->count() > 0) return back()->with('error', 'Нельзя удалить блок, содержащий материалы');
         $item->delete();
 
         return back()->with('message', 'Блок успешно удалён');

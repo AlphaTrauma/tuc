@@ -54,6 +54,20 @@ class MaterialController extends Controller
         return back()->with('message', 'Материал успешно отредактирован');
     }
 
+    public function destroy($id)
+    {
+        $item = Material::with('image', 'document')->find($id);
+        if(isset($item->image->filepath)):
+            $item->image->delete();
+        endif;
+        if($item->document->filepath):
+            $item->document->delete();
+        endif;
+        $item->delete();
+
+        return back()->with('message', 'Материал успешно удалён');
+    }
+
     public function show($id)
     {
         $user_material = UserMaterial::with('material')->find($id);

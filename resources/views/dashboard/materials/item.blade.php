@@ -32,7 +32,7 @@
                 </div>
             </div>
             <li>
-                <a uk-tooltip="Удалить материал"  href=""
+                <a uk-tooltip="Удалить материал"  href="{{ route('materials.delete', $material->id) }}"
                    uk-icon="icon: trash">
                 </a>
             </li>

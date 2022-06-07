@@ -69,6 +69,7 @@ Route::middleware([\App\Http\Middleware\IsAdmin::class])->group(function () {
     Route::get('/dashboard/blocks/{id}/material/{type}/create', [\App\Http\Controllers\MaterialController::class, 'create'])->name('materials.create');
     Route::post('/dashboard/materials/store', [\App\Http\Controllers\MaterialController::class, 'store'])->name('materials.store');
     Route::post('/dashboard/materials/{id}/update', [\App\Http\Controllers\MaterialController::class, 'update'])->name('materials.update');
+    Route::get('/dashboard/materials/{id}/delete', [\App\Http\Controllers\MaterialController::class, 'destroy'])->name('materials.delete');
 
 
     Route::get('/dashboard/documents', [\App\Http\Controllers\DocumentController::class, 'index'])->name('documents.index');

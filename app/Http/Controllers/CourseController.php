@@ -63,7 +63,8 @@ class CourseController extends Controller
     public function destroy($id)
     {
 
-        $item = Course::with('image')->find($id);
+        $item = Course::with('image', 'blocks')->find($id);
+        if($item->blocks->count() > 0) return back()->with('error', 'Нельзя удалить курс с внутренней структурой');
         $item->image()->delete();
         $item->delete();
 

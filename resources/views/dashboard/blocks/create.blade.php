@@ -8,9 +8,6 @@
     @include('blocks.errors')
     <h2 class="uk-title">@isset($item)Редактировать@elseСоздать@endisset блок ({{ isset($item) ? $item->course->title : $course->title }})</h2>
     <form class="uk-form" enctype=multipart/form-data method="POST" action="{{ isset($item) ? route('blocks.update', $item->id) : route('blocks.store') }}">
-        @isset($item)
-            @method('PATCH')
-        @endisset
         @csrf
         <input type="hidden" name="course_id" value="{{ isset($item) ? $item->course->id : $course->id }}">
             <div class="uk-margin-small">
