@@ -22,10 +22,10 @@
             <div class="uk-margin">
                 <textarea name="description" placeholder="Описание материала" id="" cols="30" rows="10" class="uk-textarea"></textarea>
             </div>
-            <div class="uk-margin" uk-margin>
-                <div uk-form-custom="target: true">
-                    <input type="file" name="file">
-                    <input class="uk-input uk-form-width-medium" type="text" placeholder="Выбрать файл" disabled>
+            <div class="uk-margin">
+                <div class="uk-width-1-1" uk-form-custom="target: true">
+                    <input accept=".pdf" type="file" required name="file">
+                    <input class="uk-input uk-form-width-medium uk-width-1-1" type="text" placeholder="Выбрать файл" disabled>
                 </div>
             </div>
             <input type="submit" class="uk-button uk-button-small uk-width-1-1" value="Прикрепить">
