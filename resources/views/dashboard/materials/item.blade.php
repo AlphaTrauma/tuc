@@ -20,6 +20,8 @@
             @case('image')
                 <a target="_blank" uk-tooltip="Открыть" href="{{ asset($material->document->filepath) }}" uk-icon="cloud-download"></a>
             @break
+            @default
+                <a uk-tooltip="Неизвестный тип материала" uk-icon="warning"></a>
         @endswitch
             <li><a uk-tooltip="Переименовать материал" href="#rename-{{$material->id}}" uk-icon="icon: file-edit" uk-toggle></a></li>
             <div id="rename-{{$material->id}}" class="uk-flex-top" uk-modal>
