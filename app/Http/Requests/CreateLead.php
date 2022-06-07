@@ -30,7 +30,10 @@ class CreateLead extends FormRequest
             'comment' => 'string|max:255|nullable',
             'phone' => 'string|required|regex:/^(\s*)?(\+)?([- _():=+]?\d[- _():=+]?){6,14}(\s*)?$/',
             'email' => 'string|email|nullable',
-            'page' => 'string|nullable'
+            'page' => 'string|nullable',
+            'fax' => 'prohibited|nullable',
+            'theme' => 'prohibited|nullable',
+            'contact' => 'prohibited|nullable'
         ];
     }
 
@@ -42,7 +45,10 @@ class CreateLead extends FormRequest
             'comment.string' => 'Поле комментария заполнено некорректно',
             'phone.required' => 'Оставьте свой номер телефона, чтобы мы могли с вами связаться',
             'phone.regex' => 'Введите корректный номер телефона',
-            'email.email' => 'Невалидный адрес электронной почты'
+            'email.email' => 'Невалидный адрес электронной почты',
+            'fax.prohibited' => 'Не удалось отправить заявку',
+            'theme.prohibited' => 'Не удалось отправить заявку',
+            'contact.prohibited' => 'Не удалось отправить заявку',
         ];
     }
 }

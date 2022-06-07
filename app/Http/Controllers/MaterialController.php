@@ -60,7 +60,7 @@ class MaterialController extends Controller
         if(isset($item->image->filepath)):
             $item->image->delete();
         endif;
-        if($item->document->filepath):
+        if(isset($item->document->filepath)):
             $item->document->delete();
         endif;
         $item->delete();

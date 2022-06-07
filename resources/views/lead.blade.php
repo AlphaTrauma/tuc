@@ -29,6 +29,11 @@
                     <div class="uk-margin-small">
                         <textarea placeholder="Комментарий" id="" cols="30" rows="10" class="uk-textarea" name="comment"></textarea>
                     </div>
+                    <div class="uk-margin-small">
+                        <input type="text" value="" name="fax" id="fax" class="uk-hidden">
+                        <input type="text" value="" name="theme" id="theme" class="uk-hidden">
+                        <input type="text" value="" name="contact" class="uk-hidden">
+                    </div>
                     <input type="hidden" name="page" value="{{ request()->url() }}">
                     <div class="uk-margin-small">
                         <input type="submit" value="Отправить" class="uk-button uk-button-primary uk-width-1-1">
