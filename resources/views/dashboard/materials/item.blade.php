@@ -7,9 +7,8 @@
         @switch($material->material_type)
             @case('pdf')
                 @isset($material->document->filepath)
-                    <a target="_blank" uk-tooltip="Открыть" href="{{ asset() }}" uk-icon="cloud-download"></a>
+                    <a target="_blank" uk-tooltip="Открыть" href="{{ asset($material->document->filepath) }}" uk-icon="cloud-download"></a>
                 @endisset
-
             @break
             @case('youtube')
                 <a target="_blank" uk-tooltip="Открыть" href="https://www.youtube.com/watch?v={{ $material->url }}" uk-icon="cloud-download"></a>
