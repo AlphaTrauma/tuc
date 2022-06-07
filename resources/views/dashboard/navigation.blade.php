@@ -59,7 +59,7 @@
                 </div>
                 <div class="uk-width-expand uk-position-relative">
                     <p class="uk-comment-meta uk-margin-remove">{{ Auth::user()->name }}</p>
-                    <p class="uk-comment-meta uk-margin-remove">{{ Auth::user()->email }}</p>
+                    <p uk-tooltip="{{ Auth::user()->email }}" class="uk-comment-meta uk-margin-remove uk-overflow-hidden">{{ Auth::user()->email }}</p>
                 <div class="uk-position-center-right uk-inline">
                     <a class="uk-link-reset"><span uk-icon="triangle-down"></span></a>
                     <div uk-dropdown="mode:click; offset: 10; pos: bottom-right;" class="uk-padding-small">
