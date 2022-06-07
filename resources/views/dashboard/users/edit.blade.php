@@ -39,6 +39,13 @@
                             </div>
                         @endif
                         <hr>
+                            <div class="uk-margin-small">
+                                <label class="uk-form-label" for="email">Пароль (замена)</label>
+                                <div class="uk-form-controls">
+                                    <input class="uk-input" required name="pass" id="pass" type="text"
+                                           placeholder="Введите новый пароль для пользователя" value="">
+                                </div>
+                            </div>
                         <div class="uk-margin-small">
                             <label class="uk-form-label" for="email">Электронная почта</label>
                             <div class="uk-form-controls">

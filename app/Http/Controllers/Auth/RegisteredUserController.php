@@ -129,11 +129,14 @@ class RegisteredUserController extends Controller
         $item = User::find($id);
 
         $data = $request->except('_token');
+        if($request->has('pass')):
+            $data['password'] = Hash::make($data['pass']);
+        endif;
         $item->update($data);
         if($request->hasFile('file')):
             Image::add($request->file('file'), 'users/'.$item->id, $item);
         endif;
 
-        return redirect()->route('users')->with('message', 'Направление успешно отредактировано');
+        return redirect()->route('users')->with('message', 'Данные пользователя успешно изменены');
     }
 }
