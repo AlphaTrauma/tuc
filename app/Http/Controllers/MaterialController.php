@@ -22,6 +22,7 @@ class MaterialController extends Controller
         if(!$data['material_type']) return back()->with('message', 'Ошибка типа материала');
         $block = Block::withCount('materials')->find($data['block_id']);
         $data['ordering'] = $block->materials_count + 1;
+        if(isset($data['download'])) $data['download'] = 1;
         $item = Material::create($data);
 
         if($request->hasFile('file')):
@@ -70,7 +71,8 @@ class MaterialController extends Controller
 
     public function show($id)
     {
-        $user_material = UserMaterial::with('material')->find($id);
+        $user_material = UserMaterial::with('material', 'user_block', 'user_block.block', 'user_block.block.course',
+            'user_block.user_materials', 'user_block.user_materials.material')->find($id);
         $material = $user_material->material;
 
         if($material and $user_material):

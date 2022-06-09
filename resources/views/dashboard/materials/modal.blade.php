@@ -28,6 +28,9 @@
                     <input class="uk-input uk-form-width-medium uk-width-1-1" type="text" placeholder="Выбрать файл" disabled>
                 </div>
             </div>
+            <div class="uk-margin">
+                <label><input class="uk-checkbox" name="download" type="checkbox"> Разрешить скачивание</label>
+            </div>
             <input type="submit" class="uk-button uk-button-small uk-width-1-1" value="Прикрепить">
         </form>
     </div>
@@ -79,7 +82,7 @@
     <div class="uk-modal-dialog uk-modal-body uk-margin-auto-vertical">
         <h2 class="uk-modal-title">Прикрепить изображение</h2>
         <form class="uk-form" enctype=multipart/form-data method="POST" action="{{ route('materials.store') }}">
-            <input type="hidden" name="material_type" value="pdf">
+            <input type="hidden" name="material_type" value="image">
             <input type="hidden" name="block_id" value="{{ $block->id }}">
             @csrf
             <div class="uk-margin">

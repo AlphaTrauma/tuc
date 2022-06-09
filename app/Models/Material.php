@@ -10,7 +10,7 @@ class Material extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['title', 'description', 'block_id', 'ordering', 'material_type', 'url', 'document_id'];
+    protected $fillable = ['title', 'description', 'block_id', 'ordering', 'material_type', 'url', 'document_id', 'download'];
 
     protected $appends = ['type'];
 

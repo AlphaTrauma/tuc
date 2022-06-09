@@ -1,7 +1,7 @@
 <li class="uk-flex uk-flex-middle uk-flex-between">
-    <div uk-tooltip="{{ $material->type['title'] }}" class="uk-margin-right">
-        <span uk-icon="ratio: 1.5;icon:{{ $material->type['icon'] }}"></span>
-        <span>#{{ $material->ordering }} {{ $material->title }}</span>
+    <div class="uk-margin-right">
+        <span uk-tooltip="{{ $material->type['title'] }}" uk-icon="ratio: 1.2;icon:{{ $material->type['icon'] }}"></span>
+        <span>{{ $material->ordering }}. {{ $material->title }} @if($material->download) <span uk-tooltip="Доступен для скачивания" uk-icon="download"></span> @endif</span>
     </div>
     <ul class="uk-iconnav">
         @switch($material->material_type)
@@ -17,7 +17,7 @@
                 <a target="_blank" uk-tooltip="Открыть" href="{{ $material->url }}" uk-icon="cloud-download"></a>
             @break
             @case('image')
-                <a target="_blank" uk-tooltip="Открыть" href="{{ asset($material->document->filepath) }}" uk-icon="cloud-download"></a>
+                <a target="_blank" uk-tooltip="Открыть" href="{{ asset($material->image->filepath) }}" uk-icon="cloud-download"></a>
             @break
             @default
                 <a uk-tooltip="Неизвестный тип материала" uk-icon="warning"></a>

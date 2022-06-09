@@ -64,6 +64,16 @@ class User extends Authenticatable
         return $this->hasMany(UserCourse::class);
     }
 
+    public function active_courses()
+    {
+        return $this->hasMany(UserCourse::class)->where('status', false);
+    }
+
+    public function completed_courses()
+    {
+        return $this->hasMany(UserCourse::class)->where('status', true);
+    }
+
     public function isAdmin()
     {
         return $this->role === 'admin';

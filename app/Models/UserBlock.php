@@ -45,6 +45,16 @@ class UserBlock extends Model
         return $this->hasMany(UserMaterial::class);
     }
 
+    public function first_material()
+    {
+        return $this->hasMany(UserMaterial::class)->orderBy('ordering')->first();
+    }
+
+    public function last_material()
+    {
+        return $this->hasMany(UserMaterial::class)->orderByDesc('ordering')->first();
+    }
+
     public function previous(){
         return UserBlock::where([['user_course_id', $this->user_course_id], ['ordering', ($this->ordering - 1)]])->first();
     }
