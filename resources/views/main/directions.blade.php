@@ -8,7 +8,8 @@
     <div>
         @foreach($items as $type)
             <div class="uk-margin-bottom">
-                <a class="uk-card uk-card-default uk-child-width-1-1 uk-card-hover"  uk-toggle="target: #directions-{{$type->id}}; animation: uk-animation-slide-top-medium">
+                <a class="uk-card uk-card-default uk-child-width-1-1 uk-card-hover"
+                   uk-toggle="target: #directions-{{$type->id}}; animation: uk-animation-slide-top-medium">
                     <div class="uk-panel uk-height-medium uk-background-cover uk-background-center-center"
                          style="background-image: url({{ asset($type->image->filepath) }})">
                         <div class="uk-overlay uk-overlay-default uk-position-center">
@@ -17,7 +18,7 @@
                     </div>
                 </a>
 
-                <div hidden id="directions-{{$type->id}}" class="uk-child-width-1-3@s uk-grid-match uk-padding-small uk-padding-remove-horizontal" uk-grid>
+                <div @if(!$loop->first)hidden@endif id="directions-{{$type->id}}" class="uk-child-width-1-3@s uk-grid-match uk-padding-small uk-padding-remove-horizontal" uk-grid>
                     @foreach($type->directions as $direction)
                         <div>
                             <a title="{{ $direction->title }} в Тюменском Учебном Центре" href="{{ asset('directions/'.$direction->slug) }}" class="uk-transition-toggle uk-link-reset uk-card uk-card-default uk-card-hover">
