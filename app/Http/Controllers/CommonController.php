@@ -10,7 +10,7 @@ use Illuminate\Http\Request;
 class CommonController extends Controller
 {
     public function index(){
-        $items = Type::with('image', 'directions')->where('status', 1)->get();
+        $items = Type::has('directions')->with('image', 'directions')->where('status', 1)->get();
         $slides = SliderItem::with('image')->orderBy('ordering')->get();
 
         return view('index', compact('items', 'slides'));
