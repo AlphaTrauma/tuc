@@ -31,7 +31,7 @@ class DirectionController extends Controller
 
     public function page()
     {
-        $items = Direction::query()->get();
+        $items = Type::has('directions')->with('image', 'directions')->where('status', 1)->get();
 
         return view('directions', compact('items'));
     }

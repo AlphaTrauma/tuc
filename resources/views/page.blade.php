@@ -11,7 +11,7 @@
 @section('content')
     <h1 class="uk-title uk-margin-bottom">{{ $item->title }}</h1>
     <section class="uk-padding uk-padding-remove-horizontal">
-        <div class="uk-card-default uk-card-body uk-box-shadow-small @if($item->slug === 'documents' || $item->slug === 'thanks') documents @endif">
+        <div class="uk-card-default uk-card-body uk-box-shadow-small uk-margin-bottom @if($item->slug === 'documents' || $item->slug === 'thanks') documents @endif">
             {!! $item->html  !!}
         </div>
         @switch($item->slug)
@@ -22,7 +22,7 @@
             @break
             @case('all_directions')
                 @php
-                    $items = App\Models\Direction::query()->get();
+                    $items = App\Models\Type::has('directions')->with('image', 'directions')->where('status', 1)->get();
                 @endphp
                 @include('main.directions')
             @break
