@@ -50,9 +50,14 @@ Route::middleware([\App\Http\Middleware\IsAdmin::class])->group(function () {
     Route::get('/dashboard/pages/{id}/delete', [\App\Http\Controllers\PageController::class, 'destroy'])->name('pages.delete');
 
     Route::resource('/dashboard/directions', \App\Http\Controllers\DirectionController::class);
+    Route::get('/dashboard/{id}/directions', [\App\Http\Controllers\DirectionController::class, 'typed_index'])->name('directions.by_type');
+    Route::get('/dashboard/{id}/directions/create', [\App\Http\Controllers\DirectionController::class ,'create'])->name('direction.create');
 
     Route::get('/dashboard/directions/{id}/delete', [\App\Http\Controllers\DirectionController::class, 'destroy'])->name('directions.delete');
     Route::get('/dashboard/courses/{id}/data', [\App\Http\Controllers\CourseController::class, 'getSelectData']);
+
+    Route::resource('/dashboard/types', \App\Http\Controllers\TypeController::class);
+    Route::get('/dashboard/types/{id}/delete', [\App\Http\Controllers\TypeController::class, 'destroy'])->name('types.delete');
 
     Route::resource('/dashboard/courses', \App\Http\Controllers\CourseController::class);
     Route::get('/dashboard/courses/{id}/delete', [\App\Http\Controllers\CourseController::class, 'destroy'])->name('courses.delete');

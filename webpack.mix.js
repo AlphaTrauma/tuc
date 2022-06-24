@@ -14,8 +14,8 @@ const mix = require('laravel-mix');
 mix.js(['resources/js/main.js'], 'public/js/main.js')
     .js(['resources/js/app.js'],
         'public/js/app.js')
-    .vue()
+    .vue().version()
     .styles([
         'node_modules/uikit/dist/css/uikit.min.css',
         'public/css/main.css'],
-        'public/css/app.css');
+        'public/css/app.css').version();

@@ -1,14 +1,19 @@
 @extends('layouts.dashboard')
 
 @section('title')
-    Список направлений обучения
+     Список направлений
 @endsection
 
 @section('content')
-    <h2>Направления:</h2>
+    <h2>@isset($type){{ $type->title }}@elseНаправления@endisset:</h2>
     @include('blocks.errors')
     <div class="uk-padding-small">
-        <a href="{{ route('directions.create') }}" class="uk-button uk-button-primary"><span class="uk-margin-small-right" uk-icon="plus"></span>Создать</a>
+        @isset($type)
+        <a href="{{ route('direction.create', $type->id) }}" class="uk-button uk-button-primary"><span class="uk-margin-small-right" uk-icon="plus"></span>Создать</a>
+        @else
+            <a href="{{ route('directions.create') }}" uk-tooltip="Скорее всего, вы видите эту кнопку из-за неправильного перехода на страницу"
+               class="uk-button uk-button-primary"><span class="uk-margin-small-right" uk-icon="plus"></span>Создать без привязки к типу</a>
+        @endisset
     </div>
     <div class="uk-padding-small">
         @forelse($items as $item)

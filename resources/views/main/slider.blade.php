@@ -8,7 +8,8 @@
                     @foreach($slides as $item)
                         <li>
                             <a class="uk-link-reset uk-card uk-position-relative" href="{{ $item->link }}">
-                                <div class="uk-panel uk-height-medium uk-background-cover uk-background-center-center" style="background-image: url({{ asset($item->image->filepath) }})">
+                                <div class="uk-panel uk-height-medium uk-background-cover uk-background-center-center"
+                                     style="background-image: url({{ asset($item->image->filepath) }})">
                                     <div  class="uk-position-bottom-left uk-padding">
                                         <h2 uk-slider-parallax="y: -50, 50; x: 50, -50" class="uk-heading text-shadow ">{{ $item->title }}</h2>
                                         @if($item->description)

@@ -7,15 +7,26 @@ use App\Http\Requests\UpdateDirection;
 use App\Models\Direction;
 use Illuminate\Support\Str;
 use App\Models\Image;
+use App\Models\Type;
 
 class DirectionController extends Controller
 {
     public function index(){
-        $items = Direction::with(['courses' => function($q){
+        $items = Direction::with(['type', 'courses' => function($q){
             $q->withCount('blocks');
         }])->paginate(30);
 
         return view('dashboard.directions.index', compact('items'));
+    }
+
+    public function typed_index($id)
+    {
+        $type = Type::find($id);
+        $items = Direction::with(['courses' => function($q){
+            $q->withCount('blocks');
+        }])->where('type_id', $id)->paginate(30);
+
+        return view('dashboard.directions.index', compact('items', 'type'));
     }
 
     public function page()
@@ -25,9 +36,9 @@ class DirectionController extends Controller
         return view('directions', compact('items'));
     }
 
-    public function create()
+    public function create($id)
     {
-        $direction = Direction::create(['title' => 'Новое направление']);
+        $direction = Direction::create(['title' => 'Новое направление', 'type_id' => $id]);
         return redirect()->route('directions.edit', compact('direction'));
     }
 
@@ -48,7 +59,7 @@ class DirectionController extends Controller
             Image::add($request->file('file'), 'directions/'.$item->id, $item);
         endif;
 
-        return redirect()->route('directions.index')->with('message', 'Направление успешно отредактировано');
+        return redirect()->route('directions.by_type', $item->type_id)->with('message', 'Направление успешно отредактировано');
     }
 
     public function edit($id){

@@ -16,7 +16,10 @@
             <li class="uk-parent">
                 <a class="uk-text-bold" href="#"><span class="uk-margin-small-right" uk-icon="icon: table"></span>Обучение</a>
                 <ul class="uk-nav-sub">
-                    <li><a href="{{ route('directions.index') }}">Список направлений</a></li>
+                    @foreach($types as $id => $title)
+                        <li><a href="{{ route('directions.by_type', $id) }}">{{ $title }}</a></li>
+                    @endforeach
+                    <li><a href="{{ route('types.index') }}">Формы обучения</a></li>
                     <li><a href="{{ route('courses.index') }}">Список курсов</a></li>
                     {{--TODO
                      <li><a>Статистика</a></li>

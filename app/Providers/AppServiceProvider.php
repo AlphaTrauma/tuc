@@ -42,7 +42,8 @@ class AppServiceProvider extends ServiceProvider
         });
         View::composer('dashboard.navigation', function($view){
             $leads_count = \App\Models\Lead::where('status', 0)->count();
-            $view->with(compact('leads_count'));
+            $types = \App\Models\Type::where('status', 1)->pluck('title', 'id')->toArray();
+            $view->with(compact('leads_count', 'types'));
         });
     }
 }

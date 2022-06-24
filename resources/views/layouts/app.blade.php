@@ -7,7 +7,7 @@
         <link rel="shortcut icon" href="{{ asset('favicon.ico') }}" type="image/x-icon">
         <title itemprop="headline">@yield('title') | Тюменский Учебный Центр</title>
         <meta itemprop="description" name="description" content="@yield('description')">
-        <link rel="stylesheet" href="{{ asset('css/app.css') }}" />
+        <link rel="stylesheet" href="{{ mix('css/app.css') }}" />
         <script src="{{ asset('js/main.js') }}"></script>
         @include('blocks.metric')
         <meta name="google-site-verification" content="iw4ek7QAeS_EK0frUsz6DM4WT_d27-B24ncMOPyxfgk" />
@@ -28,6 +28,5 @@
             @include('blocks.modal')
             @include('blocks.lead')
         </div>
-    {{-- @include('blocks.preloader') --}}
     </body>
 </html>

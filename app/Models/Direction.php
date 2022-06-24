@@ -9,7 +9,7 @@ class Direction extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['title', 'description', 'html', 'slug'];
+    protected $fillable = ['title', 'description', 'html', 'slug', 'type_id'];
 
     protected $appends = ['alias'];
 
@@ -20,6 +20,11 @@ class Direction extends Model
     public function courses()
     {
         return $this->hasMany(Course::class);
+    }
+
+    public function type()
+    {
+        return $this->belongsTo(Type::class);
     }
 
     public function getAliasAttribute(){
