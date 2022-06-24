@@ -18,7 +18,7 @@
                     </div>
                 </a>
 
-                <div @if(!$loop->first)hidden@endif id="directions-{{$type->id}}" class="uk-child-width-1-3@s uk-grid-match uk-padding-small uk-padding-remove-horizontal" uk-grid>
+                <div id="directions-{{$type->id}}" class="uk-child-width-1-3@s uk-grid-match uk-padding-small uk-padding-remove-horizontal" uk-grid>
                     @foreach($type->directions as $direction)
                         <div>
                             <a title="{{ $direction->title }} в Тюменском Учебном Центре" href="{{ asset('directions/'.$direction->slug) }}" class="uk-transition-toggle uk-link-reset uk-card uk-card-default uk-card-hover">
