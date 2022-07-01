@@ -15,7 +15,7 @@
                                     @if($user_material->status) <span class="uk-text-success" uk-icon="check"></span>
                                     @else <span uk-icon="minus"></span>
                                     @endif
-                                    <span>{{ $user_material->ordering }}. {{ $user_material->material->title }}</span>
+                                    <span>{{ $user_material->ordering }}. {{ isset($user_material->material->title) ? $user_material->material->title : '' }}</span>
                                     <a href="{{ route('material.show', $user_material->id) }}">открыть</a>
                                 </li>
                             @endforeach
