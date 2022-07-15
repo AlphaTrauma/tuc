@@ -9,6 +9,10 @@
                     <link itemprop="availability" href="http://schema.org/InStock">
                     от <span itemprop="lowPrice">{{ $course->price }}</span> ₽
                 </div>
+            @else
+                <div class="uk-card-badge uk-label uk-label-warning uk-text-bold uk-text-lowercase">
+                    Уточнить у менеджера
+                </div>
             @endif
             <div class="uk-background-center-center uk-background-cover uk-overflow-hidden uk-height-1-1"
                  style='background-image: url("{{ asset($course->image->filepath)}}")'></div>
@@ -36,6 +40,8 @@
 
                         @if($course->price)
                             <p><b>Стоимость обучения: {{ $course->price }} руб.</b></p>
+                            @else
+                            <p><b>Стоимость уточняйте у менеджера</b></p>
                         @endif
                         <p itemprop="description">{{ $course->description }}</p>
                     </div>

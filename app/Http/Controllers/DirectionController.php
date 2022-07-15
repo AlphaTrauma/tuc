@@ -43,7 +43,9 @@ class DirectionController extends Controller
     }
 
     public function show($slug){
-        $item = Direction::where('slug', $slug)->first();
+        $item = Direction::where('slug', $slug)->with(['courses' => function($q){
+            $q->orderBy('title');
+        }])->first();
         if(!$item) return abort(404);
 
         return view('courses.direction', compact('item'));

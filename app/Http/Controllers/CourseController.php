@@ -39,7 +39,7 @@ class CourseController extends Controller
         $item = Course::create($data);
         Image::add($request->file('file'), 'courses/'.$item->id, $item);
 
-        return redirect()->route('directions.index')->with('message', 'Данные курса успешно сохранены');
+        return redirect()->route('directions.by_type', $item->direction->type_id)->with('message', 'Данные курса успешно сохранены');
     }
 
     public function edit($id){
@@ -57,7 +57,7 @@ class CourseController extends Controller
             Image::add($request->file('file'), 'courses/'.$item->id, $item);
         endif;
 
-        return redirect()->route('directions.index')->with('message', 'Данные курса успешно отредактированы');
+        return redirect()->route('directions.by_type', $item->direction->type_id)->with('message', 'Данные курса успешно отредактированы');
     }
 
     public function destroy($id)
