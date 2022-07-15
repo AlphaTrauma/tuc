@@ -20,21 +20,23 @@
 
                 <div {{ $loop->first ? '' : 'hidden' }} id="directions-{{$type->id}}" class="uk-child-width-1-3@s uk-grid-match uk-padding-small uk-padding-remove-horizontal" uk-grid>
                     @foreach($type->directions as $direction)
-                        <div>
-                            <a title="{{ $direction->title }} в Тюменском Учебном Центре" href="{{ asset('directions/'.$direction->slug) }}" class="uk-transition-toggle uk-link-reset uk-card uk-card-default uk-card-hover">
-                                <div class="uk-card-media-top">
-                                    <div class="uk-overflow-hidden" tabindex="0">
-                                        <div class=" uk-transition-scale-up uk-transition-opaque uk-height-medium uk-width-expand uk-background-cover uk-background-center-center"
-                                             style='background-image: url("{{ asset($direction->image->filepath) }}");'>
+                        @if($direction->slug and isset($direction->image->filepath))
+                            <div>
+                                <a title="{{ $direction->title }} в Тюменском Учебном Центре" href="{{ asset('directions/'.$direction->slug) }}" class="uk-transition-toggle uk-link-reset uk-card uk-card-default uk-card-hover">
+                                    <div class="uk-card-media-top">
+                                        <div class="uk-overflow-hidden" tabindex="0">
+                                            <div class=" uk-transition-scale-up uk-transition-opaque uk-height-medium uk-width-expand uk-background-cover uk-background-center-center"
+                                                 style='background-image: url("{{ asset($direction->image->filepath) }}");'>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="uk-card-body">
-                                    <h3 class="uk-card-title">{{ $direction->title }}</h3>
-                                    <p>{{ $direction->description }}</p>
-                                </div>
-                            </a>
-                        </div>
+                                    <div class="uk-card-body">
+                                        <h3 class="uk-card-title">{{ $direction->title }}</h3>
+                                        <p>{{ $direction->description }}</p>
+                                    </div>
+                                </a>
+                            </div>
+                        @endif
                     @endforeach
                 </div>
             </div>
