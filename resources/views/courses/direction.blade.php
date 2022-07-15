@@ -32,7 +32,9 @@
         <div class="uk-padding uk-padding-remove-horizontal">
             <div class="uk-child-width-1-4@m uk-grid uk-grid-match" uk-grid itemscope itemtype="http://schema.org/ItemList">
                 @foreach($item->courses as $course)
-                    @include('courses.course')
+                    @isset($course->image->filepath)
+                        @include('courses.course')
+                    @endisset
                 @endforeach
             </div>
         </div>
