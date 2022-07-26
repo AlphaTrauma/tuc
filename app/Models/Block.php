@@ -20,6 +20,11 @@ class Block extends Model
         return $this->hasMany(Material::class);
     }
 
+    public function test()
+    {
+        return $this->hasOne(Test::class);
+    }
+
     public function previous(){
         return Block::where([['course_id', $this->course_id], ['ordering', ($this->ordering - 1)]])->first();
     }

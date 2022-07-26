@@ -16,12 +16,16 @@ Route::post('/send', [\App\Http\Controllers\LeadController::class, 'store'])->na
 
 Route::get('directions/{slug}', [\App\Http\Controllers\DirectionController::class, 'show'])->name('direction.show');
 
-# middleware is Student
-Route::get('/personal', [\App\Http\Controllers\PersonalController::class, 'index'])->name('personal');
-Route::get('/personal/active', [\App\Http\Controllers\PersonalController::class, 'active'])->name('personal.active');
+Route::middleware([\App\Http\Middleware\IsStudent::class])->group(function(){
+    Route::get('/personal', [\App\Http\Controllers\PersonalController::class, 'index'])->name('personal');
+    Route::get('/personal/active', [\App\Http\Controllers\PersonalController::class, 'active'])->name('personal.active');
+    Route::get('/personal/closed', [\App\Http\Controllers\PersonalController::class, 'closed'])->name('personal.closed');
+    Route::get('/personal/courses/{id}/show', [\App\Http\Controllers\PersonalController::class, 'show'])->name('personal.course');
+    Route::get('/personal/tests/{id}/{block_id}', [\App\Http\Controllers\PersonalController::class, 'test'])->name('personal.test');
+    Route::post('/personal/tests/{id}/{block_id}', [\App\Http\Controllers\PersonalController::class, 'checkTest'])->name('test.check');
 
-Route::get('/personal/material/{id}', [\App\Http\Controllers\MaterialController::class, 'show'])->name('material.show');
-###
+    Route::get('/personal/material/{id}', [\App\Http\Controllers\MaterialController::class, 'show'])->name('material.show');
+});
 
 Route::middleware([\App\Http\Middleware\IsAdmin::class])->group(function () {
 
@@ -76,6 +80,17 @@ Route::middleware([\App\Http\Middleware\IsAdmin::class])->group(function () {
     Route::post('/dashboard/materials/{id}/update', [\App\Http\Controllers\MaterialController::class, 'update'])->name('materials.update');
     Route::get('/dashboard/materials/{id}/delete', [\App\Http\Controllers\MaterialController::class, 'destroy'])->name('materials.delete');
 
+    Route::get('/dashboard/blocks/{id}/test', [\App\Http\Controllers\TestController::class, 'edit'])->name('test.constructor');
+    Route::post('/dashboard/test/{id}/update', [\App\Http\Controllers\TestController::class, 'update']);
+    Route::get('/dashboard/test/{id}/delete', [\App\Http\Controllers\TestController::class, 'delete'])->name('test.delete');
+    Route::get('/dashboard/test/{id}/add', [\App\Http\Controllers\TestController::class, 'addQuestion']);
+    Route::get('/dashboard/question/{id}/add', [\App\Http\Controllers\TestController::class, 'addVariant']);
+    Route::post('/dashboard/question/{id}/update', [\App\Http\Controllers\TestController::class, 'updateQuestion']);
+    Route::get('/dashboard/question/{id}/delete', [\App\Http\Controllers\TestController::class, 'deleteQuestion']);
+    Route::post('/dashboard/variant/{id}/update', [\App\Http\Controllers\TestController::class, 'updateVariant']);
+    Route::get('/dashboard/variant/{id}/delete', [\App\Http\Controllers\TestController::class, 'deleteVariant']);
+    Route::post('/dashboard/question/{id}/set_correct', [\App\Http\Controllers\TestController::class, 'setCorrect']);
+
 
     Route::get('/dashboard/documents', [\App\Http\Controllers\DocumentController::class, 'index'])->name('documents.index');
     Route::post('/dashboard/documents', [\App\Http\Controllers\DocumentController::class, 'store'])->name('documents.store');
@@ -90,6 +105,8 @@ Route::middleware([\App\Http\Middleware\IsAdmin::class])->group(function () {
 
     Route::get('dashboard/leads', [\App\Http\Controllers\LeadController::class, 'index'])->name('leads');
     Route::get('dashboard/leads/{lead}/read', [\App\Http\Controllers\LeadController::class, 'read'])->name('lead.read');
+    Route::get('dashboard/logs', [\Rap2hpoutre\LaravelLogViewer\LogViewerController::class, 'index']);
+    Route::get('dashboard/test', [\App\Http\Controllers\DashboardController::class, 'test']);
 });
 
 

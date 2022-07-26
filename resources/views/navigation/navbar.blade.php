@@ -66,10 +66,6 @@
                                         <li><a itemprop="url" href="/schedule">Режим работы</a></li>
                                         <li><a itemprop="url" href="/documents">Документы</a></li>
                                         <li><a itemprop="url" href="/thanks">Благодарности</a></li>
-                                        {{--
-                                         <li><a href="/managers">Руководство</a></li>
-                                        <li><a href="/teachers">Преподаватели</a></li>
-                                         --}}
                                     </ul>
                                 </div>
                             </li>
@@ -94,8 +90,6 @@
                     </div>
                 </nav>
             </div>
-
-
         </div>
     </div>
 </header>

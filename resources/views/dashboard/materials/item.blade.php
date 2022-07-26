@@ -2,6 +2,7 @@
     <div class="uk-margin-right">
         <span uk-tooltip="{{ $material->type['title'] }}" uk-icon="ratio: 1.2;icon:{{ $material->type['icon'] }}"></span>
         <span>{{ $material->ordering }}. {{ $material->title }} @if($material->download) <span uk-tooltip="Доступен для скачивания" uk-icon="download"></span> @endif</span>
+        @if($material->error) <span class="uk-text-danger">{{ $material->error }}</span>@endif
     </div>
     <ul class="uk-iconnav">
         @switch($material->material_type)
@@ -22,10 +23,10 @@
             @default
                 <a uk-tooltip="Неизвестный тип материала" uk-icon="warning"></a>
         @endswitch
-            <li><a uk-tooltip="Переименовать материал" href="#rename-{{$material->id}}" uk-icon="icon: file-edit" uk-toggle></a></li>
+            <li><a uk-tooltip="Редактировать материал" href="#rename-{{$material->id}}" uk-icon="icon: file-edit" uk-toggle></a></li>
             <div id="rename-{{$material->id}}" class="uk-flex-top" uk-modal>
                 <div class="uk-modal-dialog uk-modal-body uk-margin-auto-vertical">
-                    <h2 class="uk-modal-title">Переименовать материал</h2>
+                    <h2 class="uk-modal-title">Редактировать материал</h2>
                     <form class="uk-form" enctype=multipart/form-data method="POST" action="{{ route('materials.update', $material->id) }}">
                         @csrf
                         <div class="uk-margin">
@@ -34,6 +35,27 @@
                         <div class="uk-margin">
                             <textarea name="description" placeholder="Описание материала" cols="30" rows="10" class="uk-textarea">{{ $material->description }}</textarea>
                         </div>
+                        @if($material->material_type == 'pdf')
+                            <div class="uk-margin">
+                                @if($material->download)
+                                    <label><input class="uk-checkbox" name="download" checked type="checkbox"> Разрешить скачивание</label>
+                                @else
+                                    <label><input class="uk-checkbox" name="download" type="checkbox"> Разрешить скачивание</label>
+                                @endif
+
+                            </div>
+                            @isset($material->document->filepath)
+                                <div class="uk-margin">
+                                    <p><b>Загруженный файл:</b> {{ $material->document->filename }}</p>
+                                </div>
+                            @endisset
+                            <div class="uk-margin">
+                                <div class="uk-width-1-1" uk-form-custom="target: true">
+                                    <input accept=".pdf" type="file" required name="file">
+                                    <input class="uk-input uk-form-width-medium uk-width-1-1" type="text" placeholder="Выбрать файл" disabled>
+                                </div>
+                            </div>
+                        @endif
                         <input type="submit" class="uk-button uk-button-small uk-width-1-1" value="Переименовать">
                     </form>
                 </div>

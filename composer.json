@@ -12,6 +12,7 @@
         "laravel/sanctum": "^2.11",
         "laravel/tinker": "^2.5",
         "laravel/ui": "^3.4",
+        "rap2hpoutre/laravel-log-viewer": "^2.2",
         "ultramsg/whatsapp-php-sdk": "^2.0"
     },
     "require-dev": {

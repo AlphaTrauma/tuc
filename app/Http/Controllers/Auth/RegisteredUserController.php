@@ -111,7 +111,7 @@ class RegisteredUserController extends Controller
 
     public function students(Request $request)
     {
-        $users = User::with('courses')->where('role', 'student')->orderBy('id', 'desc');
+        $users = User::with('user_courses.course')->where('role', 'student')->orderBy('id', 'desc');
         $courses = Course::query()->orderBy('title')->pluck('title', 'id')->toArray();
         if($request->has('search')):
             $query = $request->input('search');

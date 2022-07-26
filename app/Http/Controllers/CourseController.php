@@ -19,9 +19,36 @@ class CourseController extends Controller
         return view('dashboard.courses.index', compact('items'));
     }
 
-    public function show($id)
+    public function show(Request $request, $id)
     {
-        $item = Course::with('blocks')->find($id);
+        $item = Course::with(['blocks.materials', 'blocks.test.questions'])->find($id);
+        if($request->has('check')):
+            $item->blocks->each(function($block){
+                $block->materials->each(function($material){
+                    $material->load(['document', 'image']);
+                    switch($material->material_type):
+                        case('pdf'):
+                            if($material->document):
+                                if(!file_exists($material->document->filepath)):
+                                    $material->error = 'Не найден файл PDF';
+                                endif;
+                            else:
+                                $material->error = 'Не привязан документ PDF';
+                            endif;
+                            break;
+                        case('image'):
+                            if($material->image):
+                                if(!file_exists($material->image->filepath)):
+                                    $material->error = 'Не найден файл изображения';
+                                endif;
+                            else:
+                                $material->error = 'Изображение не привязано';
+                            endif;
+                            break;
+                    endswitch;
+                });
+            });
+        endif;
 
         return view('dashboard.courses.show', compact('item'));
     }

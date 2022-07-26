@@ -33,14 +33,7 @@ class MaterialController extends Controller
                 case('image'):
                     Image::add($request->file('file'), 'materials/'.$block->id.'/'.$item->id, $item);
                 break;
-                #case('video'):
-                #break;
-                #case('link'):
-                #break;
-                #case('youtube'):
-                #break;
             endswitch;
-
         endif;
 
         return back()->with('message', 'Успешно добавлен новый материал');
@@ -49,8 +42,24 @@ class MaterialController extends Controller
     public function update(Request $request, $id)
     {
         $data = $request->except('_token');
-        $material = Material::find($id);
+        $material = Material::with('block')->find($id);
+        if($material->material_type):
+            $data['download'] = isset($data['download']) ? 1 : 0;
+        endif;
         $material->update($data);
+
+        if($request->hasFile('file')):
+            switch($material->material_type):
+                case('pdf'):
+                    if($material->document) $material->document->delete();
+                    Document::add($request->file('file'), 'materials/'.$material->block->id.'/'.$material->id, $material);
+                    break;
+                case('image'):
+                    if($material->image) $material->image->delete();
+                    Image::add($request->file('file'), 'materials/'.$material->block->id.'/'.$material->id, $material);
+                    break;
+            endswitch;
+        endif;
 
         return back()->with('message', 'Материал успешно отредактирован');
     }

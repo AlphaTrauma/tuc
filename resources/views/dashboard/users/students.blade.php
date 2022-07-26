@@ -15,8 +15,12 @@
                 <span class="uk-icon" uk-icon="icon: email"></span> <i>{{ $user->email }}</i>
             </div>
             <ul class="uk-list-striped uk-list">
-                @forelse($user->courses as $course)
-                    <ul>{{ $course->title }}</ul>
+                @forelse($user->user_courses as $user_course)
+                    @if($user_course->status)
+                        <ul class="uk-text-success"><b>{{ $user_course->course->title }}</b> <span uk-icon="icon: check; ratio: 1.2"></span></ul>
+                    @else
+                        <ul>{{ $user_course->course->title }}</ul>
+                    @endif
                 @empty
                     У пользователя нет курсов.
                 @endforelse

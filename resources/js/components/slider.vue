@@ -18,7 +18,6 @@
         components: {SliderItem},
         mounted(){
             this.load()
-            console.log(this.last);
         },
         computed: {
             ...mapGetters({

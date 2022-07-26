@@ -17,10 +17,12 @@ class UserCourse extends Model
         parent::boot();
 
         self::created(function($model){
-            $model->load(['course', 'course.blocks']);
-            foreach($model->course->blocks as $block):
+            $model->load(['course', 'course.blocks.test']);
+            foreach($model->course->blocks as $i => $block):
+                $status = 0;
+                if($i > 0) $status = ($model->course->blocks[$i - 1]->test and $block->test) ? 1 : 0;
                 $model->user_blocks()->create(['user_course_id' => $model->course->id, 'block_id' => $block->id,
-                    'ordering' => $block->ordering]);
+                    'ordering' => $block->ordering, 'status' => $status]);
             endforeach;
 
         });

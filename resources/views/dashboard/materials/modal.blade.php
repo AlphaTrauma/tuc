@@ -4,9 +4,9 @@
     <li><a href="#create-link-{{$block->id}}" uk-toggle>Ссылка</a></li>
     <li><a href="#create-image-{{$block->id}}" uk-toggle>Изображение</a></li>
     <li class="uk-nav-divider"></li>
-    <li><a class="uk-disabled">Текстовый материал</a></li>
-    <li><a class="uk-disabled">Видео</a></li>
-    <li><a class="uk-disabled"><b>Тестирование</b></a></li>
+    @if(!$block->test)
+        <li><a href="{{ route('test.constructor', $block->id) }}"><b>Тестирование</b></a></li>
+    @endif
 </ul>
 
 <div id="create-pdf-{{$block->id}}" class="uk-flex-top" uk-modal>
