@@ -49,7 +49,8 @@
                         <div class="uk-inline-block uk-width-expand"><span class="uk-badge uk-label-danger uk-float-right">{{$leads_count}}</span></div>
                     @endif
                 </a></li>
-            <li><a href="{{ route('settings') }}" class="uk-text-bold"><span class="uk-margin-small-right" uk-icon="icon: cog"></span>Настройки</a></li>
+            <li><a href="{{ route('settings') }}" class="uk-text-bold"><span class="uk-margin-small-right" uk-icon="icon: settings"></span>Настройки</a></li>
+            <li><a href="{{ route('logs') }}" class="uk-text-bold"><span class="uk-margin-small-right" uk-icon="icon: cog"></span>Технический лог</a></li>
 
             <li class="uk-grid-small uk-flex-middle uk-padding-small" uk-grid>
                 <div>

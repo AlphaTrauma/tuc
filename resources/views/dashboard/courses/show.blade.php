@@ -37,8 +37,7 @@
                                         </div>
                                         <ul class="uk-iconnav">
                                             <li><a uk-tooltip="Редактировать тест" href="{{ route('test.constructor', $block->id) }}" uk-icon="file-edit"></a></li>
-                                            <li><a uk-tooltip="Удалить тест" href="{{ route('test.delete', $block->test->id) }}"
-                                                   uk-icon="icon: trash"></a></li>
+                                            <li><a uk-tooltip="Удалить тест" href="{{ route('test.delete', $block->test->id) }}" uk-icon="icon: trash"></a></li>
                                         </ul>
                                     </li>
                             @endif

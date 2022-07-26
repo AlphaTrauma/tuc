@@ -105,7 +105,7 @@ Route::middleware([\App\Http\Middleware\IsAdmin::class])->group(function () {
 
     Route::get('dashboard/leads', [\App\Http\Controllers\LeadController::class, 'index'])->name('leads');
     Route::get('dashboard/leads/{lead}/read', [\App\Http\Controllers\LeadController::class, 'read'])->name('lead.read');
-    Route::get('dashboard/logs', [\Rap2hpoutre\LaravelLogViewer\LogViewerController::class, 'index']);
+    Route::get('dashboard/logs', [\Rap2hpoutre\LaravelLogViewer\LogViewerController::class, 'index'])->name('logs');
     Route::get('dashboard/test', [\App\Http\Controllers\DashboardController::class, 'test']);
 });
 

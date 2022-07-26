@@ -4,25 +4,27 @@
         <span>{{ $material->ordering }}. {{ $material->title }} @if($material->download) <span uk-tooltip="Доступен для скачивания" uk-icon="download"></span> @endif</span>
         @if($material->error) <span class="uk-text-danger">{{ $material->error }}</span>@endif
     </div>
-    <ul class="uk-iconnav">
-        @switch($material->material_type)
-            @case('pdf')
-                @isset($material->document->filepath)
-                    <a target="_blank" uk-tooltip="Открыть" href="{{ asset($material->document->filepath) }}" uk-icon="cloud-download"></a>
-                @endisset
-            @break
-            @case('youtube')
-                <a target="_blank" uk-tooltip="Открыть" href="https://www.youtube.com/watch?v={{ $material->url }}" uk-icon="cloud-download"></a>
-            @break
-            @case('link')
-                <a target="_blank" uk-tooltip="Открыть" href="{{ $material->url }}" uk-icon="cloud-download"></a>
-            @break
-            @case('image')
-                <a target="_blank" uk-tooltip="Открыть" href="{{ asset($material->image->filepath) }}" uk-icon="cloud-download"></a>
-            @break
-            @default
-                <a uk-tooltip="Неизвестный тип материала" uk-icon="warning"></a>
-        @endswitch
+    <ul class="uk-iconnav uk-width-small uk-flex-right">
+            <li>
+                @switch($material->material_type)
+                    @case('pdf')
+                    @isset($material->document->filepath)
+                        <a target="_blank" uk-tooltip="Открыть" href="{{ asset($material->document->filepath) }}" uk-icon="cloud-download"></a>
+                    @endisset
+                    @break
+                    @case('youtube')
+                    <a target="_blank" uk-tooltip="Открыть" href="https://www.youtube.com/watch?v={{ $material->url }}" uk-icon="cloud-download"></a>
+                    @break
+                    @case('link')
+                    <a target="_blank" uk-tooltip="Открыть" href="{{ $material->url }}" uk-icon="cloud-download"></a>
+                    @break
+                    @case('image')
+                    <a target="_blank" uk-tooltip="Открыть" href="{{ asset($material->image->filepath) }}" uk-icon="cloud-download"></a>
+                    @break
+                    @default
+                    <a uk-tooltip="Неизвестный тип материала" uk-icon="warning"></a>
+                @endswitch
+            </li>
             <li><a uk-tooltip="Редактировать материал" href="#rename-{{$material->id}}" uk-icon="icon: file-edit" uk-toggle></a></li>
             <div id="rename-{{$material->id}}" class="uk-flex-top" uk-modal>
                 <div class="uk-modal-dialog uk-modal-body uk-margin-auto-vertical">
@@ -61,7 +63,7 @@
                 </div>
             </div>
             <li>
-                <a uk-tooltip="Удалить материал"  href="{{ route('materials.delete', $material->id) }}"
+                <a uk-tooltip="Удалить материал" class="uk-text-danger" href="{{ route('materials.delete', $material->id) }}"
                    uk-icon="icon: trash">
                 </a>
             </li>
