@@ -1,7 +1,7 @@
 @extends('layouts.dashboard')
 
 @section('title')
-    Тестовая
+    Конструктор теста
 @endsection
 
 @section('content')
