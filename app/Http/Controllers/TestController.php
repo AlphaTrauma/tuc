@@ -20,7 +20,8 @@ class TestController extends Controller
             else:
                 $test = $block->test()->create([
                     'title' => 'Новый тест',
-                    'description' => 'Описание нового теста'
+                    'description' => 'Описание нового теста',
+                    'threshold' => 70
                 ]);
             endif;
             return response(['test' => $test]);

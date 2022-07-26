@@ -2,11 +2,11 @@
     <div class="uk-card uk-card-default uk-margin-bottom">
         <div class="uk-card-header">
             <input v-if="data.edit.type === 'question' && data.edit.id === question.id" v-model="question.text"
-                   class="uk-input uk-form-blank uk-width-auto" @blur="update" @keyup.enter="update" type="text">
-            <span v-else class="uk-margin-left">{{ question.text }} <a class="uk-link-text" @click="setEdit(question)" uk-icon="pencil"></a></span>
+                   class="uk-input uk-form-blank uk-width-auto uk-text-bold" @blur="update" @keyup.enter="update" type="text">
+            <span v-else class="uk-margin-left uk-text-bold">{{ question.text }} <a class="uk-link-text" @click="setEdit(question)" uk-icon="pencil"></a></span>
             <div class="uk-float-right uk-flex">
                 <ul class="uk-iconnav">
-                    <li><a class="uk-drag" uk-tooltip="Перетащить для изменения порядка вопросов" uk-icon="icon: move"></a></li>
+                    <li hidden><a class="uk-drag" uk-tooltip="Перетащить для изменения порядка вопросов" uk-icon="icon: move"></a></li>
                     <li v-if="question.variants.length < 1"><a @click="remove(question)" uk-tooltip="Удалить вопрос (если удалены ответы)" uk-icon="icon: trash"></a></li>
                 </ul>
             </div>

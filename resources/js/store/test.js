@@ -5,6 +5,7 @@ export default {
             id: null,
             title: '',
             description: '',
+            threshold: null,
             edit: {
                 type: null,
                 id: null
@@ -25,6 +26,7 @@ export default {
             state.questions = payload.test.questions ? payload.test.questions : [];
             state.data.id = payload.test.id;
             state.data.title = payload.test.title;
+            state.data.threshold = payload.test.threshold;
             state.data.description = payload.test.description;
         },
         addQuestion(state, payload){
