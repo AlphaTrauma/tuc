@@ -1,5 +1,5 @@
 <div class="uk-box-shadow-medium uk-container-expand">
-    <nav uk-sticky="sel-target: .uk-navbar-container; cls-active: uk-navbar-sticky;" class="uk-navbar-container uk-container" uk-navbar>
+    <nav class="uk-navbar-container uk-container" uk-navbar>
 
         <div class="uk-navbar-left uk-visible@s">
             <ul class="uk-navbar-nav">
