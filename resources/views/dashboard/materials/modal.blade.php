@@ -49,8 +49,9 @@
             <div class="uk-margin">
                 <textarea name="description" placeholder="Описание материала" id="" cols="30" rows="10" class="uk-textarea"></textarea>
             </div>
-            <div class="uk-margin uk-text-center">
-                <input type="text" class="uk-input" name="url" required placeholder="Идентификатор видео или полная ссылка">
+            <div class="uk-margin">
+                <input type="text" class="uk-input" name="url" required placeholder="Идентификатор видео">
+                <small>Идентификатор это последняя часть ссылки на видео, к примеру l3vsBPEeaf8 из ссылки https://www.youtube.com/watch?v=l3vsBPEeaf8.</small>
             </div>
             <input type="submit" class="uk-button uk-button-small uk-width-1-1" value="Прикрепить">
         </form>

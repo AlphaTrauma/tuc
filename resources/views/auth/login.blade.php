@@ -30,6 +30,7 @@
                         <input type="submit" class="uk-button uk-button-primary" value="Войти">
                     </div>
 
+                    {{--
                     <div class="uk-margin">
                         @if (Route::has('password.request'))
                             <a class="uk-button uk-button-link" href="{{ route('password.request') }}">
@@ -37,6 +38,7 @@
                             </a>
                         @endif
                     </div>
+                    --}}
 
                 </fieldset>
             </form>

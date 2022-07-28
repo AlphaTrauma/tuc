@@ -31,6 +31,14 @@
                     <h2 class="uk-modal-title">Редактировать материал</h2>
                     <form class="uk-form" enctype=multipart/form-data method="POST" action="{{ route('materials.update', $material->id) }}">
                         @csrf
+                        <div class="uk-form-horizontal">
+                            <div class="uk-margin">
+                                <label class="uk-form-label" for="ordering">Порядковый номер</label>
+                                <div class="uk-form-controls">
+                                    <input type="number" name="ordering" id="ordering" placeholder="Порядковый номер" value="{{ $material->ordering }}" class="uk-input">
+                                </div>
+                            </div>
+                        </div>
                         <div class="uk-margin">
                             <input name="title" type="text" class="uk-input" required placeholder="Название материала" value="{{ $material->title }}">
                         </div>
@@ -44,7 +52,6 @@
                                 @else
                                     <label><input class="uk-checkbox" name="download" type="checkbox"> Разрешить скачивание</label>
                                 @endif
-
                             </div>
                             @isset($material->document->filepath)
                                 <div class="uk-margin">
@@ -58,7 +65,7 @@
                                 </div>
                             </div>
                         @endif
-                        <input type="submit" class="uk-button uk-button-small uk-width-1-1" value="Переименовать">
+                        <input type="submit" class="uk-button uk-button-small uk-width-1-1" value="Изменить">
                     </form>
                 </div>
             </div>
