@@ -4,7 +4,7 @@
         <div>
             @if($user_material->previous())
                 <a uk-tooltip="Перейти к предыдущему материалу модуля" href="{{ route('material.show', $user_material->previous()->id) }}" class="uk-button uk-button-text uk-float-left">
-                    <span uk-icon="arrow-left" class="uk-margin-small-right"></span><span class="uk-visible@s">Предыдущий материал</span>
+                    <span uk-icon="arrow-left" class="uk-margin-small-right"></span>Предыдущий материал
                 </a>
             @else
                 @php($prev_block = $user_material->user_block->previous())
@@ -15,10 +15,12 @@
                 @endif
             @endif
         </div>
-        <div class="uk-width-large">
+        <div class="uk-width-large uk-visible@s">
             <a uk-toggle="target: #list; animation: uk-animation-slide-top-small" class="uk-button uk-button-default uk-width-1-1 uk-margin-small-bottom">Содержание модуля</a>
             <div id="list" hidden>
-                <h4 class="uk-heading uk-heading-line">{{ $user_material->user_block->block->course->title }}</h4>
+                <h4 class="uk-heading uk-heading-line">
+                    <a class="uk-link-text" href="{{ route('personal.course', $user_material->user_block->user_course_id) }}">{{ $user_material->user_block->block->course->title }}</a>
+                </h4>
                 <ul class="uk-nav uk-nav-default uk-width-large">
                     <li class="uk-nav-header">{{ $user_material->user_block->block->ordering }}. {{ $user_material->user_block->block->title }}
                         @if($user_material->user_block->status)
@@ -45,8 +47,10 @@
                     Следующий материал<span uk-icon="arrow-right" class="uk-margin-small-left"></span>
                 </a>
             @else
-                @php($next_block = $user_material->user_block->next())
-                @if($next_block)
+                @if($user_material->user_block->block->test)
+                    <a href="{{ route('personal.test', ['id' => $user_material->user_block->block->test->id, 'block_id' => $user_material->user_block->id]) }}"
+                       class="uk-button uk-button-success uk-float-left">Тестирование</a>
+                @elseif($user_material->user_block->next())
                     <a href="{{ route('material.show', $next_block->first_material()->id) }}" class="uk-button uk-button-text uk-float-left">
                         Следующий модуль<span uk-icon="arrow-right" class="uk-margin-small-left"></span>
                     </a>

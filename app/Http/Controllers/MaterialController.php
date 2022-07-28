@@ -80,8 +80,8 @@ class MaterialController extends Controller
 
     public function show($id)
     {
-        $user_material = UserMaterial::with('material', 'user_block', 'user_block.block', 'user_block.block.course',
-            'user_block.user_materials', 'user_block.user_materials.material')->find($id);
+        $user_material = UserMaterial::with('material', 'user_block.block.course', 'user_block.block.test',
+            'user_block.user_materials.material')->find($id);
         $material = $user_material->material;
 
         if($material and $user_material):

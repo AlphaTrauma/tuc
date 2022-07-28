@@ -2,10 +2,9 @@
 
 @section('content')
     @include('personal.courses.materials.nav')
-
     <h2>{{ $material->title }}
         @if($material->download)
-            <a href="{{ asset($material->document->filepath) }}" download class="uk-button uk-button-primary uk-float-right">Скачать<span class="uk-margin-small-left" uk-icon="download"></span></a></p>
+            <a href="{{ asset($material->document->filepath) }}" download class="uk-button uk-button-primary uk-float-right">Скачать<span class="uk-margin-small-left" uk-icon="download"></span></a>
         @endif
     </h2>
     <p>{{ $material->description }}</p>

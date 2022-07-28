@@ -4,7 +4,7 @@
     <h1>Завершённые курсы:</h1>
     <table class="uk-table uk-table-striped">
         @forelse($items as $user_course)
-            <div class="uk-card uk-card-default uk-card-body">
+            <div class="uk-card uk-card-default uk-card-body uk-margin-bottom">
                 <h2 class="uk-card-title">{{ $user_course->course->title }} ({{ $user_course->course->length }}
                     часов)
                 </h2>
@@ -12,11 +12,8 @@
             </div>
         @empty
             <tr>
-                <td>Курсы отсутствуют.</td>
-                <td>
-                    <a href="/all_directions"
-                       class="uk-button uk-button-small uk-button-success uk-float-right">Выбрать</a>
-                </td>
+                <td>Завершённые курсы отсутствуют.</td>
+                <td></td>
             </tr>
         @endforelse
     </table>
