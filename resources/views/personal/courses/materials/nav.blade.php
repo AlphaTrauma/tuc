@@ -51,7 +51,7 @@
                     <a href="{{ route('personal.test', ['id' => $user_material->user_block->block->test->id, 'block_id' => $user_material->user_block->id]) }}"
                        class="uk-button uk-button-success uk-float-left">Тестирование</a>
                 @elseif($user_material->user_block->next())
-                    <a href="{{ route('material.show', $next_block->first_material()->id) }}" class="uk-button uk-button-text uk-float-left">
+                    <a href="{{ route('material.show', $user_material->user_block->next()->first_material()->id) }}" class="uk-button uk-button-text uk-float-left">
                         Следующий модуль<span uk-icon="arrow-right" class="uk-margin-small-left"></span>
                     </a>
                 @endif
