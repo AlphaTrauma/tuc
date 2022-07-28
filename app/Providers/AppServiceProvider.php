@@ -37,8 +37,9 @@ class AppServiceProvider extends ServiceProvider
             ];
             $directions = Direction::where('status', 1)->pluck('title', 'slug')->toArray();
             $contacts = Settings::query()->pluck('value', 'key')->toArray();
+            $pricelist = Settings::where('key', 'pricelist')->with('document')->first();
 
-            $view->with(compact('pages', 'directions', 'contacts'));
+            $view->with(compact('pages', 'directions', 'contacts', 'pricelist'));
         });
         View::composer('dashboard.navigation', function($view){
             $leads_count = \App\Models\Lead::where('status', 0)->count();

@@ -10,4 +10,8 @@ class Settings extends Model
     use HasFactory;
 
     protected $fillable = ['key', 'value', 'type'];
+
+    public function document(){
+        return $this->morphOne(Document::class, 'entity');
+    }
 }

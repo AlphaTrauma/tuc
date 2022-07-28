@@ -8,7 +8,7 @@
     <h1>Настройки сайта</h1>
     @include('blocks.errors')
     <hr>
-    <form class="uk-form-horizontal" method="POST" action="{{ route('settings.save') }}">
+    <form class="uk-form-horizontal" method="POST" enctype="multipart/form-data" action="{{ route('settings.save') }}">
         @csrf
         <h2>Контакты и реквизиты</h2>
         <div class="uk-margin-small">
@@ -63,6 +63,19 @@
             <label class="uk-form-label" for="license">Лицензия</label>
             <div class="uk-form-controls">
                 <input class="uk-input" required name="license" id="license" type="text"  value="{{ $settings['license']->value }}">
+            </div>
+        </div>
+        <hr>
+        <h2>Прайс-лист</h2>
+        @isset($settings['pricelist']->document->filepath)
+            <p>Загруженный файл: <a class="uk-link-text" href="{{ asset($settings['pricelist']->document->filepath) }}">
+                {{ $settings['pricelist']->document->filename }}</a>
+            </p>
+        @endisset
+        <div class="uk-margin">
+            <div class="uk-width-1-1" uk-form-custom="target: true">
+                <input accept=".pdf" type="file" required name="file">
+                <input class="uk-input uk-form-width-medium uk-width-1-1" type="text" placeholder="Выбрать файл" disabled>
             </div>
         </div>
         <hr>

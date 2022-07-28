@@ -69,7 +69,9 @@
                                     </ul>
                                 </div>
                             </li>
-                            <li><a target="_blank" href="{{ asset('/uploads/documents/Прейскурант цен НК ООО ТУЦ.pdf') }}" uk-icon="icon: download">Прайс-лист</a></li>
+                            @isset($pricelist->document->filepath)
+                                <li><a target="_blank" href="{{ asset($pricelist->document->filepath) }}" uk-icon="icon: download">Прайс-лист</a></li>
+                            @endisset
                             <li @isset($page) @if($page->slug === 'contacts') class="uk-active" @endif @endisset ><a itemprop="url" href="/contacts">Контакты</a></li>
                         </ul>
 
