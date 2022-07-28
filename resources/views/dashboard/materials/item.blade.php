@@ -60,7 +60,7 @@
                             @endisset
                             <div class="uk-margin">
                                 <div class="uk-width-1-1" uk-form-custom="target: true">
-                                    <input accept=".pdf" type="file" required name="file">
+                                    <input accept=".pdf" type="file" name="file">
                                     <input class="uk-input uk-form-width-medium uk-width-1-1" type="text" placeholder="Выбрать файл" disabled>
                                 </div>
                             </div>
