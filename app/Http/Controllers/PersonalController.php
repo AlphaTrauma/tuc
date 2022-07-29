@@ -78,8 +78,10 @@ class PersonalController extends Controller
         $course->load('user_blocks.user_test');
         $check = true;
         foreach($course->user_blocks as $user_block):
-            if(!$user_block->user_test->done_at):
-                $check = false;
+            if($user_block->user_test):
+                if(!$user_block->user_test->done_at):
+                    $check = false;
+                endif;
             endif;
         endforeach;
         return $check;
