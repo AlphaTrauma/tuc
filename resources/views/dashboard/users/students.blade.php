@@ -17,9 +17,9 @@
             <ul class="uk-list-striped uk-list">
                 @forelse($user->user_courses as $user_course)
                     @if($user_course->status)
-                        <ul class="uk-text-success"><b>{{ $user_course->course->title }}</b> <span uk-icon="icon: check; ratio: 1.2"></span></ul>
+                        <li class="uk-text-success"><b>{{ $user_course->course->title }}</b> <span uk-icon="icon: check; ratio: 1.2"></span></li>
                     @else
-                        <ul>{{ $user_course->course->title }}</ul>
+                        <li>{{ $user_course->course->title }}</li>
                     @endif
                 @empty
                     У пользователя нет курсов.
