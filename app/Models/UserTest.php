@@ -9,7 +9,7 @@ class UserTest extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['user_block_id', 'result', 'done_at'];
+    protected $fillable = ['user_block_id', 'result', 'done_at', 'test_id'];
 
     protected $dates = ['done_at'];
 
