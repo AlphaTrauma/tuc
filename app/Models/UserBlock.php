@@ -22,7 +22,7 @@ class UserBlock extends Model
                 $model->user_materials()->create(['user_block_id' => $model->block->id, 'material_id' => $material->id,
                     'ordering' => $material->ordering]);
             endforeach;
-            if($model->user_test) $model->user_test()->create(['test_id' => $model->block->test->id, 'result' => 0]);
+            if($model->block->test) $model->user_test()->create(['test_id' => $model->block->test->id, 'result' => 0]);
 
         });
 
