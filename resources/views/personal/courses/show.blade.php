@@ -27,15 +27,20 @@
                             @if(!$user_block->status)<a href="{{ route('material.show', $user_material->id) }}">открыть</a>@endif
                         </li>
                     @endforeach
-                    @if($user_block->block->test and $user_block->user_test)
+                    @if($user_block->block->test)
                         <li>
                             @if($user_block->status)
                                 <span uk-tooltip="Завершите предыдущий модуль, чтобы получить доступ к тестированию" class="uk-text-danger" uk-icon="lock"></span>
-                            @elseif($user_block->user_test->done_at)
-                                <span uk-tooltip="Тест успешно пройден" class="uk-text-success" uk-icon="check"></span>
+                            @else
+                                @if($user_block->user_test)
+                                    @if($user_block->user_test->done_at)
+                                        <span uk-tooltip="Тест успешно пройден" class="uk-text-success" uk-icon="check"></span>
+                                    @endif
+                                @endif
                             @endif
                             <span><b>{{ $user_block->user_materials->count() + 1 }}. {{ $user_block->block->test->title }}</b></span>
-                                @if($user_block->user_test->done_at)<span class="uk-text-muted">(завершён {{ $user_block->user_test->done_at->format('d.m.Y') }})</span>@endif
+
+                            @isset($user_block->user_test->done_at)<span class="uk-text-muted">(завершён {{ $user_block->user_test->done_at->format('d.m.Y') }})</span>@endisset
                             @if(!$user_block->status)<a href="{{ route('personal.test', ['id' => $user_block->block->test->id, 'block_id' => $user_block->id]) }}">
                                     пройти
                                 </a>
