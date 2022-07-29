@@ -14,6 +14,7 @@
                     @endif
                     {{ $user_block->block->title }}
                 </h4>
+                </h4>
                 <ul class="uk-list uk-list-divider uk-margin-left">
                     @foreach($user_block->user_materials as $user_material)
                         <li>
@@ -26,7 +27,7 @@
                             @if(!$user_block->status)<a href="{{ route('material.show', $user_material->id) }}">открыть</a>@endif
                         </li>
                     @endforeach
-                    @if($user_block->block->test)
+                    @if($user_block->block->test and $user_block->user_test)
                         <li>
                             @if($user_block->status)
                                 <span uk-tooltip="Завершите предыдущий модуль, чтобы получить доступ к тестированию" class="uk-text-danger" uk-icon="lock"></span>

@@ -18,8 +18,8 @@
                     <div class=" uk-position-relative uk-margin-bottom">
                         <span>{{ $block->ordering }}. {{ $block->title }}</span>
                         <ul class="uk-iconnav uk-position-absolute uk-position-center-right uk-padding-small uk-flex-nowrap">
-                            <li><a uk-tooltip="Редактировать блок" href="{{ route('blocks.edit', $block->id) }}" uk-icon="icon: file-edit"></a></li>
-                            <li><a uk-tooltip="Удалить блок" href="{{ route('blocks.delete', ['id' => $block->id]) }}"
+                            <li><a uk-tooltip="Редактировать модуль" href="{{ route('blocks.edit', $block->id) }}" uk-icon="icon: file-edit"></a></li>
+                            <li><a uk-tooltip="Удалить модуль" href="{{ route('blocks.delete', ['id' => $block->id]) }}"
                                    uk-icon="icon: trash">
                                 </a></li>
                         </ul>
@@ -54,6 +54,6 @@
                 </div>
             @endforeach
         </div>
-        <a uk-tooltip="Создать блок" class="uk-button uk-button-success uk-width-1-1" uk-icon="plus" href="{{ route('blocks.create', $item->id) }}"></a>
+        <a uk-tooltip="Создать модуль" class="uk-button uk-button-success uk-width-1-1" uk-icon="plus" href="{{ route('blocks.create', $item->id) }}"></a>
     </section>
 @endsection

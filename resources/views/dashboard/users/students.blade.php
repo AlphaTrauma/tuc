@@ -26,10 +26,10 @@
                 @endforelse
             </ul>
             <ul class="uk-iconnav uk-width-small uk-card-badge uk-background-default uk-flex-right">
-                <li><a title="Добавить курс" href="#add-course-{{ $user->id }}" uk-toggle uk-icon="icon: plus"></a></li>
-                <li><a title="Открыть профиль" href="{{ route('user.show', $user->id) }}" uk-icon="icon: user"></a></li>
-                <li><a title="Редактировать данные" href="{{ route('user.edit', $user->id) }}" uk-icon="icon: file-edit"></a></li>
-                <li><a title="Удалить пользователя" href="#" uk-icon="icon: trash"></a></li>
+                <li><a uk-tooltip="Добавить курс" href="#add-course-{{ $user->id }}" uk-toggle uk-icon="icon: plus"></a></li>
+                <li><a uk-tooltip="Открыть профиль" href="{{ route('user.show', $user->id) }}" uk-icon="icon: user"></a></li>
+                <li><a uk-tooltip="Редактировать данные" href="{{ route('user.edit', $user->id) }}" uk-icon="icon: file-edit"></a></li>
+                <li><a uk-tooltip="Удалить пользователя" href="#" uk-icon="icon: trash"></a></li>
             </ul>
         </div>
         <div id="add-course-{{ $user->id }}" class="uk-flex-top" uk-modal>
