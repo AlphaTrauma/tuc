@@ -32,8 +32,8 @@
                     </div>
                     <div class="uk-position-right uk-overlay uk-overlay-default uk-card-body uk-transition-fade uk-height-1-1 uk-flex uk-flex-middle">
                         <ul class="uk-iconnav uk-iconnav-vertical">
-                            <li><a @click.prevent="remove(slide)" title="Удалить слайд" class="uk-text-danger" href="#" uk-icon="icon: close; ratio: 2"></a></li>
-                            <li><a title="Перетащить слайд" class="uk-drag" href="#" uk-icon="icon: move; ratio: 2"></a></li>
+                            <li><a @click.prevent="remove(slide)" uk-tooltip="Удалить слайд" class="uk-text-danger" href="#" uk-icon="icon: close; ratio: 2"></a></li>
+                            <li hidden><a title="Перетащить слайд" class="uk-drag" href="#" uk-icon="icon: move; ratio: 2"></a></li>
                         </ul>
                     </div>
                 </div>

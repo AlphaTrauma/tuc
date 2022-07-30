@@ -13,7 +13,7 @@
         <span v-else class="uk-margin-left">{{ variant.text }} <a @click="setEdit(variant)" class="uk-link-text" uk-icon="pencil"></a></span>
         <div class="uk-float-right uk-flex">
             <ul class="uk-iconnav">
-                <li><a class="uk-drag" uk-tooltip="Перетащить для изменения порядка ответов" uk-icon="icon: move"></a></li>
+                <li hidden><a class="uk-drag" uk-tooltip="Перетащить для изменения порядка ответов" uk-icon="icon: move"></a></li>
                 <li><a @click="remove({item: variant, question: question})" uk-tooltip="Удалить" uk-icon="icon: trash"></a></li>
             </ul>
         </div>
