@@ -25,7 +25,7 @@
                     <td>{{ $item->phone }}</td>
                     <td>{{ $item->name }}</td>
                     <td>{{ $item->email }}</td>
-                    <td>{{ idn_to_utf8($item->page) }}</td>
+                    <td>{{ $item->page }}</td>
                     <td style="word-wrap: break-word; max-width: 300px;">{{ $item->comment }}</td>
                     <td>{{ $item->created_at->diffForHumans() }}</td>
                     <td>

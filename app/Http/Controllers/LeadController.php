@@ -28,7 +28,7 @@ class LeadController extends Controller
             (isset($data['phone']) ? '<b>Телефон:</b> '.$data['phone'].PHP_EOL : '').
             (isset($data['email']) ? '<b>E-mail:</b> '.$data['email'].PHP_EOL : '').
             (isset($data['name']) ? '<b>Имя:</b> '.$data['name'].PHP_EOL : '').
-            (isset($data['page']) ? '<b>Страница:</b> '.idn_to_utf8($data['page'].PHP_EOL) : '').
+            (isset($data['page']) ? '<b>Страница:</b> '.$data['page'].PHP_EOL : '').
             (isset($data['course']) ? '<b>Курс:</b> '.$data['course'].PHP_EOL : '').
             (isset($data['comment']) ? '<b>Комментарий:</b> '.$data['comment'] : '');
         $data = [
