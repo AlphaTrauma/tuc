@@ -25,7 +25,7 @@
                     <td>{{ $item->phone }}</td>
                     <td>{{ $item->name }}</td>
                     <td>{{ $item->email }}</td>
-                    <td>{{ $item->page }}</td>
+                    <td>{{ str_replace("xn--r1acj.xn--p1ai", "туц.рф", $item->page) }}</td>
                     <td style="word-wrap: break-word; max-width: 300px;">{{ $item->comment }}</td>
                     <td>{{ $item->created_at->diffForHumans() }}</td>
                     <td>
