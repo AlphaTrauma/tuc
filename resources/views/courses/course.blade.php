@@ -18,8 +18,9 @@
                  style='background-image: url("{{ asset($course->image->filepath)}}")'></div>
             <div class="uk-overlay uk-overlay-primary uk-position-bottom uk-height-small uk-flex uk-flex-middle uk-flex-center">
                 <div>
-                    <p class="button-{{ $course->id }}" itemprop="name">{{ $course->title }}</p>
-                    <a hidden href="#modal-{{ $course->id }}" uk-toggle class="uk-button uk-button-default button-{{ $course->id }}">Подробности</a>
+                    <p class="button-{{ $course->id }} crop_text" itemprop="name">{{ $course->title }}</p>
+                    <a hidden href="#modal-{{ $course->id }}" uk-toggle uk-tooltip="{{ $course->title }}"
+                       class="uk-button uk-button-default button-{{ $course->id }}">Подробности</a>
                 </div>
             </div>
         </a>
