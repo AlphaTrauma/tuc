@@ -8,6 +8,10 @@ Route::get('/', [\App\Http\Controllers\CommonController::class, 'index'])->name(
 
 require __DIR__.'/auth.php';
 
+#Route::get('/estimate_editor', [\App\Http\Controllers\EstimateBookController::class, 'index'])->name('estimate_editor'); Это вас не касается.
+#Route::post('/estimate_editor', [\App\Http\Controllers\EstimateBookController::class, 'store'])->name('new_book');
+
+
 Route::get('/news', [\App\Http\Controllers\NewsController::class, 'main'])->name('news.main');
 Route::get('/news/{slug}', [\App\Http\Controllers\NewsController::class, 'show'])->name('news.item');
 
@@ -43,6 +47,7 @@ Route::middleware([\App\Http\Middleware\IsAdmin::class])->group(function () {
     Route::get('/dashboard/users/{id}/edit', [\App\Http\Controllers\Auth\RegisteredUserController::class, 'edit'])->name('user.edit');
     Route::post('/dashboard/users/{id}/update', [\App\Http\Controllers\Auth\RegisteredUserController::class, 'update'])->name('user.update');
     Route::post('/dashboard/users/add', [\App\Http\Controllers\Auth\RegisteredUserController::class, 'add'])->name('users.add');
+    Route::get('/dashboard/tests/{user_course}', [\App\Http\Controllers\PersonalController::class, 'results'])->name("user.results");
 
     Route::get('/dashboard/pages', [\App\Http\Controllers\PageController::class, 'index'])->name('pages');
     Route::get('/dashboard/pages/create', [\App\Http\Controllers\PageController::class, 'create'])->name('pages.create');

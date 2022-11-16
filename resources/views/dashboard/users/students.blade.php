@@ -14,17 +14,27 @@
                 {{ $user->name }} {{ $user->patronymic }} {{ $user->last_name }}
                 <span class="uk-icon" uk-icon="icon: email"></span> <i>{{ $user->email }}</i>
             </div>
-            <ul class="uk-list-striped uk-list">
-                @forelse($user->user_courses as $user_course)
-                    @if($user_course->status)
-                        <li class="uk-text-success"><b>{{ $user_course->course->title }}</b> <span uk-icon="icon: check; ratio: 1.2"></span></li>
-                    @else
-                        <li>{{ $user_course->course->title }}</li>
-                    @endif
-                @empty
-                    У пользователя нет курсов.
-                @endforelse
-            </ul>
+            <button class="uk-button uk-button-small uk-margin-small" type="button" uk-toggle="target: #courses-{{ $user->id }}; animation: uk-animation-fade">
+                Список курсов <span uk-icon="chevron-down"></span>
+            </button>
+            <div hidden id="courses-{{ $user->id }}">
+                <ul class="uk-list-striped uk-list">
+                    @forelse($user->user_courses as $user_course)
+                        @if($user_course->status)
+                            <li class="uk-text-success"><b>{{ $user_course->course->title }}</b> <span uk-icon="icon: check; ratio: 1.2"></span>
+                                <br><a href="{{ route("user.results", $user_course) }}" class="uk-link uk-text-secondary" uk-tooltip="Результаты последнего прохождения тестов">Ответы <span uk-icon="file-text"></span></a>
+                            </li>
+                        @else
+                            <li>{{ $user_course->course->title }}
+                                <br><a href="{{ route("user.results", $user_course) }}" class="uk-link uk-text-secondary" uk-tooltip="Результаты последнего прохождения тестов">Ответы <span uk-icon="file-text"></span></a>
+                            </li>
+                        @endif
+                    @empty
+                        У пользователя нет курсов.
+                    @endforelse
+                </ul>
+            </div>
+
             <ul class="uk-iconnav uk-width-small uk-card-badge uk-background-default uk-flex-right">
                 <li><a uk-tooltip="Добавить курс" href="#add-course-{{ $user->id }}" uk-toggle uk-icon="icon: plus"></a></li>
                 <li><a uk-tooltip="Открыть профиль" href="{{ route('user.show', $user->id) }}" uk-icon="icon: user"></a></li>

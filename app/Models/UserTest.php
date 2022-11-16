@@ -15,11 +15,12 @@ class UserTest extends Model
 
     public function user_answers()
     {
-        return $this->hasMany(UserAnswer::class);
+        return $this->hasMany(UserAnswer::class, 'user_test_id');
     }
 
     public function test()
     {
-        $this->belongsTo(Test::class);
+        return $this->belongsTo(Test::class);
     }
+
 }

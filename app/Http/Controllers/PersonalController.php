@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Test;
+use App\Models\User;
 use App\Models\UserBlock;
 use App\Models\UserCourse;
 use Illuminate\Http\Request;
@@ -46,15 +47,21 @@ class PersonalController extends Controller
     }
 
     public function checkTest(Request $request, $id, $block_id){
-        $userBlock = UserBlock::with(['block.test.questions', 'user_course'])->find($request->route('block_id'));
+        $userBlock = UserBlock::with(['block.test.questions', 'user_course', 'user_test.user_answers'])->find($request->route('block_id'));
         $questions = $userBlock->block->test->questions;
         $questions_count = $questions->count();
         $user_answers = $request->except('_token');
         $result = 0;
+        $userBlock->user_test->user_answers()->delete();
 
         foreach($user_answers as $question => $user_answer):
             $q_item = $questions->where('id', $question)->first();
-            if($q_item->correct == $user_answer) $result += 1;
+            $correct = false;
+            if($q_item->correct == $user_answer):
+                $result += 1;
+                $correct = true;
+            endif;
+            $userBlock->user_test->user_answers()->create(['question_id' => $question, 'variant_id' => $user_answer, 'correct' => $correct]);
         endforeach;
 
         if($questions_count * ceil($userBlock->block->test->threshold/100) <= $result){
@@ -71,6 +78,12 @@ class PersonalController extends Controller
             "Тест не пройден, набрано $result из $questions_count баллов");
         }
 
+    }
+
+    public function results(UserCourse $userCourse)
+    {
+        $userCourse->load('user_blocks.user_test.user_answers', 'user', 'course', 'user_blocks.block.test.questions.variants');
+        return view('dashboard.users.results', compact('userCourse'));
     }
 
     private function checkCourse($course)
