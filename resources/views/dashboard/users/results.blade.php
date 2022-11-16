@@ -9,7 +9,7 @@
     <p><small>Курс: {{ $userCourse->course->title }}</small></p>
     <p>Правильные ответы выделены зелёным, неправильные красным. Корректные варианты помечены галочкой. Если на странице нет никаких результатов и текста причины, значит, в курсе отсутствуют тесты.</p>
     @forelse($userCourse->user_blocks as $user_block)
-        @if($user_block->block->test)
+        @if($user_block->block->test and $user_block->user_test)
             @php $questions = $user_block->block->test->questions @endphp
             <h2>Название теста: {{ $user_block->block->test->title }}:</h2>
             @if(!$user_block->user_test->done_at)
