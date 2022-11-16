@@ -52,6 +52,7 @@ class PersonalController extends Controller
         $questions_count = $questions->count();
         $user_answers = $request->except('_token');
         $result = 0;
+        if(!$userBlock->user_test) $userBlock->user_test()->create(['test_id' => $userBlock->block->test->id, 'result' => 0]);
         $userBlock->user_test->user_answers()->delete();
 
         foreach($user_answers as $question => $user_answer):
