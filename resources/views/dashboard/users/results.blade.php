@@ -12,9 +12,7 @@
         @if($user_block->block->test and $user_block->user_test)
             @php $questions = $user_block->block->test->questions @endphp
             <h2>Название теста: {{ $user_block->block->test->title }}:</h2>
-            @if(!$user_block->user_test->done_at)
-                <p>Пользователь ещё не проходил этот тест</p>
-            @elseif($user_block->user_test->user_answers->count() < 1)
+            @if($user_block->user_test->user_answers->count() < 1)
                 <p>Пользователь прошёл текст до ведения статистики по последней попытке</p>
             @elseif($user_block->user_test->user_answers->count() < $questions->count())
                 <p>Пользователь не закончил прохождение теста</p>
