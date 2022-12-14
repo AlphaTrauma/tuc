@@ -65,7 +65,7 @@ class PersonalController extends Controller
             $userBlock->user_test->user_answers()->create(['question_id' => $question, 'variant_id' => $user_answer, 'correct' => $correct]);
         endforeach;
 
-        if($questions_count * ceil($userBlock->block->test->threshold/100) <= $result){
+        if($questions_count * ($userBlock->block->test->threshold/100) <= $result){
             if($userBlock->next()) $userBlock->next()->update(['status' => 0]);
             $userBlock->update(['done_at', now()]);
             $userBlock->user_test->update(['result' => $result, 'done_at' => now()]);
