@@ -18,15 +18,21 @@
                 Список курсов <span uk-icon="chevron-down"></span>
             </button>
             <div hidden id="courses-{{ $user->id }}">
-                <ul class="uk-list-striped uk-list">
+                <ul class="uk-list-divider uk-list">
                     @forelse($user->user_courses as $user_course)
                         @if($user_course->status)
-                            <li class="uk-text-success"><b>{{ $user_course->course->title }}</b> <span uk-icon="icon: check; ratio: 1.2"></span>
+                            <li class="uk-text-success uk-position-relative"><b>{{ $user_course->course->title }}</b> <span uk-icon="icon: check; ratio: 1.2"></span>
                                 <br><a href="{{ route("user.results", $user_course) }}" class="uk-link uk-text-secondary" uk-tooltip="Результаты последнего прохождения тестов">Ответы <span uk-icon="file-text"></span></a>
+                                <ul class="uk-iconnav uk-width-small uk-card-badge uk-background-default uk-flex-right">
+                                    <delete-button action="/dashboard/courses/{{ $user_course->id }}/deleteFromUser" text="Удалить курс"></delete-button>
+                                </ul>
                             </li>
                         @else
-                            <li>{{ $user_course->course->title }}
+                            <li class="uk-position-relative">{{ $user_course->course->title }}
                                 <br><a href="{{ route("user.results", $user_course) }}" class="uk-link uk-text-secondary" uk-tooltip="Результаты последнего прохождения тестов">Ответы <span uk-icon="file-text"></span></a>
+                                <ul class="uk-iconnav uk-width-small uk-card-badge uk-background-default uk-flex-right">
+                                    <delete-button action="/dashboard/courses/{{ $user_course->id }}/deleteFromUser" text="Удалить курс"></delete-button>
+                                </ul>
                             </li>
                         @endif
                     @empty
@@ -39,7 +45,7 @@
                 <li><a uk-tooltip="Добавить курс" href="#add-course-{{ $user->id }}" uk-toggle uk-icon="icon: plus"></a></li>
                 <li><a uk-tooltip="Открыть профиль" href="{{ route('user.show', $user->id) }}" uk-icon="icon: user"></a></li>
                 <li><a uk-tooltip="Редактировать данные" href="{{ route('user.edit', $user->id) }}" uk-icon="icon: file-edit"></a></li>
-                <li><a uk-tooltip="Удалить пользователя" href="#" uk-icon="icon: trash"></a></li>
+                <!--<li><a uk-tooltip="Удалить пользователя" href="#" uk-icon="icon: trash"></a></li>-->
             </ul>
         </div>
         <div id="add-course-{{ $user->id }}" class="uk-flex-top" uk-modal>

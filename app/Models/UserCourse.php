@@ -28,7 +28,7 @@ class UserCourse extends Model
         });
 
         self::deleting(function($model){
-            $model->user_blocks->delete();
+            $model->user_blocks()->delete();
         });
     }
 

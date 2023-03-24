@@ -9,7 +9,11 @@
     @include('blocks.errors')
     <section class="uk-padding uk-padding-remove-horizontal">
         <h3>{{ $item->title }}
-            <a href="?check" class="uk-button uk-button-success uk-float-right">Запустить проверку</a>
+            <div class="uk-float-right uk-padding">
+                <a href="?check" class="uk-button uk-button-success">Запустить проверку</a>
+                <a href="{{ route('courses.refresh', $item->id) }}" class="uk-button uk-button-danger">Обновить данные у пользователей</a>
+            </div>
+
         </h3>
         <p>{{ $item->description }}</p>
         <div>
@@ -37,7 +41,7 @@
                                         </div>
                                         <ul class="uk-iconnav">
                                             <li><a uk-tooltip="Редактировать тест" href="{{ route('test.constructor', $block->id) }}" uk-icon="file-edit"></a></li>
-                                            <li><a uk-tooltip="Удалить тест" href="{{ route('test.delete', $block->test->id) }}" uk-icon="icon: trash"></a></li>
+                                            <delete-button text="Удалить тест" action="{{ route('test.delete', $block->test->id) }}"></delete-button>
                                         </ul>
                                     </li>
                             @endif

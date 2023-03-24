@@ -69,10 +69,6 @@
                     </form>
                 </div>
             </div>
-            <li>
-                <a uk-tooltip="Удалить материал" class="uk-text-danger" href="{{ route('materials.delete', $material->id) }}"
-                   uk-icon="icon: trash">
-                </a>
-            </li>
+            <delete-button text="Удалить материал" action="{{ route('materials.delete', $material->id) }}"></delete-button>
     </ul>
 </li>

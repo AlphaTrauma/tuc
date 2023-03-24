@@ -27,7 +27,7 @@ class UserBlock extends Model
         });
 
         self::deleting(function($model){
-            $model->user_materials()->delete();
+            $model->user_test()->delete();
         });
     }
 

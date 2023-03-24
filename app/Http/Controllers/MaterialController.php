@@ -46,8 +46,9 @@ class MaterialController extends Controller
         if($material->material_type):
             $data['download'] = isset($data['download']) ? 1 : 0;
         endif;
+        $reorder = ($data['ordering'] !== $material->ordering);
         $material->update($data);
-
+        if($reorder) self::reorder($material->block);
         if($request->hasFile('file')):
             switch($material->material_type):
                 case('pdf'):
@@ -66,7 +67,8 @@ class MaterialController extends Controller
 
     public function destroy($id)
     {
-        $item = Material::with('image', 'document')->find($id);
+        $item = Material::with('image', 'document', 'block')->find($id);
+        $block = $item->block;
         if(isset($item->image->filepath)):
             $item->image->delete();
         endif;
@@ -74,8 +76,18 @@ class MaterialController extends Controller
             $item->document->delete();
         endif;
         $item->delete();
+        self::reorder($block);
 
         return back()->with('message', 'Материал успешно удалён');
+    }
+
+    private static function reorder($block){
+        $block->load('materials');
+        $index = 1;
+        foreach($block->materials->sortBy('ordering') as $material):
+            $material->update(['ordering' => $index]);
+            $index++;
+        endforeach;
     }
 
     public function show($id)

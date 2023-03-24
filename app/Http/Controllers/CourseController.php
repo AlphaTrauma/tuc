@@ -8,6 +8,7 @@ use App\Models\Direction;
 use App\Models\Course;
 use App\Models\Image;
 use App\Models\User;
+use App\Models\UserCourse;
 use Illuminate\Http\Request;
 
 class CourseController extends Controller
@@ -112,6 +113,23 @@ class CourseController extends Controller
         $user->user_courses()->create(['course_id' => $data['course_id']]);
 
         return back()->with('message', 'Курс успешно добавлен студенту');
+    }
+
+    public function remove($id){
+        $item = UserCourse::find($id);
+        $item->delete();
+        return redirect()->back();
+    }
+
+    public function refresh($id){
+        $userCourses = UserCourse::with('user')->where('course_id', $id)->get();
+        foreach($userCourses as $userCourse):
+            $user = $userCourse->user;
+            $userCourse->delete();
+            $user->user_courses()->create(['course_id' => $id]);
+        endforeach;
+
+        return redirect()->back()->with('message', 'Курс обновлён');
     }
 
 }

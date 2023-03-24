@@ -13,8 +13,11 @@ Vue.component('slider', require('./components/Slider.vue').default);
 Vue.component('alerts', require('./components/Alerts.vue').default);
 Vue.component('upload', require('./components/Upload.vue').default);
 Vue.component('courses-select', require('./components/CoursesSelect.vue').default);
-
+Vue.component('delete-button', require('./components/DeleteButton').default);
 Vue.component('test-container', require('./components/test/TestContainer.vue').default);
+Vue.component('estimate_upload', require('./components/estimate_editor/EstimateUpload').default);
+
+// Vue.component('vehicles', require('./components/Vehicles/Vehicles.vue').default);
 
 Vue.mixin({
     methods: {

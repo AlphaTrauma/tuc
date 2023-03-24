@@ -11,3 +11,10 @@ window.onload = () => {
     transition(loader, { opacity: 0 });
     once(loader, 'transitionend', () => remove(loader));
 };
+setTimeout(() => {
+    const loader = $('#preloader');
+    if(loader){
+        transition(loader, { opacity: 0 });
+        once(loader, 'transitionend', () => remove(loader));
+    }
+});

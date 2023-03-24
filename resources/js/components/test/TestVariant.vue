@@ -14,7 +14,7 @@
         <div class="uk-float-right uk-flex">
             <ul class="uk-iconnav">
                 <li hidden><a class="uk-drag" uk-tooltip="Перетащить для изменения порядка ответов" uk-icon="icon: move"></a></li>
-                <li><a @click="remove({item: variant, question: question})" uk-tooltip="Удалить" uk-icon="icon: trash"></a></li>
+                <delete-button :action="`/dashboard/variant/${variant.id}/delete`" :onSuccess="remove" text="Удалить ответ" async></delete-button>
             </ul>
         </div>
     </div>
@@ -22,9 +22,11 @@
 
 <script>
     import {mapActions, mapGetters} from "vuex";
+    import DeleteButton from "../DeleteButton";
 
     export default {
         name: "TestVariant",
+        components: {DeleteButton},
         props: {
             question: {
                 required: true,
@@ -38,7 +40,6 @@
         methods: {
             ...mapActions({
                 stopEdit: "test/stopEdit",
-                remove: "test/removeVariant",
                 updateVariant: "test/updateVariant",
                 sendCorrect: "test/sendCorrect"
             }),
@@ -53,6 +54,9 @@
             },
             setCorrect(){
                 this.sendCorrect({question: this.question, variant: this.variant.id});
+            },
+            remove(){
+                this.question.variants.splice(this.question.variants.indexOf(this.variant), 1);
             }
         },
         computed: {

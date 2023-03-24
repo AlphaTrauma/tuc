@@ -13,6 +13,15 @@ class UserTest extends Model
 
     protected $dates = ['done_at'];
 
+    public static function boot()
+    {
+        parent::boot();
+
+        self::deleting(function($model){
+            $model->user_answers()->delete();
+        });
+    }
+
     public function user_answers()
     {
         return $this->hasMany(UserAnswer::class, 'user_test_id');

@@ -8,9 +8,17 @@ Route::get('/', [\App\Http\Controllers\CommonController::class, 'index'])->name(
 
 require __DIR__.'/auth.php';
 
-#Route::get('/estimate_editor', [\App\Http\Controllers\EstimateBookController::class, 'index'])->name('estimate_editor'); Это вас не касается.
+#Route::get('/estimate_editor', [\App\Http\Controllers\EstimateBookController::class, 'index'])->name('estimate_editor'); 
 #Route::post('/estimate_editor', [\App\Http\Controllers\EstimateBookController::class, 'store'])->name('new_book');
+#Route::get('/vehicles', [\App\Http\Controllers\VehicleController::class, 'index'])->name('vehicles');
+#Route::get('/get/vehicles', [\App\Http\Controllers\VehicleController::class, 'load']);
+#Route::post('/vehicles/create', [\App\Http\Controllers\VehicleController::class, 'store']);
+#Route::post('/vehicles/update', [\App\Http\Controllers\VehicleController::class, 'update']);
+#Route::delete('/vehicles/{id}', [\App\Http\Controllers\VehicleController::class, 'remove']);
 
+#Route::post('/vehicles/add/{class}', [\App\Http\Controllers\VehicleController::class, 'storeItem']);
+#Route::post('/vehicles/update/{class}', [\App\Http\Controllers\VehicleController::class, 'updateItem']);
+#Route::post('/vehicles/remove/{class}', [\App\Http\Controllers\VehicleController::class, 'removeItem']);
 
 Route::get('/news', [\App\Http\Controllers\NewsController::class, 'main'])->name('news.main');
 Route::get('/news/{slug}', [\App\Http\Controllers\NewsController::class, 'show'])->name('news.item');
@@ -72,6 +80,8 @@ Route::middleware([\App\Http\Middleware\IsAdmin::class])->group(function () {
     Route::get('/dashboard/courses/{id}/delete', [\App\Http\Controllers\CourseController::class, 'destroy'])->name('courses.delete');
     Route::get('/dashboard/directions/{id}/create', [\App\Http\Controllers\CourseController::class, 'create'])->name('course.create');
     Route::post('/dashboard/courses/addToUser', [\App\Http\Controllers\CourseController::class, 'add'])->name('courses.add');
+    Route::get('/dashboard/courses/{id}/deleteFromUser', [\App\Http\Controllers\CourseController::class, 'remove'])->name('courses.remove');
+    Route::get('/dashboard/courses/{id}/refresh', [\App\Http\Controllers\CourseController::class, 'refresh'])->name('courses.refresh');
 
     Route::get('/dashboard/courses/{id}/blocks/create', [\App\Http\Controllers\BlockController::class, 'create'])->name('blocks.create');
     Route::get('/dashboard/courses//blocks/{id}/edit', [\App\Http\Controllers\BlockController::class, 'edit'])->name('blocks.edit');
