@@ -123,11 +123,11 @@ class CourseController extends Controller
 
     public function refresh($id){
         $userCourses = UserCourse::with('user')->where('course_id', $id)->get();
-        foreach($userCourses as $userCourse):
-            $user = $userCourse->user;
-            $userCourse->delete();
-            $user->user_courses()->create(['course_id' => $id]);
-        endforeach;
+        #foreach($userCourses as $userCourse):
+        #    $user = $userCourse->user;
+        #    $userCourse->delete();
+        #    $user->user_courses()->create(['course_id' => $id]);
+        #endforeach;
 
         return redirect()->back()->with('message', 'Курс обновлён');
     }
