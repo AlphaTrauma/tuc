@@ -85,4 +85,9 @@ class NewsController extends Controller
         endif;
     }
 
+    public function height(){
+        $title = "Безопасное проведение работ на высоте";
+        return view('pages.height', compact('title'));
+    }
+
 }
