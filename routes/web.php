@@ -20,6 +20,7 @@ require __DIR__.'/auth.php';
 #Route::post('/vehicles/update/{class}', [\App\Http\Controllers\VehicleController::class, 'updateItem']);
 #Route::post('/vehicles/remove/{class}', [\App\Http\Controllers\VehicleController::class, 'removeItem']);
 
+Route::get('/height', [\App\Http\Controllers\NewsController::class, 'height'])->name('height');
 Route::get('/news', [\App\Http\Controllers\NewsController::class, 'main'])->name('news.main');
 Route::get('/news/{slug}', [\App\Http\Controllers\NewsController::class, 'show'])->name('news.item');
 

@@ -7,6 +7,20 @@
         <link rel="shortcut icon" href="{{ asset('favicon.ico') }}" type="image/x-icon">
         <title itemprop="headline">@yield('title') | Тюменский Учебный Центр</title>
         <meta itemprop="description" name="description" content="@yield('description')">
+        <script>
+            window.onload = () => {
+                const loader = $('#preloader');
+                transition(loader, { opacity: 0 });
+                once(loader, 'transitionend', () => remove(loader));
+            };
+            setTimeout(() => {
+                const loader = $('#preloader');
+                if(loader){
+                    transition(loader, { opacity: 0 });
+                    once(loader, 'transitionend', () => remove(loader));
+                }
+            }, 1000);
+        </script>
         <link rel="stylesheet" href="{{ mix('css/app.css') }}" />
         <script src="{{ asset('js/main.js') }}"></script>
         @include('blocks.metric')

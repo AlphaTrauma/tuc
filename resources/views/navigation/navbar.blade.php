@@ -66,30 +66,25 @@
                                         <li><a itemprop="url" href="/schedule">Режим работы</a></li>
                                         <li><a itemprop="url" href="/documents">Документы</a></li>
                                         <li><a itemprop="url" href="/thanks">Благодарности</a></li>
+
                                     </ul>
                                 </div>
                             </li>
                             @isset($pricelist->document->filepath)
                                 <li><a target="_blank" href="{{ asset($pricelist->document->filepath) }}" uk-icon="icon: download">Прайс-лист</a></li>
                             @endisset
+                                <li style="max-width: 200px; text-align: center;"><a itemprop="url" href="/height" style="font-size: 12px">Аренда: Учебно-тренировочный стенд "Высота"</a></li>
                             <li @isset($page) @if($page->slug === 'contacts') class="uk-active" @endif @endisset ><a itemprop="url" href="/contacts">Контакты</a></li>
+                                <li class="uk-navbar-item">
+                                    <ul class="uk-list">
+                                        <li><a href="tel:{{ $contacts['phone'] }}">{{ $contacts['phone'] }}</a></li>
+                                        <li><a href="mailto:{{ $contacts['email'] }}">{{ $contacts['email'] }}</a></li>
+                                    </ul>
+                                </li>
                         </ul>
 
                     </div>
 
-                    <div class="uk-navbar-right">
-                        {{--
-                         <div class="uk-navbar-item">
-                            <a href="" class="uk-button">Позвоните мне</a>
-                        </div>
-                         --}}
-                        <div class="uk-navbar-item">
-                            <ul class="uk-list">
-                                <li><a href="tel:{{ $contacts['phone'] }}">{{ $contacts['phone'] }}</a></li>
-                                <li><a href="mailto:{{ $contacts['email'] }}">{{ $contacts['email'] }}</a></li>
-                            </ul>
-                        </div>
-                    </div>
                 </nav>
             </div>
         </div>
