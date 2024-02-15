@@ -9,12 +9,12 @@
         <meta itemprop="description" name="description" content="@yield('description')">
         <script>
             window.onload = () => {
-                const loader = $('#preloader');
+                const loader = document.getElementById('preloader');
                 transition(loader, { opacity: 0 });
                 once(loader, 'transitionend', () => remove(loader));
             };
             setTimeout(() => {
-                const loader = $('#preloader');
+                const loader = document.getElementById('preloader');
                 if(loader){
                     transition(loader, { opacity: 0 });
                     once(loader, 'transitionend', () => remove(loader));
