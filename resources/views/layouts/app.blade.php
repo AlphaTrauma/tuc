@@ -8,18 +8,14 @@
         <title itemprop="headline">@yield('title') | Тюменский Учебный Центр</title>
         <meta itemprop="description" name="description" content="@yield('description')">
         <script>
-            window.onload = () => {
-                const loader = document.getElementById('preloader');
-                transition(loader, { opacity: 0 });
-                once(loader, 'transitionend', () => remove(loader));
-            };
-            setTimeout(() => {
-                const loader = document.getElementById('preloader');
-                if(loader){
-                    transition(loader, { opacity: 0 });
-                    once(loader, 'transitionend', () => remove(loader));
-                }
-            }, 1000);
+            document.addEventListener("DOMContentLoaded", function() {
+                var preloader = document.getElementById("preloader");
+                preloader.style.transition = "opacity 1s";
+                preloader.style.opacity = 0;
+                setTimeout(function() {
+                    preloader.remove();
+                }, 1000);
+            });
         </script>
         <link rel="stylesheet" href="{{ mix('css/app.css') }}" />
         <script src="{{ asset('js/main.js') }}"></script>
