@@ -1139,12 +1139,12 @@ class CreateDocument
         $this->paragraph("Программа обучения: ".($this->course ? $this->course->title : "_____________"), 25);
         $this->delimeter();
         $this->bold();
-        $this->paragraph($this->group->created_at->format('d.m.Y')." — __.__.".date('Y'), 25);
+        $this->paragraph($this->startDate." — ".$this->endDate, 25);
         $this->delimeter();
         $this->tablerow(['A' => '№ п/п', 'B' => 'Ф.И.О.', 'C' => 'Подпись', 'D' => '№ удостоверения', 'E' => 'Дата выдачи'], true);
         foreach($this->group->users as $i => $user):
             $this->tablerow(['A' => $i+1, 'B' => $user->last_name." ".$user->name." ".$user->patronymic,
-                'C' => '', 'D' => '', 'E' => ''], false);
+                'C' => '', 'D' => '', 'E' => $this->endDate.' г.'], false);
         endforeach;
 
     }
