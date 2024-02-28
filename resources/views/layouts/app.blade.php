@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<!-- || Разработка сайта: Филиппов Н.А. aka Alpha Trauma, laravel, vue2, холст, масло. || -->
     <head itemscope itemtype="http://schema.org/WPHeader">
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -7,7 +8,6 @@
         <link rel="shortcut icon" href="{{ asset('favicon.ico') }}" type="image/x-icon">
         <title itemprop="headline">@yield('title') | Тюменский Учебный Центр</title>
         <meta itemprop="description" name="description" content="@yield('description')">
-        <!-- || Разработка сайта: Филиппов Н.А. aka Alpha Trauma, laravel, vue2, холст, масло. || -->
         <script>
             document.addEventListener("DOMContentLoaded", function() {
                 var preloader = document.getElementById("preloader");
