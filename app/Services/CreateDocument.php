@@ -675,9 +675,10 @@ class CreateDocument
             $this->sheet->setCellValue("D$this->index", "Решением квалификационной комиссии от ".$this->startDate." года протокол № 03 / ПО-".$this->group->created_at->format('d-m-Y')." присвоена квалификация");
             $this->sheet->getRowDimension($this->index)->setRowHeight(80);
             $this->sheet->mergeCells("A$this->index:C$this->index");
-            $this->sheet->setCellValue("A$this->index", "СПР 000392");
+            $this->sheet->setCellValue("A$this->index", "СПР 000???");
             $this->sheet->getStyle("A$this->index")->getFont()->setSize(13)->setBold(true)->setColor(new Color('Red'));
             $this->index++;
+            $this->sheet->mergeCells("D$this->index:F".($this->index+3));
             $this->sheet->setCellValue("D$this->index", "«".($this->course ? $this->course->title : "____________")."»");
             $this->sheet->getStyle("A$this->index")->getFont()->setSize(14)->setBold(true);
             $this->bigDelimeter();
