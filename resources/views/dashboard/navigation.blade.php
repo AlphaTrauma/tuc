@@ -8,10 +8,12 @@
             <li class="uk-parent">
                 <a class="uk-text-bold" href="#"><span class="uk-margin-small-right" uk-icon="icon: users"></span>Пользователи</a>
                 <ul class="uk-nav-sub">
-                    <li hidden><a>Зарегистрировать</a></li>
                     <li><a href="{{ route('students') }}">Студенты</a></li>
                     <li><a href="{{ route('users') }}">Полный список</a></li>
                 </ul>
+            </li>
+            <li>
+                <a href="{{ route('contractors') }}" class="uk-text-bold"><span class="uk-margin-small-right" uk-icon="icon: list"></span>Контрагенты</a>
             </li>
             <li class="uk-parent">
                 <a class="uk-text-bold" href="#"><span class="uk-margin-small-right" uk-icon="icon: table"></span>Обучение</a>
@@ -21,9 +23,6 @@
                     @endforeach
                     <li><a href="{{ route('types.index') }}">Формы обучения</a></li>
                     <li><a href="{{ route('courses.index') }}">Список курсов</a></li>
-                    {{--TODO
-                     <li><a>Статистика</a></li>
-                     --}}
                 </ul>
             </li>
             <li class="uk-parent">

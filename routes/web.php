@@ -8,17 +8,25 @@ Route::get('/', [\App\Http\Controllers\CommonController::class, 'index'])->name(
 
 require __DIR__.'/auth.php';
 
-#Route::get('/estimate_editor', [\App\Http\Controllers\EstimateBookController::class, 'index'])->name('estimate_editor'); 
+#Route::get('/estimate_editor', [\App\Http\Controllers\EstimateBookController::class, 'index'])->name('estimate_editor');
 #Route::post('/estimate_editor', [\App\Http\Controllers\EstimateBookController::class, 'store'])->name('new_book');
-#Route::get('/vehicles', [\App\Http\Controllers\VehicleController::class, 'index'])->name('vehicles');
-#Route::get('/get/vehicles', [\App\Http\Controllers\VehicleController::class, 'load']);
-#Route::post('/vehicles/create', [\App\Http\Controllers\VehicleController::class, 'store']);
-#Route::post('/vehicles/update', [\App\Http\Controllers\VehicleController::class, 'update']);
-#Route::delete('/vehicles/{id}', [\App\Http\Controllers\VehicleController::class, 'remove']);
 
-#Route::post('/vehicles/add/{class}', [\App\Http\Controllers\VehicleController::class, 'storeItem']);
-#Route::post('/vehicles/update/{class}', [\App\Http\Controllers\VehicleController::class, 'updateItem']);
-#Route::post('/vehicles/remove/{class}', [\App\Http\Controllers\VehicleController::class, 'removeItem']);
+//Route::get('/vehicles/{id}/locations', [\App\Http\Controllers\VehicleController::class, 'exportLocationHistory']);
+//Route::get('/vehicles/{id}/using', [\App\Http\Controllers\VehicleController::class, 'exportUsingHistory']);
+//Route::get('/vehicles/export', [\App\Http\Controllers\VehicleController::class, 'export'])->name('vehicles.export');
+//Route::get('/vehicles', [\App\Http\Controllers\VehicleController::class, 'index'])->name('vehicles');
+//Route::get('/get/vehicles', [\App\Http\Controllers\VehicleController::class, 'load']);
+
+//Route::post('/vehicles/add/{class}', [\App\Http\Controllers\VehicleController::class, 'storeItem']);
+//Route::post('/vehicles/update/{class}', [\App\Http\Controllers\VehicleController::class, 'updateItem']);
+//Route::post('/vehicles/remove/{class}', [\App\Http\Controllers\VehicleController::class, 'removeItem']);
+//Route::post('/vehicles/addList/TransportTools', [\App\Http\Controllers\VehicleController::class, 'addToolsList']);
+//Route::post('/vehicles/addReceipt/{tool_id}', [\App\Http\Controllers\VehicleController::class, 'addReceipt']);
+//Route::get('/vehicles/removeReceipt/{receipt_id}', [\App\Http\Controllers\VehicleController::class, 'removeReceipt']);
+
+//Route::post('/vehicles/create', [\App\Http\Controllers\VehicleController::class, 'store']);
+//Route::post('/vehicles/update', [\App\Http\Controllers\VehicleController::class, 'update']);
+//Route::delete('/vehicles/{id}', [\App\Http\Controllers\VehicleController::class, 'remove']);
 
 Route::get('/height', [\App\Http\Controllers\NewsController::class, 'height'])->name('height');
 Route::get('/news', [\App\Http\Controllers\NewsController::class, 'main'])->name('news.main');
@@ -58,6 +66,15 @@ Route::middleware([\App\Http\Middleware\IsAdmin::class])->group(function () {
     Route::post('/dashboard/users/add', [\App\Http\Controllers\Auth\RegisteredUserController::class, 'add'])->name('users.add');
     Route::get('/dashboard/tests/{user_course}', [\App\Http\Controllers\PersonalController::class, 'results'])->name("user.results");
 
+    Route::get('/dashboard/contractors', [\App\Http\Controllers\ContractorsController::class, 'index'])->name('contractors');
+    Route::post('/dashboard/contractors/create', [\App\Http\Controllers\ContractorsController::class, 'store'])->name('contractors.create');
+    #Route::get('/dashboard/contractors/{id}/update', [\App\Http\Controllers\ContractorsController::class, 'update'])->name('contractors.update');
+    Route::get('/dashboard/contractors/{id}/remove', [\App\Http\Controllers\ContractorsController::class, 'destroy'])->name('contractors.remove');
+    Route::get('/dashboard/contractors/{item}', [\App\Http\Controllers\ContractorsController::class, 'show'])->name('contractor');
+    Route::post('/contractors/{id}/upload', [\App\Http\Controllers\ContractorsController::class, 'upload']);
+    Route::post('/dashboard/groups/{group}/update', [\App\Http\Controllers\ContractorsController::class, 'update'])->name('group.update');
+    Route::get('/dashboard/groups/{group}/download/{type}', [\App\Http\Controllers\ContractorsController::class, 'downloadDocument'])->name('group.document');
+
     Route::get('/dashboard/pages', [\App\Http\Controllers\PageController::class, 'index'])->name('pages');
     Route::get('/dashboard/pages/create', [\App\Http\Controllers\PageController::class, 'create'])->name('pages.create');
     Route::get('/dashboard/pages/{id}/edit', [\App\Http\Controllers\PageController::class, 'edit'])->name('pages.edit');
@@ -81,6 +98,7 @@ Route::middleware([\App\Http\Middleware\IsAdmin::class])->group(function () {
     Route::get('/dashboard/courses/{id}/delete', [\App\Http\Controllers\CourseController::class, 'destroy'])->name('courses.delete');
     Route::get('/dashboard/directions/{id}/create', [\App\Http\Controllers\CourseController::class, 'create'])->name('course.create');
     Route::post('/dashboard/courses/addToUser', [\App\Http\Controllers\CourseController::class, 'add'])->name('courses.add');
+    Route::post('/dashboard/courses/addToGroup', [\App\Http\Controllers\CourseController::class, 'addGroup'])->name('courses.addGroup');
     Route::get('/dashboard/courses/{id}/deleteFromUser', [\App\Http\Controllers\CourseController::class, 'remove'])->name('courses.remove');
     Route::get('/dashboard/courses/{id}/refresh', [\App\Http\Controllers\CourseController::class, 'refresh'])->name('courses.refresh');
 
@@ -125,7 +143,7 @@ Route::middleware([\App\Http\Middleware\IsAdmin::class])->group(function () {
     Route::get('dashboard/test', [\App\Http\Controllers\DashboardController::class, 'test']);
 });
 
-
+Route::get('/settings/impaired', [\App\Http\Controllers\CommonController::class, 'switchMode'])->name('mode');
 # default route
 Route::get('/{slug}', [\App\Http\Controllers\PageController::class, 'show'])->where('slug', '([a-z-_])+')->name('page');
 

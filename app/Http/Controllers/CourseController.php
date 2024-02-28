@@ -6,6 +6,7 @@ use App\Http\Requests\CreateCourse;
 use App\Http\Requests\UpdateCourse;
 use App\Models\Direction;
 use App\Models\Course;
+use App\Models\Group;
 use App\Models\Image;
 use App\Models\User;
 use App\Models\UserCourse;
@@ -113,6 +114,16 @@ class CourseController extends Controller
         $user->user_courses()->create(['course_id' => $data['course_id']]);
 
         return back()->with('message', 'Курс успешно добавлен студенту');
+    }
+
+    public function addGroup(Request $request)
+    {
+        $data = $request->except('_token');
+        $group = Group::with('users')->find($data['group_id']);
+        foreach($group->users as $user):
+            $user->user_courses()->create(['course_id' => $data['course_id']]);
+        endforeach;
+        return back()->with('message', 'Курс успешно добавлен группе контрагента');
     }
 
     public function remove($id){

@@ -3,10 +3,20 @@
         <div>
             <span class="uk-visible@s"><b>{{ $contacts['name'] }}</b></span>
         </div>
-        <div class="uk-flex uk-flex-right">
+        <div class="uk-flex uk-flex-right uk-flex-middle">
+            @if(session('impaired'))
+                <a href="{{ route('mode') }}" class="button__impaired">
+                    <strong>Обычная версия</strong>
+                </a>
+            @else
+                <a href="{{ route('mode') }}" class="button__impaired">
+                    <strong>Версия для<br>слабовидящих</strong>
+                </a>
+            @endif
+
              @auth
                  @if(Auth::user()->isAdmin())
-                    <a href="{{ route('dashboard') }}" class="uk-button">Управление сайтом <span class="uk-margin-left" uk-icon="icon: sign-in"></span></a>
+                        <a href="{{ route('dashboard') }}" class="uk-button"><span class="uk-visible@l">Управление</span> <span class="uk-margin-left" uk-icon="icon: sign-in"></span></a>
                     <form method="POST" class="uk-flex uk-flex-middle" action="{{ route('logout') }}">
                         @csrf
                         <button class="uk-button uk-button-link uk-text-capitalize uk-width-1-1" title="Выйти" type="submit">ВЫХОД</button>
@@ -25,11 +35,12 @@
     </div>
     <div class="uk-container-expand">
         <div uk-sticky="sel-target: .uk-navbar-container; cls-active: uk-navbar-sticky;">
-            <div class="uk-background-primary">
+            <div @if(!session('impaired')) class="uk-background-primary" @else class="impaired-nav" @endif>
                 <nav class="uk-container uk-light" uk-navbar itemscope itemtype="http://schema.org/SiteNavigationElement">
                     <div class="uk-navbar-left uk-hidden@s">
-                        <a title="Меню" class="uk-navbar-item" href="#mobile-menu" uk-toggle><span uk-icon="menu"></span></a>
+                        <a title="Меню" class="uk-navbar-item" href="#mobile-menu" uk-toggle>@if(session('impaired'))<strong class="uk-text-large">МЕНЮ</strong>@else<span uk-icon="menu"></span>@endif</a>
                     </div>
+                    @if(!session('impaired'))
                     <div class="uk-navbar-left">
                         @if(Route::currentRouteName() === 'main')
                             <div class="uk-navbar-item uk-logo"><img style="max-height: 55px;" src="https://imageup.ru/img6/3890887/logo.png" alt=""></div>
@@ -37,6 +48,7 @@
                             <a class="uk-navbar-item uk-logo" itemprop="url" href="{{ route('main') }}"><img style="max-height: 55px;" src="https://imageup.ru/img6/3890887/logo.png" alt=""></a>
                         @endif
                     </div>
+                    @endif
                     <div class="uk-navbar-left uk-visible@s">
                         <ul class="uk-navbar-nav uk-text-bold">
                             @if(Route::currentRouteName() === 'main')
@@ -58,7 +70,7 @@
                                 </div>
                             </li>
                             <li @isset($page) @if(in_array($page->slug, $pages['information'])) class="uk-active" @endif @endisset>
-                                <a uk-icon="icon: chevron-down">Сведения об организации</a>
+                                <a>Сведения об организации <span uk-icon="icon: chevron-down"></span></a>
                                 <div class="uk-navbar-dropdown uk-text-normal">
                                     <ul class="uk-nav uk-navbar-dropdown-nav">
                                         <li><a itemprop="url" href="{{ route('news.main') }}">Новости и акции</a></li>
@@ -71,11 +83,13 @@
                                 </div>
                             </li>
                             @isset($pricelist->document->filepath)
-                                <li><a target="_blank" href="{{ asset($pricelist->document->filepath) }}" uk-icon="icon: download">Прайс-лист</a></li>
+                                <li><a target="_blank" href="{{ asset($pricelist->document->filepath) }}">Прайс-лист <span uk-icon="icon: download"></span></a></li>
                             @endisset
-                                <li style="max-width: 200px; text-align: center;"><a itemprop="url" href="/height" style="font-size: 12px">Аренда: Учебно-тренировочный стенд "Высота"</a></li>
+                                <li style="max-width: 200px; text-align: center;"><a itemprop="url" href="/height"
+                                         @if(session('impaired')) style="font-size: 15px" @else style="font-size: 12px" @endif>
+                                        Аренда: Учебно-тренировочный стенд "Высота"</a></li>
                             <li @isset($page) @if($page->slug === 'contacts') class="uk-active" @endif @endisset ><a itemprop="url" href="/contacts">Контакты</a></li>
-                                <li class="uk-navbar-item">
+                                <li class="uk-navbar-item phones">
                                     <ul class="uk-list">
                                         <li><a href="tel:{{ $contacts['phone'] }}">{{ $contacts['phone'] }}</a></li>
                                         <li><a href="mailto:{{ $contacts['email'] }}">{{ $contacts['email'] }}</a></li>

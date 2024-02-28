@@ -15,4 +15,13 @@ class CommonController extends Controller
 
         return view('index', compact('items', 'slides'));
     }
+
+    public function switchMode(){
+        if(session()->has('impaired') and session('impaired') === true):
+            session()->forget('impaired');
+        else:
+            session()->put('impaired', true);
+        endif;
+        return back();
+    }
 }

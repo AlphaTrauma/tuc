@@ -1,0 +1,91 @@
+
+* {
+    box-shadow: none !important;
+    background: white !important;
+    color: black !important;
+}
+.uk-modal {
+    background: black !important;
+}
+*:hover {
+    box-shadow: none !important;
+}
+
+b, p, th, td, .crop_text, .uk-input, .uk-textarea {
+    font-size: 20px;
+    color: black;
+}
+
+.uk-button-primary {
+    background: white !important;
+    font-size: 22px;
+    border: 2px solid black !important;
+}
+
+svg {
+    width: 30px;
+    height: 30px;
+}
+
+h1, h2 {
+    font-size: 3rem !important;
+}
+
+h3, h2.modal-title {
+    font-size: 2rem !important;
+}
+
+.uk-card:not(.uk-child-width-1-1), .uk-panel, .uk-navbar-dropdown, .uk-input, .uk-offcanvas-bar-light {
+    border: 2px solid black;
+}
+.uk-card-media-top {
+    display: none;
+}
+
+img {
+    display: none;
+}
+
+.uk-breadcrumb > * > * {
+    font-size: 20px;
+}
+
+.lead-button {
+    border: 2px solid black;
+    width: 240px;
+    height: 100px;
+}
+
+.impaired-nav {
+    border-top: 2px solid black;
+    border-bottom: 2px solid black;
+    font-size: 2rem;
+}
+.impaired-nav .phones {
+    width: 250px;
+}
+.impaired-nav li a, .uk-offcanvas-bar-light li a {
+    font-size: 18px;
+    font-weight: bold;
+}
+footer {
+    border-top: 2px solid black;
+
+}
+footer ul li a {
+    font-weight: bold;
+}
+footer ul li {
+    font-size: 20px !important;
+}
+
+.uk-modal-body {
+    border: 2px solid black;
+}
+.uk-input::placeholder, .uk-textarea::placeholder {
+    color: #1c1c1c;
+}
+
+.button__impaired {
+    border: 2px solid black;
+}

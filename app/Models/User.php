@@ -22,11 +22,19 @@ class User extends Authenticatable
         'patronymic',
         'last_name',
         'email',
+        'group_id',
+        'document',
+        'doc_series',
+        'snils',
+        'gender',
+        'inn',
+        'education',
+        'doc_education',
+        'birth_date',
         'phone',
         'position',
         'organization',
         'role',
-        'email',
         'password'
     ];
 
@@ -49,6 +57,8 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    protected $dates = ['birth_date'];
+
     public function image()
     {
         return $this->morphOne(Image::class, 'entity');
@@ -64,6 +74,11 @@ class User extends Authenticatable
         return $this->hasMany(UserCourse::class);
     }
 
+    public function latestCourse()
+    {
+        return $this->hasOne(UserCourse::class)->orderByDesc('created_at');
+    }
+
     public function active_courses()
     {
         return $this->hasMany(UserCourse::class)->where('status', false);
@@ -72,6 +87,11 @@ class User extends Authenticatable
     public function completed_courses()
     {
         return $this->hasMany(UserCourse::class)->where('status', true);
+    }
+
+    public function group()
+    {
+        return $this->belongsTo(Group::class);
     }
 
     public function isAdmin()

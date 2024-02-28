@@ -39,9 +39,10 @@ class RegisteredUserController extends Controller
     {
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'email' => ['nullable', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
+
 
         $user = User::create([
             'name' => $request->name,
@@ -65,8 +66,10 @@ class RegisteredUserController extends Controller
             'patronymic' => ['nullable', 'string', 'max:25'],
             'phone' => ['nullable', 'string', 'max:15'],
             'organization' => ['nullable', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users']
+            'email' => ['nullable', 'string', 'email', 'max:255', 'unique:users']
         ]);
+        $email = $request->has('email') && $request['email'] ? $request['email'] :
+            strtoupper(Str::slug($request['name'])[0].Str::slug($request['patronymic'])[0]).Str::slug($request->last_name).\App\Models\User::count();
 
         $user = User::create([
             'name' => $request->name,
@@ -74,7 +77,7 @@ class RegisteredUserController extends Controller
             'patronymic' => $request->patronymic,
             'phone' => $request->phone,
             'organization' => $request->organization,
-            'email' => $request->email,
+            'email' => $email,
             'password' => 'default'
         ]);
         $password = Str::slug($user->last_name).Str::slug($user->name)[0].'@'.$user->id;
@@ -91,8 +94,8 @@ class RegisteredUserController extends Controller
             'parse_mode' => 'HTML',
             'text' => $message
         ];
-        $response = file_get_contents("https://api.telegram.org/bot5344836009:AAGH0z3JJdlfN10sNjK_457a_2C_mFrNc1k/sendMessage?".
-            http_build_query($data) );
+        #$response = file_get_contents("https://api.telegram.org/bot5344836009:AAGH0z3JJdlfN10sNjK_457a_2C_mFrNc1k/sendMessage?".
+        #    http_build_query($data) );
 
         return back()->with('message', 'Пользователь успешно зарегистрирован. Логин: '.$user->email.' Пароль: '.$password);
     }

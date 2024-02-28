@@ -17,11 +17,13 @@
             <div class="uk-width-2-3@s">
                 <h1>{{ $item->title }}</h1>
                 <div class="uk-margin">
-                    {{ $item->description }}
+                    <p>
+                        {{ $item->description }}
+                    </p>
                 </div>
                 @if($item->html)
                     <div class="uk-margin-small">
-                        {!! $item->html !!}
+                        <p>{!! $item->html !!}</p>
                     </div>
                 @endif
             </div>

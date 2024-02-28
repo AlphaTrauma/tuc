@@ -12,7 +12,9 @@
 @endsection
 
 @section('content')
-    @include('main.slider')
+    @if(!session('impaired'))
+        @include('main.slider')
+    @endif
     @include('main.directions')
     @include('main.benefits')
 @endsection

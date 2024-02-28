@@ -4,16 +4,16 @@
         <form class="uk-form" enctype=multipart/form-data method="POST" action="{{ route('users.add') }}">
             @csrf
             <div class="uk-margin">
-                <input class="uk-input" type="text" name="email" required placeholder="E-mail (обязательно)">
-            </div>
-            <div class="uk-margin">
-                <input class="uk-input" type="text" name="last_name" required placeholder="Фамилия (обязательно)">
+                <input class="uk-input" type="text" name="email" placeholder="E-mail (необязательно)">
             </div>
             <div class="uk-margin">
                 <input class="uk-input" type="text" name="name" required placeholder="Имя (обязательно)">
             </div>
             <div class="uk-margin">
                 <input class="uk-input" type="text" name="patronymic" placeholder="Отчество">
+            </div>
+            <div class="uk-margin">
+                <input class="uk-input" type="text" name="last_name" required placeholder="Фамилия (обязательно)">
             </div>
             <div class="uk-margin">
                 <input class="uk-input" type="text" name="phone" placeholder="Телефон">

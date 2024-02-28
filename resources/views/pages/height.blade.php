@@ -17,10 +17,10 @@
                 <div class="uk-card-body">
                     <h2>Учебно-тренировочный стенд "Высота"</h2>
                     <ul class="uk-list">
-                        <li><a target="_blank" class="uk-link" uk-icon="icon:download" download href="http://туц.рф/images/height/Паспорт.pdf">Паспорт</a></li>
-                        <li><a target="_blank" class="uk-link" uk-icon="icon:download" download href="http://туц.рф/images/height/Инструкция_Высота_Т.pdf">Инструкция</a></li>
-                        <li><a target="_blank" class="uk-link" uk-icon="icon:download" download href="http://туц.рф/images/height/Сертификат Высота.pdf">Сертификат соответствия "Высота"</a></li>
-                        <li><a target="_blank" class="uk-link" uk-icon="icon:download" download href="http://туц.рф/images/height/Сертификат Пласт А.pdf">Сертификат соответствия "Пласт А"</a></li>
+                        <li><a target="_blank" class="uk-link uk-text-nowrap" uk-icon="icon:download" download href="http://туц.рф/images/height/Паспорт.pdf">Паспорт</a></li>
+                        <li><a target="_blank" class="uk-link uk-text-nowrap" uk-icon="icon:download" download href="http://туц.рф/images/height/Инструкция_Высота_Т.pdf">Инструкция</a></li>
+                        <li><a target="_blank" class="uk-link uk-text-nowrap" uk-icon="icon:download" download href="http://туц.рф/images/height/Сертификат Высота.pdf">Сертификат соответствия "Высота"</a></li>
+                        <li><a target="_blank" class="uk-link uk-text-nowrap" uk-icon="icon:download" download href="http://туц.рф/images/height/Сертификат Пласт А.pdf">Сертификат соответствия "Пласт А"</a></li>
                     </ul>
                 </div>
             </article>
@@ -29,7 +29,7 @@
             <article class="uk-card-default uk-card-body">
                 <div itemprop="articleBody">
                     <p class="uk-text-center">
-                        <img uk-img src="http://туц.рф/images/height/mujik.jpg" alt="">
+                        <img uk-img src="http://туц.рф/images/height/mujik.jpg" alt="Как обучать работе на высоте с учетом требований Порядка № 2464">
                     </p>
                     <h2>Как обучать работе на высоте с учетом требований Порядка № 2464</h2>
                     <p>Теперь можно совмещать обучение работе на высоте и обучение работам повышенной

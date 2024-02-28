@@ -18,6 +18,9 @@
             });
         </script>
         <link rel="stylesheet" href="{{ mix('css/app.css') }}" />
+        @if(session('impaired'))
+            <link rel="stylesheet" href="{{ asset('css/impaired.css') }}" />
+        @endif
         <script src="{{ asset('js/main.js') }}"></script>
         @include('blocks.metric')
         <meta name="google-site-verification" content="iw4ek7QAeS_EK0frUsz6DM4WT_d27-B24ncMOPyxfgk" />
