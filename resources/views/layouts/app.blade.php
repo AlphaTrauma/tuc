@@ -7,6 +7,7 @@
         <link rel="shortcut icon" href="{{ asset('favicon.ico') }}" type="image/x-icon">
         <title itemprop="headline">@yield('title') | Тюменский Учебный Центр</title>
         <meta itemprop="description" name="description" content="@yield('description')">
+        <!-- || Разработка сайта: Филиппов Н.А. aka Alpha Trauma, laravel, vue2, холст, масло. || -->
         <script>
             document.addEventListener("DOMContentLoaded", function() {
                 var preloader = document.getElementById("preloader");
@@ -15,6 +16,7 @@
                 setTimeout(function() {
                     preloader.remove();
                 }, 1000);
+                console.log('|| Разработка сайта: Филиппов Н.А. aka Alpha Trauma, laravel, vue2, холст, масло. ||')
             });
         </script>
         <link rel="stylesheet" href="{{ mix('css/app.css') }}" />
