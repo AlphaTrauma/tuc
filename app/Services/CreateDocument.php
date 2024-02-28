@@ -885,7 +885,7 @@ class CreateDocument
 
             $style->getAlignment()->setHorizontal(Alignment::HORIZONTAL_CENTER)->setVertical(Alignment::VERTICAL_CENTER);
             $rte = new RichText();
-            $run = $rte->createTextRun("В период с ".$this->group->created_at->format('d.m.Y')." по __.__".date('Y')." прошел(ла) обучение в объеме соответствующим требованиям программы \r\n");
+            $run = $rte->createTextRun("В период с ".$this->startDate." г. по ".$this->endDate." г. прошел(ла) обучение в объеме соответствующим требованиям программы \r\n");
             $run->getFont()->setSize(9)->setName("Times New Roman");
             $run = $rte->createTextRun("«".($this->course ? $this->course->title : '______________')."»\r\n");
             $run->getFont()->setColor(new \PhpOffice\PhpSpreadsheet\Style\Color(\PhpOffice\PhpSpreadsheet\Style\Color::COLOR_RED))->setSize(9)->setName("Times New Roman")->setBold(true);
@@ -1139,12 +1139,12 @@ class CreateDocument
         $this->paragraph("Программа обучения: ".($this->course ? $this->course->title : "_____________"), 25);
         $this->delimeter();
         $this->bold();
-        $this->paragraph($this->startDate." — ".$this->endDate, 25);
+        $this->paragraph($this->startDate." — ".$this->endDate, 50);
         $this->delimeter();
         $this->tablerow(['A' => '№ п/п', 'B' => 'Ф.И.О.', 'C' => 'Подпись', 'D' => '№ удостоверения', 'E' => 'Дата выдачи'], true);
         foreach($this->group->users as $i => $user):
             $this->tablerow(['A' => $i+1, 'B' => $user->last_name." ".$user->name." ".$user->patronymic,
-                'C' => '', 'D' => '', 'E' => $this->endDate.' г.'], false);
+                'C' => '', 'D' => '', 'E' => $this->startDate.' г.'], false);
         endforeach;
 
     }
