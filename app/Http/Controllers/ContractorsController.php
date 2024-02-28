@@ -86,6 +86,8 @@ class ContractorsController extends Controller
             $user->education = $sheet->getCell('T'.$row)->getValue();
             $user->doc_education = $sheet->getCell('U'.$row)->getValue();
             $user->email = Str::slug($user->last_name).Str::slug($user->name ? $user->name :  '_')[0].Str::slug($user->patronymic ? $user->patronymic : '_')[0];
+            $count = User::where('email', 'like', $user->email."%")->count();
+            if($count > 0) $user->email .= $count;
             $password = $user->email.\App\Models\User::count();
             $user->password = Hash::make($password);
             $user->group_id = $group->id;
@@ -101,7 +103,7 @@ class ContractorsController extends Controller
         $newSpreadsheet->addExternalSheet($sheet, 0);
         if ($newSpreadsheet->getSheetCount() > 1):
             $newSpreadsheet->removeSheetByIndex(1);
-        endif; 
+        endif;
         $writer = new Xlsx($newSpreadsheet);
         header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
         header('Content-Disposition: attachment; filename="file.xlsx"');
