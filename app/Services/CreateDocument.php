@@ -1086,7 +1086,7 @@ class CreateDocument
         $this->delimeter();
         $this->paragraph('ПРИКАЗЫВАЮ:', 25);
         $this->delimeter();
-        $this->paragraph('   1. Зачислить на обучение с __ ______ '.date('Y').' г. по __ ______ '.date('Y').' г.:', 25);
+        $this->paragraph('   1. Зачислить на обучение с '.$this->startDate.' г. по '.$this->endDate.' г.:', 25);
         $this->delimeter();
         $this->tablerow(['A' => '№ п/п', 'B' => 'Ф.И.О', 'C' => 'Должность', 'D' => 'Организация'], true);
         foreach($this->group->users as $i => $user):
