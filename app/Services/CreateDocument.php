@@ -680,7 +680,7 @@ class CreateDocument
             $this->index++;
             $this->sheet->mergeCells("D$this->index:F".($this->index+3));
             $this->sheet->setCellValue("D$this->index", "«".($this->course ? $this->course->title : "____________")."»");
-            $this->sheet->getStyle("A$this->index")->getFont()->setSize(14)->setBold(true);
+            $this->sheet->getStyle("A$this->index:D$this->index")->getFont()->setSize(14)->setBold(true);
             $this->bigDelimeter();
 
             $this->index++;
