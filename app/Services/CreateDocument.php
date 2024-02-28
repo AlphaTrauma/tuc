@@ -1225,7 +1225,6 @@ class CreateDocument
     }
 
     public function download(){
-        ob_clean();
         $writer = new Xlsx($this->xlcx);
         header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
         header('Content-Disposition: attachment; filename="'.($this->title.'.xlsx').'"');
