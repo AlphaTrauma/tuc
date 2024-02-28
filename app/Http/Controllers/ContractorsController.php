@@ -101,8 +101,7 @@ class ContractorsController extends Controller
         $newSpreadsheet->addExternalSheet($sheet, 0);
         if ($newSpreadsheet->getSheetCount() > 1):
             $newSpreadsheet->removeSheetByIndex(1);
-        endif;
-        ob_clean();
+        endif; 
         $writer = new Xlsx($newSpreadsheet);
         header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
         header('Content-Disposition: attachment; filename="file.xlsx"');
