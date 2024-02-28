@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-<!-- || Разработка сайта: Филиппов Н.А. aka Alpha Trauma, laravel, vue2, холст, масло. || -->
+{{-- Если мою подпись после меня кто-то тронет грязными ручонками, найду и оторву.
+     Договор на разработку и все акты в наличии, моё дело предупредить. --}}
+<!-- || Разработка сайта: Филиппов Н.А. aka AlphaTrauma, laravel, vue2, холст, масло. || -->
     <head itemscope itemtype="http://schema.org/WPHeader">
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
