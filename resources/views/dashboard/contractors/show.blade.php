@@ -6,6 +6,12 @@
     <upload-contractors :id="{{ $item->id }}">
         @csrf
     </upload-contractors>
+    <div class="uk-card uk-card-default uk-margin-top">
+        <div class="uk-card-body">
+            <b>Памятка по таблице импорта</b>: документ excel с указанными далее столбцами. Список импортируемых пользователей должен начинаться со второй строки (в первой опционально заголовки), в нём не должно быть пустых строк.
+            Список колонок: <b>A</b> — фамилия, <b>B</b> — имя, <b>A</b> — отчество, <b>D</b> — должность, <b>E</b> — дата рождения (тип данных ячейки "строка", а не "дата"), <b>F</b> — СНИЛС, <b>G</b> — паспорт, <b>H</b> — моб. телефон, <b>I</b> — документ об образовании.
+        </div>
+    </div>
 
     @foreach($item->groups as $group)
         <div class="uk-card uk-card-default uk-padding uk-margin-top">

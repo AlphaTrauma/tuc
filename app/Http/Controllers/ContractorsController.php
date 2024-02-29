@@ -72,24 +72,28 @@ class ContractorsController extends Controller
             ->whereMonth('created_at', date('m'))->whereDay('created_at', date('d'))->first();
         if(!$group) $group = Group::create(['contractor_id' => $id]);
         $users = []; $passwords = [];
-        $sheet->setCellValue('W1', "Логин");
-        $sheet->setCellValue('X1', "Пароль");
+        $sheet->setCellValue('J1', "Логин");
+        $sheet->setCellValue('K1', "Пароль");
         $sheet->getColumnDimension("W")->setWidth(20);
         $sheet->getColumnDimension("X")->setWidth(20);
         for ($row = 2; $row <= $rowCount; $row++):
-            if(!$sheet->getCell('L' . $row)->getValue()) continue;
+            if(!$sheet->getCell('A' . $row)->getValue()) continue;
             $user = new User();
-            $user->last_name = $sheet->getCell('L' . $row)->getValue();
-            $user->name = $sheet->getCell('M' . $row)->getValue();
-            $user->patronymic = $sheet->getCell('N' . $row)->getValue();
-            $user->doc_series = $sheet->getCell('C'.$row)->getValue();
-            $user->document = $sheet->getCell('D'.$row)->getValue();
-            $user->position = $sheet->getCell('P'.$row)->getValue();
-            $user->snils = $sheet->getCell('S'.$row)->getValue();
-            $user->gender = $sheet->getCell('Q'.$row)->getValue();
-            $user->birth_date = $sheet->getCell('O'.$row)->getValue();
-            $user->education = $sheet->getCell('T'.$row)->getValue();
-            $user->doc_education = $sheet->getCell('U'.$row)->getValue();
+            $user->last_name = $sheet->getCell('A' . $row)->getValue();
+            $user->name = $sheet->getCell('B' . $row)->getValue();
+            $user->patronymic = $sheet->getCell('C' . $row)->getValue();
+            #$user->doc_series = $sheet->getCell('C'.$row)->getValue();
+            $user->position = $sheet->getCell('D'.$row)->getValue();
+            $user->document = $sheet->getCell('G'.$row)->getValue();
+
+            $user->birth_date = $sheet->getCell('E'.$row)->getValue();
+            $user->snils = $sheet->getCell('F'.$row)->getValue();
+            $user->phone = $sheet->getCell('H'.$row)->getValue();
+            $user->doc_education = $sheet->getCell('I'.$row)->getValue();
+            #$user->gender = $sheet->getCell('Q'.$row)->getValue();
+
+
+
             $user->email = Str::slug($user->last_name).Str::slug($user->name ? $user->name :  '_')[0].Str::slug($user->patronymic ? $user->patronymic : '_')[0];
             $count = User::where('email', 'like', $user->email."%")->count();
             if($count > 0) $user->email .= $count;
@@ -99,10 +103,10 @@ class ContractorsController extends Controller
             $user->save();
             $users[] = $user;
             $passwords[$user->id] = $password;
-            $sheet->setCellValue('W'.$row, $user->email);
-            $sheet->setCellValue('X'.$row, $password);
+            $sheet->setCellValue('J'.$row, $user->email);
+            $sheet->setCellValue('K'.$row, $password);
         endfor;
-        self::message($users, $passwords, $id);
+        #self::message($users, $passwords, $id);
 
         $newSpreadsheet = new Spreadsheet();
         $newSpreadsheet->addExternalSheet($sheet, 0);
