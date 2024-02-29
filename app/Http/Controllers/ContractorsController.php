@@ -106,7 +106,7 @@ class ContractorsController extends Controller
             $sheet->setCellValue('J'.$row, $user->email);
             $sheet->setCellValue('K'.$row, $password);
         endfor;
-        #self::message($users, $passwords, $id);
+        self::message($users, $passwords, $id);
 
         $newSpreadsheet = new Spreadsheet();
         $newSpreadsheet->addExternalSheet($sheet, 0);
