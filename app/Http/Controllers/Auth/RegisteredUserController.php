@@ -69,7 +69,7 @@ class RegisteredUserController extends Controller
             'email' => ['nullable', 'string', 'email', 'max:255', 'unique:users']
         ]);
         $email = $request->has('email') && $request['email'] ? $request['email'] :
-            strtoupper(Str::slug($request['name'])[0].Str::slug($request['patronymic'])[0]).Str::slug($request->last_name).\App\Models\User::count();
+            strtoupper(($request['name'] ? Str::slug($request['name'])[0] : '').($request['patronymic'] ? Str::slug($request['patronymic'])[0] : '')).Str::slug($request->last_name).\App\Models\User::count();
 
         $user = User::create([
             'name' => $request->name,
@@ -95,7 +95,7 @@ class RegisteredUserController extends Controller
             'text' => $message
         ];
         $response = file_get_contents("https://api.telegram.org/bot5344836009:AAGH0z3JJdlfN10sNjK_457a_2C_mFrNc1k/sendMessage?".
-            http_build_query($data) );
+           http_build_query($data) );
 
         return back()->with('message', 'Пользователь успешно зарегистрирован. Логин: '.$user->email.' Пароль: '.$password);
     }
