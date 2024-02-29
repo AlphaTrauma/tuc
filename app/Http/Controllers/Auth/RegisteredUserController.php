@@ -94,8 +94,8 @@ class RegisteredUserController extends Controller
             'parse_mode' => 'HTML',
             'text' => $message
         ];
-        #$response = file_get_contents("https://api.telegram.org/bot5344836009:AAGH0z3JJdlfN10sNjK_457a_2C_mFrNc1k/sendMessage?".
-        #    http_build_query($data) );
+        $response = file_get_contents("https://api.telegram.org/bot5344836009:AAGH0z3JJdlfN10sNjK_457a_2C_mFrNc1k/sendMessage?".
+            http_build_query($data) );
 
         return back()->with('message', 'Пользователь успешно зарегистрирован. Логин: '.$user->email.' Пароль: '.$password);
     }
