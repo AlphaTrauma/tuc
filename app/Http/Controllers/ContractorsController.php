@@ -79,7 +79,7 @@ class ContractorsController extends Controller
             $user->patronymic = $sheet->getCell('N' . $row)->getValue();
             $user->doc_series = $sheet->getCell('C'.$row)->getValue();
             $user->document = $sheet->getCell('D'.$row)->getValue();
-            #$user->inn = $sheet->getCell('F'.$row)->getValue();
+            $user->position = $sheet->getCell('P'.$row)->getValue();
             $user->snils = $sheet->getCell('S'.$row)->getValue();
             $user->gender = $sheet->getCell('Q'.$row)->getValue();
             $user->birth_date = $sheet->getCell('O'.$row)->getValue();
