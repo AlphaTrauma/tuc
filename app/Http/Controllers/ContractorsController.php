@@ -43,9 +43,14 @@ class ContractorsController extends Controller
     }
 
     public function destroy($id){
-        $id = Contractor::find($id);
-        $id->delete();
-        return back()->with('message', 'Контрагент успешно удалён');
+        $item = Contractor::find($id);
+        if(!$item):
+            return back()->with('error', 'Контрагент не найден');
+        else:
+            $item->delete();
+            return back()->with('message', 'Контрагент успешно удалён');
+        endif;
+
     }
 
     public function update(Request $request, Group $group){
