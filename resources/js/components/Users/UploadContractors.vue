@@ -1,8 +1,8 @@
 <template>
     <div>
-        <form :action="`/contractors/${id}/upload`" ref="form" method="post" enctype="multipart/form-data">
+        <form :action="group ? `/contractors/${id}/upload/${group}` : `/contractors/${id}/upload`" ref="form" method="post" enctype="multipart/form-data">
             <slot></slot>
-            <a @click="upload" class="uk-button uk-button-success">Импортировать пользователей</a>
+            <a @click="upload" class="uk-button uk-button-success">{{ group ? 'Дополнить группу' : 'Импортировать пользователей' }}</a>
             <input ref="file" type="file" name="file" class="uk-hidden" @change="submit">
         </form>
     </div>
@@ -15,6 +15,10 @@
             id: {
                 type: Number,
                 required: true
+            },
+            group: {
+                type: Number,
+                required: false
             }
         },
         methods: {

@@ -25,7 +25,7 @@ class CreateCourse extends FormRequest
     {
         return [
             'title' => 'string|required',
-            'description' => 'string|max:255|required',
+            'description' => 'string|max:1000|required',
             'length' => 'integer|nullable',
             'direction_id' => 'integer|exists:directions,id',
             'file' => 'image|required',
@@ -40,7 +40,7 @@ class CreateCourse extends FormRequest
             'title.string' => 'Некорректный заголовок слайда',
             'description.required' => 'Не заполнено краткое описание направления',
             'description.string' => 'Некорректное описание',
-            'description.max' => 'Длина краткого описания не должна превышать 255 символов',
+            'description.max' => 'Длина краткого описания не должна превышать 1000 символов',
             'length.integer' => 'Некорректный формат количества часов',
             'direction_id.exists' => 'Не найдено указанное направление',
             'file.required' => 'Изображение не загружено',

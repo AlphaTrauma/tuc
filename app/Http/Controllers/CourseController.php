@@ -119,9 +119,9 @@ class CourseController extends Controller
     public function addGroup(Request $request)
     {
         $data = $request->except('_token');
-        $group = Group::with('users')->find($data['group_id']);
+        $group = Group::with('users.user_courses')->find($data['group_id']);
         foreach($group->users as $user):
-            $user->user_courses()->create(['course_id' => $data['course_id']]);
+            $user->user_courses()->firstOrCreate(['course_id' => $data['course_id']]);
         endforeach;
         return back()->with('message', 'Курс успешно добавлен группе контрагента');
     }

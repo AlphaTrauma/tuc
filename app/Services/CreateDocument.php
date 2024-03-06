@@ -3,6 +3,7 @@
 
 namespace App\Services;
 
+use App\Models\Settings;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use PhpOffice\PhpSpreadsheet\Cell\DataType;
@@ -32,6 +33,7 @@ class CreateDocument
         else:
             $this->course = null;
         endif;
+        $this->director = Settings::where('key', 'director')->first()->value;
         $this->init();
         $this->handle($type);
     }
@@ -40,32 +42,6 @@ class CreateDocument
         $this->xlcx = new Spreadsheet();
         $this->sheet = $this->xlcx->getActiveSheet();
         $this->index = 1;
-    }
-
-    private function tablerow($titles, $bold){
-
-        foreach($titles as $col => $title):
-            $this->sheet->setCellValue($col.$this->index, $title);
-        endforeach;
-        $style = $this->sheet->getStyle("A$this->index:".$this->lastColumn.$this->index);
-        $style->getFont()->setBold($bold);
-        $style->getAlignment()->setHorizontal(Alignment::HORIZONTAL_CENTER);
-        $style->getBorders()->getAllBorders()
-            ->setBorderStyle(Border::BORDER_THIN)
-            ->setColor(new Color('#000'));
-
-        $this->index++;
-    }
-
-    private function setColumns($columns){
-        foreach($columns as $col => $width):
-            $this->sheet->getColumnDimension($col)->setWidth($width);
-        endforeach;
-        $this->columns = array_keys($columns);
-        $this->lastColumn = $this->columns[count($this->columns) - 1];
-
-        $this->sheet->getStyle($this->columns[0]."1:".$this->lastColumn."1000")->getAlignment()->setWrapText(true)->setVertical('top');
-        $this->sheet->getStyle($this->columns[0]."1:".$this->lastColumn."1000")->getFont()->setName("Times New Roman")->setSize(14);
     }
 
     private function handle($type){
@@ -88,7 +64,7 @@ class CreateDocument
                 $this->title = 'Протокол '.$this->group->contractor->short_name." ".$this->group->created_at->format('d-m-Y');
             break;
             case('certificates'):
-                $this->setColumns(['A' => 12, 'B' => 43, 'C' => 30, 'D' => 30]);
+                $this->setColumns(['A' => 15, 'B' => 35, 'C' => 25, 'D' => 25]);
                 $this->createCertificates();
                 $this->title = 'Удостоверения '.$this->group->contractor->short_name." ".$this->group->created_at->format('d-m-Y');
             break;
@@ -266,7 +242,7 @@ class CreateDocument
 
         foreach($this->group->users as $i => $user):
             $this->index++;
-            $this->sheet->setCellValue("F$this->index", $user->doc_series);
+            #$this->sheet->setCellValue("F$this->index", $user->doc_series);
             $this->sheet->setCellValue("G$this->index", $user->document);
             $this->sheet->setCellValue("K$this->index", $this->course ? $this->course->title : '-');
             $this->sheet->setCellValue("N$this->index", $this->group->start_date ? $this->group->start_date->format('Y') : '-' );
@@ -289,7 +265,7 @@ class CreateDocument
             $this->sheet->getStyle("A$this->index")->getFont()->setBold(true);
             $this->sheet->getStyle("A$this->index")->getAlignment()->setHorizontal(Alignment::HORIZONTAL_RIGHT);
             $this->index++;
-            $this->sheet->setCellValue("A$this->index", "К договору №  ТУЦ-_\r\nот ".($this->group->start_date ? $this->group->start_date->format('d.m.Y') : "___________")."\r\nДиректору ООО «ТУЦ»r\r\nЕ.В. Евграфовой");
+            $this->sheet->setCellValue("A$this->index", "К договору № ".$this->group->contract." от ".($this->group->start_date ? $this->group->start_date->format('d.m.Y') : "___________")."\r\nДиректору ООО «ТУЦ»r\r\nЕ.В. Евграфовой");
             $this->sheet->getStyle("A$this->index")->getAlignment()->setHorizontal(Alignment::HORIZONTAL_RIGHT);
             $this->index++;
             $this->delimeter();
@@ -320,6 +296,8 @@ class CreateDocument
             $this->sheet->getStyle("A$this->index")->getFont()->setSize(8);
             $this->index++;
             $this->delimeter();
+
+            $this->sheet->setCellValue("A$this->index", "Номер телефона: ".$user->phone);
             $this->sheet->setCellValue("A$this->index","в соответствии с Федеральным законом от 27.07.2006 № 152-ФЗ \"О персональных данных\" и письмом Рособразования от 29.07.2009 № 17-110 \"Об обеспечении защиты персональных данных\" даю согласие на обработку моих персональных данных Общество с ограниченной ответственностью «Тюменский Учебный Центр»  (далее - ООО «ТУЦ»), расположенному по адресу 625023, РФ, Тюменская область, г. Тюмень, ул. Республики, дом 209, оф.300");
             $this->index++;
             $this->delimeter();
@@ -387,17 +365,6 @@ class CreateDocument
         endforeach;
     }
 
-    private function subheader($text){
-        $this->sheet->setCellValue("A$this->index", "      $text");
-        $this->sheet->getStyle("A$this->index")->getFont()->setBold(true);
-        $this->index++;
-    }
-
-    private function listItem($text){
-        $this->sheet->setCellValue("A$this->index", "     • $text");
-        $this->index++;
-    }
-
     private function certificatesWorkerTwo(){
         foreach($this->group->users as $i => $user):
             $this->sheet->getRowDimension($this->index)->setRowHeight(5);
@@ -410,7 +377,7 @@ class CreateDocument
             $this->sheet->getStyle("B$this->index:B".($this->index+9))->getBorders()->getAllBorders()
                 ->setBorderStyle(Border::BORDER_THIN)
                 ->setColor(new Color('FF008000'));
-            $this->sheet->setCellValue("D$this->index", "Удостоверение № 0".$user->id.'-'.date('y'));
+            $this->sheet->setCellValue("D$this->index", "Удостоверение № ___");
             $this->sheet->getStyle("D$this->index")->getFont()->setSize(12)->setBold(true);
             $this->sheet->getRowDimension($this->index)->setRowHeight(20);
             $this->index++;
@@ -526,15 +493,15 @@ class CreateDocument
             $this->sheet->getRowDimension($this->index)->setRowHeight(30);
             $this->index++;
             $this->sheet->mergeCells("A$this->index:C$this->index");
-            $text = "протокол квалификационной комиссии\r\n № 0".$this->group->id." / ПО-".$this->group->created_at->format('d-m-y')." от ".$this->group->end_date->format('d.m.Y');
+            $text = "протокол квалификационной комиссии\r\n № 0".$this->group->protocol." / ".$this->group->number." от ".$this->group->end_date->format('d.m.Y');
             $this->sheet->setCellValue("A$this->index", $text);
             $this->sheet->setCellValue("D$this->index", $text);
             $this->sheet->getStyle("A$this->index:D$this->index")->getFont()->setSize(10);
             $this->sheet->getRowDimension($this->index)->setRowHeight(30);
             $this->index++;
             $this->sheet->mergeCells("A$this->index:C$this->index");
-            $this->sheet->setCellValue("A$this->index", "  Председатель\r\n  квалификационной комиссии ____________  А.В. Шаруха");
-            $this->sheet->setCellValue("D$this->index", "  Председатель\r\n  квалификационной комиссии ____________  А.В. Шаруха");
+            $this->sheet->setCellValue("A$this->index", "  Председатель\r\n  квалификационной комиссии ____________  ".$this->group->chairman2);
+            $this->sheet->setCellValue("D$this->index", "  Председатель\r\n  квалификационной комиссии ____________  ".$this->group->chairman2);
             $this->sheet->getStyle("A$this->index:D$this->index")->getAlignment()->setVertical(Alignment::VERTICAL_BOTTOM)->setHorizontal(Alignment::HORIZONTAL_LEFT);
             $this->sheet->getRowDimension($this->index)->setRowHeight(30);
 
@@ -549,8 +516,8 @@ class CreateDocument
 
             $this->index++;
             $this->sheet->mergeCells("A$this->index:C$this->index");
-            $this->sheet->setCellValue("A$this->index", "  Секретарь __________________________   Ю.Р. Ульянова");
-            $this->sheet->setCellValue("D$this->index", "  Секретарь __________________________   Ю.Р. Ульянова");
+            $this->sheet->setCellValue("A$this->index", "  Секретарь __________________________   ".$this->group->secretary);
+            $this->sheet->setCellValue("D$this->index", "  Секретарь __________________________   ".$this->group->secretary);
             $this->sheet->getStyle("A$this->index:D$this->index")->getAlignment()->setVertical(Alignment::VERTICAL_BOTTOM)->setHorizontal(Alignment::HORIZONTAL_LEFT);
             $this->sheet->getRowDimension($this->index)->setRowHeight(30);
 
@@ -566,8 +533,8 @@ class CreateDocument
 
             $this->index++;
             $this->sheet->mergeCells("A$this->index:C$this->index");
-            $this->sheet->setCellValue("A$this->index", "  Директор __________________________   Е.В. Евграфова");
-            $this->sheet->setCellValue("D$this->index", "  Директор __________________________   Е.В. Евграфова");
+            $this->sheet->setCellValue("A$this->index", "  Директор __________________________   ".$this->director);
+            $this->sheet->setCellValue("D$this->index", "  Директор __________________________   ".$this->director);
             $this->sheet->getStyle("A$this->index:D$this->index")->getAlignment()->setVertical(Alignment::VERTICAL_BOTTOM)->setHorizontal(Alignment::HORIZONTAL_LEFT);
             $this->sheet->getRowDimension($this->index)->setRowHeight(30);
 
@@ -672,10 +639,10 @@ class CreateDocument
             $this->index++;
 
             $this->sheet->mergeCells("D$this->index:F$this->index");
-            $this->sheet->setCellValue("D$this->index", "Решением квалификационной комиссии от ".$this->startDate." года протокол № 03 / ПО-".$this->group->created_at->format('d-m-Y')." присвоена квалификация");
+            $this->sheet->setCellValue("D$this->index", "Решением квалификационной комиссии от ".$this->startDate." года протокол ".$this->group->protocol." / ".$this->group->number." присвоена квалификация");
             $this->sheet->getRowDimension($this->index)->setRowHeight(80);
             $this->sheet->mergeCells("A$this->index:C$this->index");
-            $this->sheet->setCellValue("A$this->index", "СПР 000???");
+            $this->sheet->setCellValue("A$this->index", "СПР ??????");
             $this->sheet->getStyle("A$this->index")->getFont()->setSize(13)->setBold(true)->setColor(new Color('Red'));
             $this->index++;
             $this->sheet->mergeCells("D$this->index:F".($this->index+3));
@@ -691,13 +658,13 @@ class CreateDocument
 
             $this->index++;
             $this->sheet->mergeCells("A$this->index:C$this->index");
-            $this->sheet->setCellValue("A$this->index", "Регистрационный номер ____".($this->group->created_at->format('d/Y').' ПО'));
+            $this->sheet->setCellValue("A$this->index", "Регистрационный номер ____");
             $this->sheet->getStyle("A$this->index")->getFont()->setSize(12)->setBold(true);
             $this->index++;
 
             $this->sheet->setCellValue("E$this->index", "Председатель\r\nКвалификационной комиссии");
             $this->sheet->getStyle("E$this->index")->getAlignment()->setHorizontal(Alignment::HORIZONTAL_LEFT)->setVertical(Alignment::VERTICAL_BOTTOM);
-            $this->sheet->setCellValue("F$this->index", "А.В. Шаруха");
+            $this->sheet->setCellValue("F$this->index", $this->group->chairman2);
             $this->sheet->getStyle("F$this->index")->getAlignment()->setHorizontal(Alignment::HORIZONTAL_RIGHT)->setVertical(Alignment::VERTICAL_BOTTOM);
 
             $this->index++;
@@ -710,7 +677,7 @@ class CreateDocument
 
             $this->sheet->setCellValue("E$this->index", "Руководитель\r\nобразовательной организации");
             $this->sheet->getStyle("E$this->index")->getAlignment()->setHorizontal(Alignment::HORIZONTAL_LEFT)->setVertical(Alignment::VERTICAL_BOTTOM);
-            $this->sheet->setCellValue("F$this->index", "Е.В. Евграфова");
+            $this->sheet->setCellValue("F$this->index", $this->director);
             $this->sheet->getStyle("F$this->index")->getAlignment()->setHorizontal(Alignment::HORIZONTAL_RIGHT)->setVertical(Alignment::VERTICAL_BOTTOM);
             $this->sheet->mergeCells("A$this->index:C$this->index");
             $this->sheet->setCellValue("A$this->index", "Город Тюмень");
@@ -723,7 +690,6 @@ class CreateDocument
         endforeach;
 
     }
-
 
     private function createCertificatesPrint(){
         foreach($this->group->users as $i => $user):
@@ -780,7 +746,7 @@ class CreateDocument
             $this->bigDelimeter();
             $this->sheet->mergeCells("D$this->index:F$this->index");
             $this->sheet->mergeCells("A$this->index:C$this->index");
-            $this->sheet->setCellValue("A$this->index", "КПК 0009468");
+            $this->sheet->setCellValue("A$this->index", "КПК ??????");
             $this->sheet->getStyle("A$this->index")->getFont()->setSize(11)->setBold(true);
             $this->sheet->setCellValue("D$this->index", "В объёме ".($this->course ? $this->course->length : "___")." ч.");
             $this->sheet->getStyle("D$this->index")->getFont()->setSize(12)->setBold(true);
@@ -789,14 +755,14 @@ class CreateDocument
             $this->sheet->setCellValue("D$this->index", "М.П.     ");
             $this->sheet->getStyle("D$this->index")->getAlignment()->setHorizontal(Alignment::HORIZONTAL_RIGHT);
             $this->sheet->setCellValue("E$this->index", "Директор");
-            $this->sheet->setCellValue("F$this->index", "Е.В. Евграфова");
+            $this->sheet->setCellValue("F$this->index", $this->director);
             $this->sheet->mergeCells("A$this->index:C$this->index");
             $this->sheet->setCellValue("A$this->index", "Дата выдачи ".$this->endDate." года");
             $this->sheet->getStyle("A$this->index")->getFont()->setSize(11)->setBold(true);
             $this->index++;
             $this->bigDelimeter();
             $this->sheet->setCellValue("E$this->index", "Секретарь");
-            $this->sheet->setCellValue("F$this->index", "Е.А. Терентьева");
+            $this->sheet->setCellValue("F$this->index", $this->group->secretary);
             $this->sheet->mergeCells("A$this->index:C$this->index");
             $this->sheet->setCellValue("A$this->index", "Город Тюмень");
             $this->sheet->getStyle("A$this->index")->getFont()->setSize(11)->setBold(true);
@@ -808,7 +774,7 @@ class CreateDocument
 
     }
 
-    private  function createCertificates(){
+    private function createCertificates(){
         foreach($this->group->users as $i => $user):
             $this->line();
             $drawing = new Drawing();
@@ -831,9 +797,9 @@ class CreateDocument
             $style = $this->sheet->getStyle("B$this->index");
             $style->getAlignment()->setHorizontal(Alignment::HORIZONTAL_CENTER);
             $style->getFont()->setSize(9);
-            $this->sheet->getRowDimension($this->index)->setRowHeight(36);
+            $this->sheet->getRowDimension($this->index)->setRowHeight(50);
             $this->index++;
-            $this->sheet->setCellValue("B$this->index", 'УДОСТОВЕРЕНИЕ № 0'.$user->id.'-'.date('y'));
+            $this->sheet->setCellValue("B$this->index", 'УДОСТОВЕРЕНИЕ № ??????');
             $style = $this->sheet->getStyle("B$this->index");
             $style->getAlignment()->setHorizontal(Alignment::HORIZONTAL_CENTER);
             $this->sheet->getRowDimension($this->index)->setRowHeight(15);
@@ -854,15 +820,15 @@ class CreateDocument
             $this->sheet->setCellValue("A$this->index", 'Должность (профессия)');
             $this->sheet->setCellValue("B$this->index", "          ".$user->position);
             $style = $this->sheet->getStyle("A".($this->index-4).":B".$this->index);
-            $style->getFont()->setSize(11);
+            $style->getFont()->setSize(9);
             $this->index++;
-            $this->sheet->setCellValue("A$this->index", $this->group->contractor->short_name);
-            $style = $this->sheet->getStyle("A".$this->index);
+            $this->sheet->setCellValue("B$this->index", $this->group->contractor->short_name);
+            $style = $this->sheet->getStyle("B".$this->index);
             $style->getFont()->setSize(9);
             $this->sheet->getRowDimension($this->index)->setRowHeight(14);
             $this->index++;
             $this->sheet->mergeCells("A$this->index:B$this->index");
-            $this->sheet->setCellValue("A$this->index", "Дата выдачи __ ______ ".date('Y')." г.");
+            $this->sheet->setCellValue("A$this->index", "Дата выдачи ".($this->group->end_date ? $this->group->end_date->format('d.m.Y') : '')." г.");
             $style = $this->sheet->getStyle("A$this->index");
             $style->getAlignment()->setHorizontal(Alignment::HORIZONTAL_CENTER);
             $style->getFont()->setSize(8);
@@ -874,7 +840,7 @@ class CreateDocument
             $style->getAlignment()->setHorizontal(Alignment::HORIZONTAL_CENTER);
             $style->getFont()->setSize(8);
             $this->sheet->getRowDimension($this->index)->setRowHeight(12);
-            if($i > 1 and ($i + 1) % 5 === 0 and $this->group->users->count() !== ($i + 1)):
+            if($i > 1 and ($i + 1) % 4 === 0 and $this->group->users->count() !== ($i + 1)):
                 $this->sheet->setBreak('A'.$this->index, \PhpOffice\PhpSpreadsheet\Worksheet\Worksheet::BREAK_ROW);
             endif;
             $this->index++;
@@ -896,14 +862,14 @@ class CreateDocument
             $run->getFont()->setSize(9)->setName("Times New Roman");
             $run = $rte->createTextRun("Протокол заседания экзаменационной комиссии \r\n");
             $run->getFont()->setSize(9)->setName("Times New Roman");
-            $run = $rte->createTextRun("__ / ПК-__-03-".date('y')." от __.__.".date('Y')." \r\n");
+            $run = $rte->createTextRun($this->group->protocol." / ".$this->group->number." от ".($this->group->end_date ? $this->group->end_date->format('d.m.Y') : '__________')." \r\n");
             $run->getFont()->setSize(9)->setName("Times New Roman");
             $this->sheet->getCell("C".$treshold)->setValue($rte);
 
             $this->sheet->setCellValue("C".($treshold + 6), 'Председатель экзаменационной комиссии');
-            $this->sheet->setCellValue("D".($treshold + 6), 'Е.В. Евграфова');
+            $this->sheet->setCellValue("D".($treshold + 6), $this->group->chairman2);
             $this->sheet->setCellValue("C".($treshold + 7), 'Директор ООО «ТУЦ»');
-            $this->sheet->setCellValue("D".($treshold + 7), 'Е.В. Евграфова');
+            $this->sheet->setCellValue("D".($treshold + 7), $this->director);
             $style = $this->sheet->getStyle("D".($treshold + 6).":D".($treshold + 7));
             $style->getAlignment()->setHorizontal(Alignment::HORIZONTAL_RIGHT);
             $style->getAlignment()->setVertical(Alignment::VERTICAL_BOTTOM);
@@ -956,16 +922,17 @@ class CreateDocument
         $this->setHeaderImage();
         $this->sheet->getRowDimension($this->index)->setRowHeight(150);
         $this->index++;
-        $this->header('Протокол № __ / ПО-'.$this->group->created_at->format('d-m-Y').' заседания экзаменационной комиссии ООО «ТУЦ»', 18, true);
+        $this->header('Протокол № '.$this->group->protocol.' / '.$this->group->number.' заседания экзаменационной комиссии ООО «ТУЦ»', 18, true);
         $this->delimeter();
         $this->dateLine();
+        $this->index++;
         $this->paragraph('Комиссией в составе: ', 25);
         $this->delimeter();
-        $this->paragraph('Председатель: директор ООО «ТУЦ» Евграфова Е.В.', 25);
+        $this->paragraph('Председатель: '.$this->group->chairman_pos.' '.$this->group->chairman, 25);
         $this->delimeter();
-        $this->paragraph('Члены комиссии: преподаватель ООО «ТУЦ» Шаруха А.В., преподаватель ООО «ТУЦ» Абрамова Е.Ю.', 25);
-        $this->delimeter();
-        $this->paragraph('проведена проверка знаний слушателей группы № ПО-'.$this->group->created_at->format('d-m-Y').' в объеме, соответствующем требованиям профессионального обучения (повышения квалификации) «'.($this->course ? $this->course->title : "_________").'» '.($this->course ? $this->course->length : "___").' часов', 75);
+        $this->paragraph('Члены комиссии: '.$this->group->member1_pos.' '.$this->group->member1.($this->group->member2 ? ', '.$this->group->member2_pos.' '.$this->group->member2 : ''), 40);
+        $this->index++;
+        $this->paragraph('проведена проверка знаний слушателей группы № '.$this->group->number.' в объеме, соответствующем требованиям профессионального обучения (повышения квалификации) «'.($this->course ? $this->course->title : "_________").'» '.($this->course ? $this->course->length : "___").' часов', 75);
         $this->delimeter();
         $this->tablerow(['A' => '№ п/п', 'B' => 'Ф.И.О.', 'C' => 'Должность', 'D' => 'Организация', 'E' => 'Результат проверки знаний'], true);
         foreach($this->group->users as $i => $user):
@@ -973,25 +940,26 @@ class CreateDocument
                 'C' => $user->position, 'D' => $this->group->contractor->name, 'E' => 'Хорошо'], false);
         endforeach;
         $this->delimeter();
-        $this->signature(['Председатель', 'Е.В. Евграфова']);
+        $this->signature(['Председатель', $this->group->chairman]);
         $this->bigDelimeter();
-        $this->signature(['Члены комиссии', 'А.В. Шаруха']);
+        $this->signature(['Члены комиссии', $this->group->member1]);
         $this->delimeter();
-        $this->signature([' ', 'Е.Ю Абрамова ']);
+        $this->signature([' ', $this->group->member2]);
         $this->sheet->setBreak('A'.$this->index, \PhpOffice\PhpSpreadsheet\Worksheet\Worksheet::BREAK_ROW);
 
         // 2 лист
-        $this->sheet->getRowDimension($this->index)->setRowHeight(150);
         $this->index++;
-        $this->header('Протокол № __ / ПО-'.$this->group->created_at->format('d-m-Y').' заседания экзаменационной комиссии ООО «ТУЦ»', 18, true);
+        $this->header('Протокол № '.$this->group->protocol.' / '.$this->group->number.' заседания экзаменационной комиссии ООО «ТУЦ»', 18, true);
         $this->delimeter();
-        $this->dateLine();$this->paragraph('Квалификационная комиссия в составе: ', 25);
+        $this->dateLine();
+        $this->index++;
+        $this->paragraph('Квалификационная комиссия в составе: ', 25);
         $this->delimeter();
-        $this->paragraph('Председатель:  к.т.н., доцент кафедры «Транспортные технологические системы» Шаруха А.В.', 25);
+        $this->paragraph('Председатель: '.$this->group->chairman2_pos.' '.$this->group->chairman2, 25);
         $this->delimeter();
-        $this->paragraph('Члены комиссии: директор ООО «ТУЦ» Евграфова Е.В., преподаватель ООО «ТУЦ» Абрамова Е.Ю.', 25);
-        $this->delimeter();
-        $this->paragraph('Секретарь комиссии: преподаватель ООО «ТУЦ» Ульянова Ю.Р.', 25);
+        $this->paragraph('Члены комиссии: '.$this->group->member3_pos.' '.$this->group->member3.($this->group->member4 ? ', '.$this->group->member4_pos.' '.$this->group->member4 : ''), 40);
+        $this->index++;
+        $this->paragraph('Секретарь комиссии: '.$this->group->secretary_pos.' '.$this->group->secretary, 25);
         $this->delimeter();
         $this->paragraph('Обсудив результаты обучения, промежуточной и итоговой аттестации обучающихся по программе профессионального обучения (повышения квалификации)  «'.($this->course ? $this->course->title : "_________").'» ('.($this->course ? $this->course->length : "___").' часов), решила:', 75);
         $this->delimeter();
@@ -1002,27 +970,28 @@ class CreateDocument
                 'C' => $user->position, 'D' => $this->group->contractor->name, 'E' => 'Хорошо'], false);
         endforeach;
         $this->delimeter();
-        $this->signature(['Председатель', 'А.В.Шаруха']);
+        $this->signature(['Председатель', $this->group->chairman2]);
         $this->bigDelimeter();
-        $this->signature(['Члены комиссии', 'Е.В. Евграфова']);
+        $this->signature(['Члены комиссии', $this->group->member3]);
         $this->delimeter();
-        $this->signature([' ', 'Е.Ю Абрамова']);
+        $this->signature([' ', $this->group->member4]);
         $this->bigDelimeter();
-        $this->signature(['Секретарь комиссии', 'Ю.Р Ульянова']);
+        $this->signature(['Секретарь комиссии', $this->group->secretary]);
         $this->sheet->setBreak('A'.$this->index, \PhpOffice\PhpSpreadsheet\Worksheet\Worksheet::BREAK_ROW);
 
         // 3 лист
-        $this->sheet->getRowDimension($this->index)->setRowHeight(150);
         $this->index++;
-        $this->header('Выписка из протокола № __ / ПО-'.$this->group->created_at->format('d-m-Y').' заседания экзаменационной комиссии ООО «ТУЦ»', 18, true);
+        $this->header('Выписка из протокола № '.$this->group->protocol.' / '.$this->group->number.' заседания экзаменационной комиссии ООО «ТУЦ»', 18, true);
         $this->delimeter();
+        $this->dateLine();
+        $this->index++;
         $this->paragraph('Комиссией в составе: ', 25);
         $this->delimeter();
-        $this->paragraph('Председатель: директор ООО «ТУЦ» Евграфова Е.В.', 25);
-        $this->delimeter();
-        $this->paragraph('Члены комиссии: преподаватель ООО «ТУЦ» Шаруха А.В., преподаватель ООО «ТУЦ» Абрамова Е.Ю.', 25);
-        $this->delimeter();
-        $this->paragraph('проведена проверка знаний слушателей группы № ПО-'.$this->group->created_at->format('d-m-Y').' в объеме, соответствующем требованиям профессионального обучения (повышения квалификации) «'.($this->course ? $this->course->title : "_________").'» '.($this->course ? $this->course->length : "___").' часов', 75);
+        $this->paragraph('Председатель: '.$this->group->chairman_pos.' '.$this->group->chairman, 25);
+        $this->index++;
+        $this->paragraph('Члены комиссии: '.$this->group->member1_pos.' '.$this->group->member1.($this->group->member2 ? ', '.$this->group->member2_pos.' '.$this->group->member2 : ''), 40);
+        $this->index++;
+        $this->paragraph('проведена проверка знаний слушателей группы № '.$this->group->number.' в объеме, соответствующем требованиям профессионального обучения (повышения квалификации) «'.($this->course ? $this->course->title : "_________").'» '.($this->course ? $this->course->length : "___").' часов', 75);
         $this->delimeter();
         $this->tablerow(['A' => '№ п/п', 'B' => 'Ф.И.О.', 'C' => 'Должность', 'D' => 'Организация', 'E' => 'Результат проверки знаний'], true);
         foreach($this->group->users as $i => $user):
@@ -1030,43 +999,45 @@ class CreateDocument
                 'C' => $user->position, 'D' => $this->group->contractor->name, 'E' => 'Хорошо'], false);
         endforeach;
         $this->delimeter();
-        $this->signature(['Председатель', 'Е.В. Евграфова']);
+        $this->signature(['Председатель', $this->group->chairman]);
         $this->bigDelimeter();
-        $this->signature(['Члены комиссии', 'А.В. Шаруха']);
+        $this->signature(['Члены комиссии', $this->group->member1]);
         $this->delimeter();
-        $this->signature([' ', 'Е.Ю Абрамова ']);
+        $this->signature([' ', $this->group->member2]);
 
         $this->sheet->setBreak('A'.$this->index, \PhpOffice\PhpSpreadsheet\Worksheet\Worksheet::BREAK_ROW);
 
         // 4 лист
-        $this->sheet->getRowDimension($this->index)->setRowHeight(150);
         $this->index++;
-        $this->header('Выписка из протокола № __ / ПО-'.$this->group->created_at->format('d-m-Y').' заседания экзаменационной комиссии ООО «ТУЦ»', 18, true);
+        $this->header('Выписка из протокола № '.$this->group->protocol.' / '.$this->group->number.' заседания экзаменационной комиссии ООО «ТУЦ»', 18, true);
         $this->delimeter();
-        $this->dateLine();$this->paragraph('Квалификационная комиссия в составе: ', 25);
+        $this->dateLine();
+        $this->index++;
+        $this->paragraph('Квалификационная комиссия в составе: ', 25);
         $this->delimeter();
-        $this->paragraph('Председатель:  к.т.н., доцент кафедры «Транспортные технологические системы» Шаруха А.В.', 25);
+        $this->paragraph('Председатель: '.$this->group->chairman2_pos.' '.$this->group->chairman2, 25);
         $this->delimeter();
-        $this->paragraph('Члены комиссии: директор ООО «ТУЦ» Евграфова Е.В., преподаватель ООО «ТУЦ» Абрамова Е.Ю.', 25);
+        $this->paragraph('Члены комиссии: '.$this->group->member3_pos.' '.$this->group->member3.($this->group->member4 ? ', '.$this->group->member4_pos.' '.$this->group->member4 : ''), 40);
         $this->delimeter();
-        $this->paragraph('Секретарь комиссии: преподаватель ООО «ТУЦ» Ульянова Ю.Р.', 25);
+        $this->paragraph('Секретарь комиссии: '.$this->group->secretary_pos.' '.$this->group->secretary, 25);
         $this->delimeter();
         $this->paragraph('Обсудив результаты обучения, промежуточной и итоговой аттестации обучающихся по программе профессионального обучения (повышения квалификации)  «'.($this->course ? $this->course->title : "_________").'» ('.($this->course ? $this->course->length : "___").' часов), решила:', 75);
         $this->delimeter();
         $this->paragraph('считать окончившими обучение в ООО «ТУЦ» следующих обучающихся и подтвердившими квалификацию и установленные разряды:', 25);
+        $this->index++;
         $this->tablerow(['A' => '№ п/п', 'B' => 'Ф.И.О.', 'C' => 'Должность', 'D' => 'Разряд', 'E' => 'Результат проверки знаний'], true);
         foreach($this->group->users as $i => $user):
             $this->tablerow(['A' => $i+1, 'B' => $user->last_name." ".$user->name." ".$user->patronymic,
                 'C' => $user->position, 'D' => $this->group->contractor->name, 'E' => 'Хорошо'], false);
         endforeach;
         $this->delimeter();
-        $this->signature(['Председатель', 'А.В.Шаруха']);
+        $this->signature(['Председатель', $this->group->chairman2]);
         $this->bigDelimeter();
-        $this->signature(['Члены комиссии', 'Е.В. Евграфова']);
+        $this->signature(['Члены комиссии', $this->group->member3]);
         $this->delimeter();
-        $this->signature([' ', 'Е.Ю Абрамова']);
+        $this->signature([' ', $this->group->member4]);
         $this->bigDelimeter();
-        $this->signature(['Секретарь комиссии', 'Ю.Р Ульянова']);
+        $this->signature(['Секретарь комиссии', $this->group->secretary]);
 
     }
 
@@ -1080,10 +1051,10 @@ class CreateDocument
         $this->delimeter();
         $this->header('О зачислении на обучение', 16, false);
         $this->delimeter();
-        $text = 'В связи с завершением комплектования учебной группы ПО-'.$this->group->created_at->format('d-m-Y');
+        $text = 'В связи с завершением комплектования учебной группы '.$this->group->number;
         $text .= ', программа обучения «'.($this->course ? $this->course->title : '____________').'» ';
         $text .= '('.($this->course ? $this->course->length : '___').'ч.),';
-        $this->paragraph($text, 40);
+        $this->paragraph($text, 60);
         $this->delimeter();
         $this->paragraph('ПРИКАЗЫВАЮ:', 25);
         $this->delimeter();
@@ -1094,11 +1065,11 @@ class CreateDocument
             $this->tablerow(['A' => $i+1, 'B' => $user->last_name." ".$user->name." ".$user->patronymic, 'C' => $user->position, 'D' => $this->group->contractor->name], false);
         endforeach;
         $this->delimeter();
-        $this->paragraph('   2. Назначить куратором группы и возложить ответственность за организационно-методическое сопровождение программы на Абрамову Е.Ю.', 50);
+        $this->paragraph('   2. Назначить куратором группы и возложить ответственность за организационно-методическое сопровождение программы на '.$this->group->secretary2, 50);
         $this->delimeter();
         $this->paragraph('   3. Контроль за исполнением настоящего приказа оставляю за собой.', 25);
         $this->bigDelimeter();
-        $this->signature(['Директор', 'Е.В. Евграфова']);
+        $this->signature(['Директор', $this->director]);
         $this->sheet->setBreak('A'.$this->index, \PhpOffice\PhpSpreadsheet\Worksheet\Worksheet::BREAK_ROW);
         $this->sheet->getRowDimension($this->index)->setRowHeight(150);
         $this->index++;
@@ -1110,7 +1081,7 @@ class CreateDocument
         $this->delimeter();
         $text = 'В связи с успешным завершением обучения по программе «'.($this->course ? $this->course->title : '____________').'» ';
         $text .= '('.($this->course ? $this->course->length : '___').'ч.), ';
-        $text .= 'обучающихся группы ПО-'.$this->group->created_at->format('d-m-Y');
+        $text .= 'обучающихся группы '.$this->group->number;
         $this->paragraph($text, 40);
         $this->delimeter();
         $this->paragraph('ПРИКАЗЫВАЮ:', 25);
@@ -1124,7 +1095,7 @@ class CreateDocument
         $this->delimeter();
         $this->paragraph('   2. Контроль за исполнением настоящего приказа оставляю за собой.', 25);
         $this->bigDelimeter();
-        $this->signature(['Директор', 'Е.В. Евграфова']);
+        $this->signature(['Директор', $this->director]);
     }
 
     private function createStatement(){
@@ -1162,6 +1133,7 @@ class CreateDocument
     }
 
     private function dateLine(){
+        $this->index++;
         $this->sheet->mergeCells("A$this->index:B$this->index");
         $this->sheet->setCellValue("A$this->index", date('d.m.Y'));
         $this->sheet->setCellValue("C$this->index", 'г. Тюмень');
@@ -1199,7 +1171,6 @@ class CreateDocument
         $this->index++;
     }
 
-
     private function paragraph($text, $height){
         $this->sheet->mergeCells("A$this->index:".$this->lastColumn.$this->index);
         $this->sheet->setCellValue("A$this->index", $text);
@@ -1218,6 +1189,43 @@ class CreateDocument
 
         $this->sheet->getRowDimension($this->index)->setRowHeight(10);
         $this->index++;
+    }
+
+    private function subheader($text){
+        $this->sheet->setCellValue("A$this->index", "      $text");
+        $this->sheet->getStyle("A$this->index")->getFont()->setBold(true);
+        $this->index++;
+    }
+
+    private function listItem($text){
+        $this->sheet->setCellValue("A$this->index", "     • $text");
+        $this->index++;
+    }
+
+    private function tablerow($titles, $bold){
+
+        foreach($titles as $col => $title):
+            $this->sheet->setCellValue($col.$this->index, $title);
+        endforeach;
+        $style = $this->sheet->getStyle("A$this->index:".$this->lastColumn.$this->index);
+        $style->getFont()->setBold($bold);
+        $style->getAlignment()->setHorizontal(Alignment::HORIZONTAL_CENTER);
+        $style->getBorders()->getAllBorders()
+            ->setBorderStyle(Border::BORDER_THIN)
+            ->setColor(new Color('#000'));
+
+        $this->index++;
+    }
+
+    private function setColumns($columns){
+        foreach($columns as $col => $width):
+            $this->sheet->getColumnDimension($col)->setWidth($width);
+        endforeach;
+        $this->columns = array_keys($columns);
+        $this->lastColumn = $this->columns[count($this->columns) - 1];
+
+        $this->sheet->getStyle($this->columns[0]."1:".$this->lastColumn."1000")->getAlignment()->setWrapText(true)->setVertical('top');
+        $this->sheet->getStyle($this->columns[0]."1:".$this->lastColumn."1000")->getFont()->setName("Times New Roman")->setSize(14);
     }
 
     private function bigDelimeter(){

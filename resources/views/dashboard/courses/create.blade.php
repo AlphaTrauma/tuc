@@ -25,7 +25,7 @@
                     <input type="number" value="{{ isset($item) ? $item->price : old('price')}}" placeholder="Стоимость" name="price" class="uk-input">
                 </div>
                 <div class="uk-margin-small">
-                    <textarea name="description" placeholder="Краткое описание" id="" cols="30" rows="10" class="uk-textarea">{{ isset($item) ? $item->description : old('description')}}</textarea>
+                    <textarea name="description" placeholder="Краткое описание" id="" class="uk-textarea">{{ isset($item) ? $item->description : old('description')}}</textarea>
                 </div>
             </div>
             <div class="uk-width-2-3 uk-padding-small uk-padding-remove-vertical">

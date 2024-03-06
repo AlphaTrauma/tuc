@@ -8,6 +8,68 @@
     <h1>Настройки сайта</h1>
     @include('blocks.errors')
     <hr>
+    <div class="uk-form-horizontal">
+        <h2>Список сотрудников</h2>
+        <div class="uk-margin">
+            <label class="uk-form-label" for="list">Список</label>
+            <div class="uk-form-controls">
+                <ul class="uk-list uk-list-divider">
+                    @forelse($personnel as $person)
+                        <li>
+
+                            {{ $person->name }}
+                            <a href="{{ route('person.remove', $person) }}" class="uk-link uk-text-danger"><span uk-icon="close"></span></a>
+                        </li>
+                    @empty
+                        <li>Сотрудники не добавлены</li>
+                    @endforelse
+                    <li>
+                        <form action="{{ route('person.add') }}" method="POST">
+                            @csrf
+                            <div  class="uk-flex uk-width-large">
+                                <input required class="uk-input" name="name" id="person" type="text" placeholder="Фамилия И.О." value="">
+                                <input type="submit" class="uk-button uk-button-success" value="Добавить">
+                            </div>
+
+                        </form>
+                    </li>
+
+                </ul>
+            </div>
+        </div>
+    </div>
+    <hr>
+    <div class="uk-form-horizontal">
+        <h2>Список должностей</h2>
+        <div class="uk-margin">
+            <label class="uk-form-label" for="list">Список</label>
+            <div class="uk-form-controls">
+                <ul class="uk-list uk-list-divider">
+                    @forelse($positions as $position)
+                        <li>
+
+                            {{ $position->name }}
+                            <a href="{{ route('position.remove', $position) }}" class="uk-link uk-text-danger"><span uk-icon="close"></span></a>
+                        </li>
+                    @empty
+                        <li>Должности не добавлены</li>
+                    @endforelse
+                    <li>
+                        <form action="{{ route('position.add') }}" method="POST">
+                            @csrf
+                            <div  class="uk-flex uk-width-large">
+                                <input required class="uk-input" name="name" id="person" type="text" placeholder="Название" value="">
+                                <input type="submit" class="uk-button uk-button-success" value="Добавить">
+                            </div>
+
+                        </form>
+                    </li>
+
+                </ul>
+            </div>
+        </div>
+    </div>
+    <hr>
     <form class="uk-form-horizontal" method="POST" enctype="multipart/form-data" action="{{ route('settings.save') }}">
         @csrf
         <h2>Контакты и реквизиты</h2>
@@ -79,6 +141,13 @@
             </div>
         </div>
         <hr>
+        <div class="uk-margin-small">
+            <label class="uk-form-label" for="director">Директор</label>
+            <div class="uk-form-controls">
+                <input class="uk-input" name="director" id="director" type="text"  value="{{ $settings['director']->value }}">
+            </div>
+        </div>
+        <hr>
         <h2>Системные</h2>
         <div class="uk-margin-small">
             <label class="uk-form-label" for="metric">Идентификатор Я.Метрики</label>
@@ -96,4 +165,8 @@
             <input type="submit" class="uk-button uk-button-success uk-width-1-1" value="Сохранить изменения">
         </div>
     </form>
+
+
+
+
 @endsection

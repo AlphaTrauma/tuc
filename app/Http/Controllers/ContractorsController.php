@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Contractor;
 use App\Models\Course;
 use App\Models\Group;
+use App\Models\Person;
+use App\Models\Positions;
 use App\Models\User;
 use App\Services\CreateDocument;
 use Carbon\Carbon;
@@ -34,7 +36,9 @@ class ContractorsController extends Controller
     public function show(Contractor $item){
         $item->load('groups.users');
         $courses = Course::query()->whereHas('blocks')->orderBy('title')->pluck('title', 'id')->toArray();
-        return view('dashboard.contractors.show', compact('item', 'courses'));
+        $personnel = Person::all();
+        $positions = Positions::all();
+        return view('dashboard.contractors.show', compact('item', 'courses', 'personnel', 'positions'));
     }
 
     public function store(Request $request){
@@ -58,7 +62,7 @@ class ContractorsController extends Controller
         return back()->with('message', 'Данные группы обновлены');
     }
 
-    public function upload(Request $request, $id){
+    public function upload(Request $request, $id, $group_id = null){
         $contractor = Contractor::find($id);
         if(!$contractor) return back()->with('error', 'Ошибка: контрагент не обнаружен');
         if(!$request->hasFile('file')) return back()->with('error', 'Ошибка: не найден загруженный файл');
@@ -68,8 +72,13 @@ class ContractorsController extends Controller
         $sheet = $spreadsheet->getActiveSheet();
         $rowCount = $sheet->getHighestRow();
         if($rowCount < 2) return back()->with('error', 'В загруженной таблице нет данных');
-        $group = Group::where('contractor_id', $id)->whereYear('created_at', date('Y'))
-            ->whereMonth('created_at', date('m'))->whereDay('created_at', date('d'))->first();
+        if($group_id):
+            $group = Group::find($group_id);
+        else:
+            $group = Group::where('contractor_id', $id)->whereYear('created_at', date('Y'))
+                    ->whereMonth('created_at', date('m'))->whereDay('created_at', date('d'))->first();
+        endif;
+
         if(!$group) $group = Group::create(['contractor_id' => $id]);
         $users = []; $passwords = [];
         $sheet->setCellValue('J1', "Логин");

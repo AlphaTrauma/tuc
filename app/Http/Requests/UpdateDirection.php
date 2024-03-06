@@ -25,7 +25,7 @@ class UpdateDirection extends FormRequest
     {
         return [
             'title' => 'string|required',
-            'description' => 'string|max:255|required',
+            'description' => 'string|max:1000|required',
             'file' => 'image|nullable',
             'html' => 'string|nullable'
         ];
@@ -38,7 +38,7 @@ class UpdateDirection extends FormRequest
             'title.string' => 'Некорректный заголовок слайда',
             'description.required' => 'Не заполнено краткое описание направления',
             'description.string' => 'Некорректное описание',
-            'description.max' => 'Длина краткого описания не должна превышать 255 символов',
+            'description.max' => 'Длина краткого описания не должна превышать 1000 символов',
             'file.image' => 'Загруженное изображение имеет неправильное расширение'
         ];
     }

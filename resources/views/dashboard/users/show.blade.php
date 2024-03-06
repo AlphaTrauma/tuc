@@ -32,6 +32,9 @@
                 <p class="uk-text-bold">Должность</p>
                 <p class="uk-text-bold">Электронная почта</p>
                 <p class="uk-text-bold">Телефон</p>
+                <p class="uk-text-bold">Паспорт</p>
+                <p class="uk-text-bold">СНИЛС</p>
+                <p class="uk-text-bold">Дата рождения</p>
             </div>
             <div class="uk-padding-small">
                 <p>{{ $item->name ? $item->name : '-' }}</p>
@@ -42,6 +45,9 @@
                 <p>{{ $item->position ? $item->position : '-' }}</p>
                 <p>{{ $item->email ? $item->email : '-' }}</p>
                 <p>{{ $item->phone ? $item->phone : '-' }}</p>
+                <p>{{ $item->document ? $item->document : '-' }}</p>
+                <p>{{ $item->snils ? $item->snils : '-' }}</p>
+                <p>{{ $item->birth_date ? $item->birth_date->format('d.m.Y') : '-' }}</p>
             </div>
         </div>
         <div class=" uk-width-1-3@s">

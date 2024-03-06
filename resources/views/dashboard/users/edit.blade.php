@@ -70,12 +70,12 @@
                                 <input class="uk-input" name="patronymic" id="patronymic" type="text" value="{{ $item->patronymic }}">
                             </div>
                         </div>
-                        <div class="uk-margin-small">
-                            <label class="uk-form-label" for="organization">Организация</label>
-                            <div class="uk-form-controls">
-                                <input class="uk-input" name="organization" id="organization" type="text" value="{{ $item->organization }}">
+                            <div class="uk-margin-small">
+                                <label class="uk-form-label" for="created_at">Дата регистрации</label>
+                                <div class="uk-form-controls">
+                                    <input class="uk-input" required name="created_at" id="created_at" type="date" value="{{ $item->created_at->format('Y-m-d') }}">
+                                </div>
                             </div>
-                        </div>
                         <div class="uk-margin-small">
                             <label class="uk-form-label" for="position">Должность</label>
                             <div class="uk-form-controls">
@@ -89,6 +89,19 @@
                                 <input class="uk-input" name="phone" id="phone" type="text" value="{{ $item->phone }}">
                             </div>
                         </div>
+                            <div class="uk-margin-small">
+                                <label class="uk-form-label" for="document">Паспорт</label>
+                                <div class="uk-form-controls">
+                                    <input class="uk-input" name="document" id="document" type="text" value="{{ $item->document }}">
+                                </div>
+                            </div>
+                            <div class="uk-margin-small">
+                                <label class="uk-form-label" for="snils">Снилс</label>
+                                <div class="uk-form-controls">
+                                    <input class="uk-input" name="snils" id="snils" type="text" value="{{ $item->snils }}">
+                                </div>
+                            </div>
+
                     </div>
                     <div class="uk-width-1-3@s">
                         <h3 class="uk-text-center">Фото</h3>

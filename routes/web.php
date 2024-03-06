@@ -71,7 +71,7 @@ Route::middleware([\App\Http\Middleware\IsAdmin::class])->group(function () {
     #Route::get('/dashboard/contractors/{id}/update', [\App\Http\Controllers\ContractorsController::class, 'update'])->name('contractors.update');
     Route::get('/dashboard/contractors/{id}/remove', [\App\Http\Controllers\ContractorsController::class, 'destroy'])->name('contractors.remove');
     Route::get('/dashboard/contractors/{item}', [\App\Http\Controllers\ContractorsController::class, 'show'])->name('contractor');
-    Route::post('/contractors/{id}/upload', [\App\Http\Controllers\ContractorsController::class, 'upload']);
+    Route::post('/contractors/{id}/upload/{group_id?}', [\App\Http\Controllers\ContractorsController::class, 'upload']);
     Route::post('/dashboard/groups/{group}/update', [\App\Http\Controllers\ContractorsController::class, 'update'])->name('group.update');
     Route::get('/dashboard/groups/{group}/download/{type}', [\App\Http\Controllers\ContractorsController::class, 'downloadDocument'])->name('group.document');
 
@@ -131,6 +131,12 @@ Route::middleware([\App\Http\Middleware\IsAdmin::class])->group(function () {
 
     Route::get('/dashboard/settings', [\App\Http\Controllers\SettingsController::class, 'index'])->name('settings');
     Route::post('/dashboard/settings', [\App\Http\Controllers\SettingsController::class, 'store'])->name('settings.save');
+    Route::post('/dashboard/add_person', [\App\Http\Controllers\SettingsController::class, 'add_person'])->name('person.add');
+    Route::get('/dashboard/remove_person/{person}', [\App\Http\Controllers\SettingsController::class, 'remove_person'])->name('person.remove');
+    Route::post('/dashboard/add_position', [\App\Http\Controllers\SettingsController::class, 'add_position'])->name('position.add');
+    Route::get('/dashboard/remove_position/{position}', [\App\Http\Controllers\SettingsController::class, 'remove_position'])->name('position.remove');
+
+
 
     Route::get('/dashboard/files/images', [\App\Http\Controllers\ImageController::class, 'index'])->name('images.index');
 
