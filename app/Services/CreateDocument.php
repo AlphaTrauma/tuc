@@ -21,7 +21,7 @@ use Carbon\Carbon;
 
 class CreateDocument
 {
-    private $group, $xlcx, $sheet, $index, $course, $columns, $lastColumn, $title, $startDate, $endDate;
+    private $group, $xlcx, $sheet, $index, $course, $direction, $director, $columns, $lastColumn, $title, $startDate, $endDate;
 
     public function __construct($group, $type)
     {
@@ -30,8 +30,10 @@ class CreateDocument
         $this->endDate = $this->group->end_date ? Carbon::parse($this->group->end_date)->isoFormat('D MMMM YYYY', 'Do MMMM YYYY') : "__ ______ ____";
         if($group->users->first() and $group->users->first()->latestCourse and $group->users->first()->latestCourse->course):
             $this->course = $group->users->first()->latestCourse->course;
+            $this->direction = $this->course->direction;
         else:
             $this->course = null;
+            $this->direction = null;
         endif;
         $this->director = Settings::where('key', 'director')->first()->value;
         $this->init();
@@ -96,7 +98,6 @@ class CreateDocument
                 $this->agreements();
                 $this->title = 'Соглашения о п.д. '.$this->group->contractor->short_name." ".$this->group->created_at->format('d-m-Y');
                 break;
-
             case('certificatesWorker2'):
                 $this->setColumns(['A' => 1, 'B' => 20, 'C' => 29, 'D' => 50]);
                 $this->sheet->getStyle($this->columns[0]."1:".$this->lastColumn."1000")->getAlignment()->setHorizontal(Alignment::HORIZONTAL_CENTER)->setVertical(Alignment::VERTICAL_CENTER);
@@ -113,6 +114,16 @@ class CreateDocument
                 $this->dpo();
                 $this->title = 'Реестр ДПО '.$this->group->contractor->short_name." ".$this->group->created_at->format('d-m-Y');
                 break;
+            case('diary_pp'):
+                $this->setColumns(['A' => 7, 'B' => 13, 'C' => 60, 'D' => 20]);
+                $this->diary_pp();
+                $this->title = 'Дневник практики ПП '.$this->group->contractor->short_name." ".$this->group->created_at->format('d-m-Y');
+                break;
+            case('diary_po'):
+                $this->setColumns(['A' => 100]);
+                $this->diary_po();
+                $this->title = 'Дневник практики ПО '.$this->group->contractor->short_name." ".$this->group->created_at->format('d-m-Y');
+                break;
             default:
                 return back()->with('error', 'Ошибка при генерации документа');
         endswitch;
@@ -124,6 +135,104 @@ class CreateDocument
                 ->setPrintArea("A1:AI"."$this->index")->setFitToWidth(0)->setFitToHeight(0);
         endif;
 
+    }
+
+    private function diary_pp(){
+        foreach($this->group->users as $i => $user):
+
+            $this->header("Дневник стажировки курсов профпереподготовки\r\n слушателя ООО «ТУЦ»", 18, true);
+            $this->sheet->getRowDimension($this->index - 1)->setRowHeight(50);
+            $this->index++;
+            $this->index++;
+            $this->bold()->center();
+            $this->paragraph($user->last_name." ".$user->name." ".$user->patronymic, 20);
+
+            $this->caption('(фамилия, имя, отчество слушателя)');
+            $this->index++;
+            $this->paragraph("Наименование программы: ".($this->course ? $this->course->title : '__________________________________________________'), 50);
+            $this->caption('(наименование программы)');
+            $this->index++;
+            $this->paragraph("Квалификация (сфера деятельности): ".($this->direction ? $this->direction->title : '__________________________________________________'), 20);
+            $this->caption('(наименование квалификации)');
+            $this->index++;
+            $this->paragraph("Место проведения стажировки: ".$this->group->contractor->name, 20);
+            $this->caption('(наименование организации)');
+            $this->index++;
+            $this->paragraph("Руководитель стажировки: __________________________________________________", 20);
+            $this->caption('(фамилия, имя, отчество руководителя стажировки, должность)');
+            $this->index++;
+            $this->paragraph("Начало практической стажировки «___» ________________202__г", 20);
+            $this->index++;
+            $this->paragraph("Окончание практической стажировки «___» _______________202__г", 20);
+            $this->index++;
+            $this->header("Программа стажировки", 14, true);
+            $this->index++;
+            $this->size(12);
+            $this->tablerow(["A" => "Дата", "B" => "Кол-во\r\nчасов", "C" => "Краткая характеристика вида работ", "D" => "Подпись\r\nруководителя\r\nработ"], 1);
+            foreach(range(0, 6) as $z):
+                $this->tablerow(["A" => "", "B" => "", "C" => "", "D" => ""], 0);
+            endforeach;
+            $this->index+=5;
+            $this->paragraph("Руководитель стажировки: _____________/____________________________________", 20);
+            $this->index++;
+            $this->paragraph("Руководитель организации: _____________/___________________________________", 20);
+            $this->index++;
+            $this->paragraph("М.П.", 20);
+            $this->index++;
+
+            if($this->group->users->count() - 1 <> $i):
+                $this->sheet->setBreak('A'.$this->index, \PhpOffice\PhpSpreadsheet\Worksheet\Worksheet::BREAK_ROW);
+                $this->index++;
+            endif;
+        endforeach;
+
+    }
+
+    private function diary_po(){
+        foreach($this->group->users as $i => $user):
+
+            $this->header("Дневник практической подготовки (практики)\r\n слушателя ООО «ТУЦ»", 18, true);
+            $this->sheet->getRowDimension($this->index - 1)->setRowHeight(50);
+            $this->index++;
+            $this->index++;
+            $this->bold()->center();
+            $this->paragraph($user->last_name." ".$user->name." ".$user->patronymic, 20);
+
+            $this->caption('(фамилия, имя, отчество слушателя)');
+            $this->index++;
+            $this->paragraph("Профессия/Должность: ".($this->course ? $this->course->title : '__________________________________________________'), 50);
+            $this->caption('(наименование профессии/должности)');
+            $this->index++;
+            $this->paragraph("Уровень квалификации: _____________________________________________________", 20);
+            $this->caption('(разряд, уровень)');
+            $this->index++;
+            $this->paragraph("Место проведения практической подготовки (практики): ".$this->group->contractor->name, 20);
+            $this->caption('(наименование организации)');
+            $this->index++;
+            $this->paragraph("Мастер: ____________________________________________________________________", 20);
+            $this->caption('(фамилия, имя, отчество мастера, должность)');
+            $this->index++;
+
+            $this->paragraph("Начало практической подготовки (практики) «___» ________________202__г", 20);
+            $this->index++;
+            $this->paragraph("Окончание практической подготовки (практики) «___» _______________202__г", 20);
+            $this->index++;
+            $this->paragraph("Характеристика выполненных работ____________________________________________", 20);
+            $this->paragraph("____________________________________________________________________________", 20);
+            $this->paragraph("____________________________________________________________________________", 20);
+            $this->index+=4;
+            $this->paragraph("Мастер: _____________/______________________________________________________", 20);
+            $this->index++;
+            $this->paragraph("Руководитель организации: _____________/_____________________________________", 20);
+            $this->index++;
+            $this->paragraph("М.П.", 20);
+            $this->index++;
+
+            if($this->group->users->count() - 1 <> $i):
+                $this->sheet->setBreak('A'.$this->index, \PhpOffice\PhpSpreadsheet\Worksheet\Worksheet::BREAK_ROW);
+                $this->index++;
+            endif;
+        endforeach;
     }
 
     private function dpo(){
@@ -1145,6 +1254,7 @@ class CreateDocument
         $style = $this->sheet->getStyle($this->lastColumn.$this->index);
         $style->getAlignment()->setHorizontal(Alignment::HORIZONTAL_RIGHT);
         $this->index++;
+        return $this;
     }
 
     private function signature($arr = ['Директор', '___________']){
@@ -1154,11 +1264,22 @@ class CreateDocument
         $style = $this->sheet->getStyle($this->lastColumn.$this->index);
         $style->getAlignment()->setHorizontal(Alignment::HORIZONTAL_RIGHT);
         $this->index++;
+        return $this;
     }
 
     private function bold(){
-        $style = $this->sheet->getStyle("A$this->index:$this->lastColumn".$this->index);
-        $style->getFont()->setBold(true);
+        $this->sheet->getStyle("A$this->index:$this->lastColumn".$this->index)->getFont()->setBold(true);
+        return $this;
+    }
+
+    private function size($size){
+        $this->sheet->getStyle("A$this->index:$this->lastColumn".$this->index)->getFont()->setSize($size);
+        return $this;
+    }
+
+    private function center(){
+        $this->sheet->getStyle("A$this->index:$this->lastColumn".$this->index)->getAlignment()->setHorizontal(Alignment::HORIZONTAL_CENTER);
+        return $this;
     }
 
     private function header($title, $size, $bold){
@@ -1176,6 +1297,17 @@ class CreateDocument
         $this->sheet->setCellValue("A$this->index", $text);
         $this->sheet->getRowDimension($this->index)->setRowHeight($height);
         $this->index++;
+        return $this;
+    }
+
+    private function caption($text){
+        $this->sheet->mergeCells("A$this->index:".$this->lastColumn.$this->index);
+        $this->sheet->setCellValue("A$this->index", $text);
+        $this->sheet->getStyle("A$this->index")->getAlignment()->setHorizontal(Alignment::HORIZONTAL_CENTER)->setVertical(Alignment::VERTICAL_TOP);
+        $this->sheet->getStyle("A$this->index")->getFont()->setSize(8);
+        $this->sheet->getRowDimension($this->index)->setRowHeight(15);
+        $this->index++;
+        return $this;
     }
 
     private function line(){
@@ -1183,6 +1315,7 @@ class CreateDocument
             ->getTop()
             ->setBorderStyle(Border::BORDER_THIN)
             ->setColor(new Color('#000'));
+        return $this;
     }
 
     private function delimeter(){
