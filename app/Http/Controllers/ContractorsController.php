@@ -35,7 +35,7 @@ class ContractorsController extends Controller
 
     public function show(Contractor $item){
         $item->load('groups.users');
-        $courses = Course::query()->whereHas('blocks')->orderBy('title')->pluck('title', 'id')->toArray();
+        $courses = Course::query()->whereNotNull('direction_id')->whereHas('blocks')->orderBy('title')->pluck('title', 'id')->toArray();
         $personnel = Person::all();
         $positions = Positions::all();
         return view('dashboard.contractors.show', compact('item', 'courses', 'personnel', 'positions'));
