@@ -74,9 +74,6 @@ class ContractorsController extends Controller
         if($rowCount < 2) return back()->with('error', 'В загруженной таблице нет данных');
         if($group_id):
             $group = Group::find($group_id);
-        else:
-            $group = Group::where('contractor_id', $id)->whereYear('created_at', date('Y'))
-                    ->whereMonth('created_at', date('m'))->whereDay('created_at', date('d'))->first();
         endif;
 
         if(!$group) $group = Group::create(['contractor_id' => $id]);
