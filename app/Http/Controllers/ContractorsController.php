@@ -74,9 +74,11 @@ class ContractorsController extends Controller
         if($rowCount < 2) return back()->with('error', 'В загруженной таблице нет данных');
         if($group_id):
             $group = Group::find($group_id);
+
+        else:
+            $group = Group::create(['contractor_id' => $id]);
         endif;
 
-        if(!$group) $group = Group::create(['contractor_id' => $id]);
         $users = []; $passwords = [];
         $sheet->setCellValue('J1', "Логин");
         $sheet->setCellValue('K1', "Пароль");
