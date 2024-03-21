@@ -66,7 +66,7 @@ class RegisteredUserController extends Controller
             'patronymic' => ['nullable', 'string', 'max:25'],
             'phone' => ['nullable', 'string', 'max:15'],
             'organization' => ['nullable', 'string', 'max:255'],
-            'email' => ['nullable', 'string', 'email', 'max:255', 'unique:users']
+            'email' => ['nullable', 'string', 'max:255', 'unique:users']
         ]);
         $email = $request->has('email') && $request['email'] ? $request['email'] :
             strtoupper(($request['name'] ? Str::slug($request['name'])[0] : '').($request['patronymic'] ? Str::slug($request['patronymic'])[0] : '')).Str::slug($request->last_name).\App\Models\User::count();
