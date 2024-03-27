@@ -58,7 +58,7 @@
                         <select class="uk-select" name="course_id" id="course_id">
                             <option value="">Выберите курс</option>
                             @foreach($courses as $id => $name)
-                                <option value="{{ $id }}">{{ \Illuminate\Support\Str::limit($name, 60) }}</option>
+                                <option value="{{ $id }}">{{ $name }}</option>
                             @endforeach
                         </select>
                     </div>
