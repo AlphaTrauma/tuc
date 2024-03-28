@@ -30,10 +30,11 @@
                             Настройки группы
                         </div>
                         <a href="#add-course-{{ $group->id }}" uk-toggle class="uk-button uk-button-default">Добавить курс</a>
+                        <a href="{{ route('group.copy', $group->id) }}" class="uk-button uk-button-default" title="Копировать настройки в новую группу">Копировать настройки</a>
                     </div>
                 </div>
-                @if($group->users->count() and $group->users->first()->latestCourse)
-                    <small class="uk-text-success">({{ $group->users->first()->latestCourse->course->title }})</small>
+                @if($group->course_id and isset($courses[$group->course_id]))
+                    <small class="uk-text-success">({{ $courses[$group->course_id] }})</small>
                 @else
                     <small class="uk-text-danger">(Курс не выбран)</small>
                 @endif
@@ -49,36 +50,66 @@
                 @php
                     $chunks = $group->users->chunk(10);
                 @endphp
-                <ul class="uk-list">
-                    @foreach($chunks[0] as $user)
-                        <li>
-                            <a href="{{ route('user.show', $user->id) }}" class="uk-link uk-link-text">{{ $user->last_name }} @if($user->name){{ mb_substr($user->name, 0, 1) }}.@endif @if($user->patronymic){{ mb_substr($user->patronymic, 0, 1) }}.@endif</a>
-                        </li>
-                    @endforeach
-                </ul>
-                @if(count($chunks) > 1)
-
-                    <ul hidden id="users-{{ $group->id }}" class="uk-list">
-                        @foreach($chunks as $key => $chunk)
-                            @if($key > 0)
-                                @foreach($chunk as $user)
-                                    <li>
-                                        <a href="{{ route('user.show', $user->id) }}" class="uk-link uk-link-text">{{ $user->last_name }} @if($user->name){{ mb_substr($user->name, 0, 1) }}.@endif @if($user->patronymic){{ mb_substr($user->patronymic, 0, 1) }}.@endif</a>
-                                    </li>
-                                @endforeach
-                            @endif
+                @if(count($chunks))
+                    <ul class="uk-list">
+                        @foreach($chunks[0] as $user)
+                            <li>
+                                <delete-button style="display: inline-block;" text="Удалить пользователя из группы" action="{{ route('groups.removeUser', ['user_id' => $user->id, 'group_id' => $group->id]) }}">
+                                </delete-button>
+                                <a href="{{ route('user.show', $user->id) }}" class="uk-link uk-link-text">{{ $user->last_name }} @if($user->name){{ mb_substr($user->name, 0, 1) }}.@endif @if($user->patronymic){{ mb_substr($user->patronymic, 0, 1) }}.@endif</a>
+                            </li>
                         @endforeach
                     </ul>
-                    <button class="uk-button uk-button-small uk-button-text uk-margin-small" type="button" uk-toggle="target: #users-{{ $group->id }}; animation: uk-animation-fade">
-                        Показать/скрыть полный список
-                    </button>
+                    @if(count($chunks) > 1)
+
+                        <ul hidden id="users-{{ $group->id }}" class="uk-list">
+                            @foreach($chunks as $key => $chunk)
+                                @if($key > 0)
+                                    @foreach($chunk as $user)
+                                        <li>
+                                            <delete-button style="display: inline-block;"  text="Удалить пользователя из группы" action="{{ route('groups.removeUser', ['user_id' => $user->id, 'group_id' => $group->id]) }}">
+                                            </delete-button>
+                                            <a href="{{ route('user.show', $user->id) }}" class="uk-link uk-link-text">{{ $user->last_name }} @if($user->name){{ mb_substr($user->name, 0, 1) }}.@endif @if($user->patronymic){{ mb_substr($user->patronymic, 0, 1) }}.@endif</a>
+                                        </li>
+                                    @endforeach
+                                @endif
+                            @endforeach
+                        </ul>
+                        <button class="uk-button uk-button-small uk-button-text uk-margin-small" type="button" uk-toggle="target: #users-{{ $group->id }}; animation: uk-animation-fade">
+                            Показать/скрыть полный список
+                        </button>
+                    @endif
                 @endif
 
             </div>
             <div class="uk-card-body">
-                <upload-contractors :group="{{ $group->id }}" :id="{{ $item->id }}">
-                    @csrf
-                </upload-contractors>
+                <a class="uk-button uk-button-secondary uk-margin-small" uk-toggle="target: #add-user-{{ $group->id }}; animation: uk-animation-fade">Добавить пользователя</a>
+                    <upload-contractors :group="{{ $group->id }}" :id="{{ $item->id }}">
+                        @csrf
+                    </upload-contractors>
+                <a href="{{ route('group.delete', $group->id) }}" class="uk-button uk-button-danger uk-margin-small">
+                    Удалить группу
+                </a>
+
+            </div>
+            <div id="add-user-{{ $group->id }}" class="uk-flex-top" uk-modal>
+                <div class="uk-modal-dialog uk-modal-body uk-margin-auto-vertical">
+                    <h2 class="uk-modal-title">Добавить пользователя</h2>
+                    <form class="uk-form" enctype=multipart/form-data method="POST" action="{{ route('groups.addUser') }}">
+                        @csrf
+                        <input type="hidden" name="group_id" value="{{ $group->id }}">
+                        <div class="uk-margin">
+                            <select class="uk-select" name="user_id" id="user_id">
+                                <option value="">Выберите пользователя</option>
+                                @foreach($users->whereNotIn('id', $group->users->pluck('id')) as $user)
+                                    <option value="{{ $user->id }}">{{ $user->last_name }} {{ $user->name }} {{ $user->patronymic }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <input type="submit" class="uk-button uk-button-success uk-width-1-1" value="Добавить">
+                    </form>
+                </div>
+
             </div>
             <div id="add-course-{{ $group->id }}" class="uk-flex-top" uk-modal>
                 <div class="uk-modal-dialog uk-modal-body uk-margin-auto-vertical">

@@ -28,9 +28,9 @@ class CreateDocument
         $this->group = $group;
         $this->startDate = Carbon::parse($this->group->start_date ? $this->group->start_date : $this->group->created_at)->isoFormat('D MMMM YYYY', 'Do MMMM YYYY');
         $this->endDate = $this->group->end_date ? Carbon::parse($this->group->end_date)->isoFormat('D MMMM YYYY', 'Do MMMM YYYY') : "__ ______ ____";
-        if($group->users->first() and $group->users->first()->latestCourse and $group->users->first()->latestCourse->course):
-            $this->course = $group->users->first()->latestCourse->course;
-            $this->direction = $this->course->direction;
+        if($group->course and $group->course->direction):
+            $this->course = $group->course;
+            $this->direction = $group->course->direction;
         else:
             $this->course = null;
             $this->direction = null;

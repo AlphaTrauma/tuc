@@ -8,9 +8,12 @@ use App\Models\Group;
 use App\Models\Person;
 use App\Models\Positions;
 use App\Models\User;
+use App\Models\UserCourse;
+use App\Models\UserGroups;
 use App\Services\CreateDocument;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 use PhpOffice\PhpSpreadsheet\IOFactory;
@@ -35,10 +38,43 @@ class ContractorsController extends Controller
 
     public function show(Contractor $item){
         $item->load('groups.users');
-        $courses = Course::query()->whereNotNull('direction_id')->whereHas('blocks')->orderBy('title')->pluck('title', 'id')->toArray();
+
+        $courses = Course::query()->whereNotNull('direction_id')->whereHas('blocks')->orderBy('title')->get();
+
+        $users = $item->groups->pluck('users')[0];
+        $user_courses = [];
+        foreach($item->groups as $group):
+            $ids = $group->users->pluck('id');
+        $course_ids = DB::table('user_courses')
+            ->whereIn('user_id', $ids)
+            ->select('course_id')
+            ->distinct()
+            ->pluck('course_id');
+        $user_courses[$group->id] = $courses->whereIn('id', $course_ids);
+        endforeach;
+        $courses = $courses->pluck('title', 'id')->toArray();
         $personnel = Person::all();
         $positions = Positions::all();
-        return view('dashboard.contractors.show', compact('item', 'courses', 'personnel', 'positions'));
+        return view('dashboard.contractors.show', compact('item', 'courses', 'personnel', 'positions', 'users', 'user_courses'));
+    }
+
+    public function copy($group_id){
+        $group = Group::find($group_id);
+        $copy = $group->replicate();
+        $copy->created_at = Carbon::now();
+        $copy->save();
+        return back()->with('message', 'Настройки группы успешно скопированы');
+    }
+
+    public function deleteGroup($group_id){
+        $group = Group::with('users')->find($group_id);
+        if($group->users->count()):
+            return back()->with('error', 'Группа содержит пользователей');
+        else:
+            $group->delete();
+            return back()->with('message', 'Группа удалена');
+        endif;
+
     }
 
     public function store(Request $request){
@@ -66,6 +102,8 @@ class ContractorsController extends Controller
         $contractor = Contractor::find($id);
         if(!$contractor) return back()->with('error', 'Ошибка: контрагент не обнаружен');
         if(!$request->hasFile('file')) return back()->with('error', 'Ошибка: не найден загруженный файл');
+        $contractor->load('groups.users');
+        $ex_users = $contractor->groups->pluck('users')[0];
         $file = $request->file('file');
         $filePath = $file->getRealPath();
         $spreadsheet = IOFactory::load($filePath);
@@ -90,7 +128,6 @@ class ContractorsController extends Controller
             $user->last_name = $sheet->getCell('A' . $row)->getValue();
             $user->name = $sheet->getCell('B' . $row)->getValue();
             $user->patronymic = $sheet->getCell('C' . $row)->getValue();
-            #$user->doc_series = $sheet->getCell('C'.$row)->getValue();
             $user->position = $sheet->getCell('D'.$row)->getValue();
             $user->document = $sheet->getCell('G'.$row)->getValue();
 
@@ -98,17 +135,21 @@ class ContractorsController extends Controller
             $user->snils = $sheet->getCell('F'.$row)->getValue();
             $user->phone = $sheet->getCell('H'.$row)->getValue();
             $user->doc_education = $sheet->getCell('I'.$row)->getValue();
-            #$user->gender = $sheet->getCell('Q'.$row)->getValue();
 
-
-
-            $user->email = Str::slug($user->last_name).Str::slug($user->name ? $user->name :  '_')[0].Str::slug($user->patronymic ? $user->patronymic : '_')[0];
-            $count = User::where('email', 'like', $user->email."%")->count();
-            if($count > 0) $user->email .= $count;
-            $password = $user->email.\App\Models\User::count();
-            $user->password = Hash::make($password);
-            $user->group_id = $group->id;
-            $user->save();
+            $ex_user = $ex_users->where('last_name', $user->last_name)->where('name', $user->name)->where('patronymic', $user->patronymic)->first();
+            if($ex_user):
+                UserGroups::firstOrCreate(['user_id' => $ex_user->id, 'group_id' => $group->id]);
+                $user = $ex_user;
+                $password = 'Пользователь уже существует';
+            else:
+                $user->email = Str::slug($user->last_name).Str::slug($user->name ? $user->name :  '_')[0].Str::slug($user->patronymic ? $user->patronymic : '_')[0];
+                $count = User::where('email', 'like', $user->email."%")->count();
+                if($count > 0) $user->email .= $count;
+                $password = $user->email.\App\Models\User::count();
+                $user->password = Hash::make($password);
+                $user->save();
+                UserGroups::create(['user_id' => $user->id, 'group_id' => $group->id]);
+            endif;
             $users[] = $user;
             $passwords[$user->id] = $password;
             $sheet->setCellValue('J'.$row, $user->email);
@@ -128,9 +169,24 @@ class ContractorsController extends Controller
         exit;
     }
 
+    public function addUser(Request $request){
+        if($request->group_id and $request->user_id):
+            UserGroups::create(['user_id' => $request->user_id, 'group_id' => $request->group_id]);
+            return back()->with('message', 'Пользователь прикреплён к группе');
+        else:
+            return back()->with('error', 'Пользователь не найден');
+        endif;
+    }
+
+    public function removeUser($group_id, $user_id){
+        UserGroups::query()->where(['user_id' => $user_id, 'group_id' => $group_id])->delete();
+        return back()->with('message', 'Пользователь откреплён от группы');
+
+    }
+
     public function downloadDocument(Group $group, $type, $pdf = false){
 
-        $group->load('contractor', 'users.latestCourse.course');
+        $group->load('contractor', 'course.direction');
         $doc = new CreateDocument($group, $type);
         if($pdf):
             $doc->toPDF();

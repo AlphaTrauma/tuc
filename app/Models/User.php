@@ -90,9 +90,9 @@ class User extends Authenticatable
         return $this->hasMany(UserCourse::class)->where('status', true);
     }
 
-    public function group()
+    public function groups()
     {
-        return $this->belongsTo(Group::class);
+        return $this->belongsToMany(Group::class, 'user_groups_link');
     }
 
     public function isAdmin()

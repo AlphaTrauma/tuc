@@ -44,6 +44,19 @@
                 </div>
             </div>
         </div>
+        <div class="uk-width-1-4">
+            <div>
+                <label class="uk-form-label" for="">Выбранный курс</label>
+                <div class="uk-form-controls">
+                    <select class="uk-select" name="course_id">
+                        <option value="">Выбрать</option>
+                        @foreach($user_courses[$group->id] as $course)
+                            <option @if($course->id === $group->course_id) selected @endif value="{{ $course->id }}">{{ $course->title }}</option>
+                        @endforeach
+                    </select>
+                </div>
+            </div>
+        </div>
     </div>
     <hr>
     <div class="uk-flex">

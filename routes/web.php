@@ -68,12 +68,15 @@ Route::middleware([\App\Http\Middleware\IsAdmin::class])->group(function () {
 
     Route::get('/dashboard/contractors', [\App\Http\Controllers\ContractorsController::class, 'index'])->name('contractors');
     Route::post('/dashboard/contractors/create', [\App\Http\Controllers\ContractorsController::class, 'store'])->name('contractors.create');
-    #Route::get('/dashboard/contractors/{id}/update', [\App\Http\Controllers\ContractorsController::class, 'update'])->name('contractors.update');
     Route::get('/dashboard/contractors/{id}/remove', [\App\Http\Controllers\ContractorsController::class, 'destroy'])->name('contractors.remove');
     Route::get('/dashboard/contractors/{item}', [\App\Http\Controllers\ContractorsController::class, 'show'])->name('contractor');
     Route::post('/contractors/{id}/upload/{group_id?}', [\App\Http\Controllers\ContractorsController::class, 'upload']);
     Route::post('/dashboard/groups/{group}/update', [\App\Http\Controllers\ContractorsController::class, 'update'])->name('group.update');
     Route::get('/dashboard/groups/{group}/download/{type}', [\App\Http\Controllers\ContractorsController::class, 'downloadDocument'])->name('group.document');
+    Route::post('/dashboard/contractors/addUserToGroup', [\App\Http\Controllers\ContractorsController::class, 'addUser'])->name('groups.addUser');
+    Route::get('/dashboard/groups/{group_id}/remove/{user_id}', [\App\Http\Controllers\ContractorsController::class, 'removeUser'])->name('groups.removeUser');
+    Route::get('/dashboard/groups/{group_id}/copy', [\App\Http\Controllers\ContractorsController::class, 'copy'])->name('group.copy');
+    Route::get('/dashboard/groups/{group_id}/delete', [\App\Http\Controllers\ContractorsController::class, 'deleteGroup'])->name('group.delete');
 
     Route::get('/dashboard/pages', [\App\Http\Controllers\PageController::class, 'index'])->name('pages');
     Route::get('/dashboard/pages/create', [\App\Http\Controllers\PageController::class, 'create'])->name('pages.create');
@@ -99,6 +102,7 @@ Route::middleware([\App\Http\Middleware\IsAdmin::class])->group(function () {
     Route::get('/dashboard/directions/{id}/create', [\App\Http\Controllers\CourseController::class, 'create'])->name('course.create');
     Route::post('/dashboard/courses/addToUser', [\App\Http\Controllers\CourseController::class, 'add'])->name('courses.add');
     Route::post('/dashboard/courses/addToGroup', [\App\Http\Controllers\CourseController::class, 'addGroup'])->name('courses.addGroup');
+
     Route::get('/dashboard/courses/{id}/deleteFromUser', [\App\Http\Controllers\CourseController::class, 'remove'])->name('courses.remove');
     Route::get('/dashboard/courses/{id}/refresh', [\App\Http\Controllers\CourseController::class, 'refresh'])->name('courses.refresh');
 

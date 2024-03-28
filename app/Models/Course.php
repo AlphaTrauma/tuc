@@ -26,6 +26,10 @@ class Course extends Model
         return $this->belongsTo(User::class, 'teacher_id');
     }
 
+    public function users(){
+        return $this->hasManyThrough(User::class, UserCourse::class,  'course_id', 'id','id', 'user_id');
+    }
+
     public function blocks(){
         return $this->hasMany(Block::class);
     }
