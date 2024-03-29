@@ -65,6 +65,11 @@ class CreateDocument
                 $this->createProtocol();
                 $this->title = 'Протокол '.$this->group->contractor->short_name." ".$this->group->created_at->format('d-m-Y');
             break;
+            case('protocol2'):
+                $this->setColumns(['A' => 5, 'B' => 20, 'C' => 20, 'D' => 15, 'E' => 15, 'F' => 15, 'G' => 15]);
+                $this->createProtocol2();
+                $this->title = 'Протокол '.$this->group->contractor->short_name." ".$this->group->created_at->format('d-m-Y');
+                break;
             case('certificates'):
                 $this->setColumns(['A' => 15, 'B' => 35, 'C' => 25, 'D' => 25]);
                 $this->createCertificates();
@@ -1150,6 +1155,133 @@ class CreateDocument
 
     }
 
+    private function createProtocol2(){
+        $this->setHeaderImage(700);
+        $this->sheet->getRowDimension($this->index)->setRowHeight(150);
+        $this->index++;
+        $this->header('Протокол № '.$this->group->protocol.' / '.$this->group->number.' заседания экзаменационной комиссии ООО «ТУЦ»', 18, true);
+        $this->delimeter();
+        $this->dateLine();
+        $this->index++;
+        $this->paragraph('Комиссией в составе: ', 25);
+        $this->delimeter();
+        $this->paragraph('Председатель: '.$this->group->chairman_pos.' '.$this->group->chairman, 25);
+        $this->delimeter();
+        $this->paragraph('Члены комиссии: '.$this->group->member1_pos.' '.$this->group->member1.($this->group->member2 ? ', '.$this->group->member2_pos.' '.$this->group->member2 : ''), 40);
+        $this->index++;
+        $this->paragraph('проведена проверка знаний слушателей группы № '.$this->group->number.' в объеме, соответствующем требованиям профессионального обучения (повышения квалификации) «'.($this->course ? $this->course->title : "_________").'» '.($this->course ? $this->course->length : "___").' часов', 75);
+        $this->delimeter();
+        $this->tablerow(['A' => '№ п/п', 'B' => 'Ф.И.О.', 'C' => 'Должность', 'D' => 'Организация', 'E' => 'Результат проверки знаний',
+            'F' => "Регистрационный\r\nномер (запись о проверке знаний в реестре обученных лиц)", 'G' => "Подпись\r\nпроверяемого"], true);
+        foreach($this->group->users as $i => $user):
+            $this->tablerow(['A' => $i+1, 'B' => $user->last_name." ".$user->name." ".$user->patronymic,
+                'C' => $user->position, 'D' => $this->group->contractor->name, 'E' => 'Хорошо', 'F' => '', 'G' => ''], false);
+        endforeach;
+        $this->delimeter();
+        $this->signature(['Председатель', $this->group->chairman]);
+        $this->bigDelimeter();
+        $this->signature(['Члены комиссии', $this->group->member1]);
+        $this->delimeter();
+        $this->signature([' ', $this->group->member2]);
+        $this->sheet->setBreak('A'.$this->index, \PhpOffice\PhpSpreadsheet\Worksheet\Worksheet::BREAK_ROW);
+
+        // 2 лист
+        $this->index++;
+        $this->header('Протокол № '.$this->group->protocol.' / '.$this->group->number.' заседания экзаменационной комиссии ООО «ТУЦ»', 18, true);
+        $this->delimeter();
+        $this->dateLine();
+        $this->index++;
+        $this->paragraph('Квалификационная комиссия в составе: ', 25);
+        $this->delimeter();
+        $this->paragraph('Председатель: '.$this->group->chairman2_pos.' '.$this->group->chairman2, 25);
+        $this->delimeter();
+        $this->paragraph('Члены комиссии: '.$this->group->member3_pos.' '.$this->group->member3.($this->group->member4 ? ', '.$this->group->member4_pos.' '.$this->group->member4 : ''), 40);
+        $this->index++;
+        $this->paragraph('Секретарь комиссии: '.$this->group->secretary_pos.' '.$this->group->secretary, 25);
+        $this->delimeter();
+        $this->paragraph('Обсудив результаты обучения, промежуточной и итоговой аттестации обучающихся по программе профессионального обучения (повышения квалификации)  «'.($this->course ? $this->course->title : "_________").'» ('.($this->course ? $this->course->length : "___").' часов), решила:', 75);
+        $this->delimeter();
+        $this->paragraph('считать окончившими обучение в ООО «ТУЦ» следующих обучающихся и подтвердившими квалификацию и установленные разряды:', 25);
+        $this->tablerow(['A' => '№ п/п', 'B' => 'Ф.И.О.', 'C' => 'Должность', 'D' => 'Разряд', 'E' => 'Результат проверки знаний',
+            'F' => "Регистрационный\r\nномер (запись о проверке знаний в реестре обученных лиц)", 'G' => "Подпись\r\nпроверяемого"], true);
+        foreach($this->group->users as $i => $user):
+            $this->tablerow(['A' => $i+1, 'B' => $user->last_name." ".$user->name." ".$user->patronymic,
+                'C' => $user->position, 'D' => $this->group->contractor->name, 'E' => 'Хорошо', 'F' => '', 'G' => ''], false);
+        endforeach;
+        $this->delimeter();
+        $this->signature(['Председатель', $this->group->chairman2]);
+        $this->bigDelimeter();
+        $this->signature(['Члены комиссии', $this->group->member3]);
+        $this->delimeter();
+        $this->signature([' ', $this->group->member4]);
+        $this->bigDelimeter();
+        $this->signature(['Секретарь комиссии', $this->group->secretary]);
+        $this->sheet->setBreak('A'.$this->index, \PhpOffice\PhpSpreadsheet\Worksheet\Worksheet::BREAK_ROW);
+
+        // 3 лист
+        $this->index++;
+        $this->header('Выписка из протокола № '.$this->group->protocol.' / '.$this->group->number.' заседания экзаменационной комиссии ООО «ТУЦ»', 18, true);
+        $this->delimeter();
+        $this->dateLine();
+        $this->index++;
+        $this->paragraph('Комиссией в составе: ', 25);
+        $this->delimeter();
+        $this->paragraph('Председатель: '.$this->group->chairman_pos.' '.$this->group->chairman, 25);
+        $this->index++;
+        $this->paragraph('Члены комиссии: '.$this->group->member1_pos.' '.$this->group->member1.($this->group->member2 ? ', '.$this->group->member2_pos.' '.$this->group->member2 : ''), 40);
+        $this->index++;
+        $this->paragraph('проведена проверка знаний слушателей группы № '.$this->group->number.' в объеме, соответствующем требованиям профессионального обучения (повышения квалификации) «'.($this->course ? $this->course->title : "_________").'» '.($this->course ? $this->course->length : "___").' часов', 75);
+        $this->delimeter();
+        $this->tablerow(['A' => '№ п/п', 'B' => 'Ф.И.О.', 'C' => 'Должность', 'D' => 'Организация', 'E' => 'Результат проверки знаний',
+            'F' => "Регистрационный\r\nномер (запись о проверке знаний в реестре обученных лиц)", 'G' => "Подпись\r\nпроверяемого"], true);
+        foreach($this->group->users as $i => $user):
+            $this->tablerow(['A' => $i+1, 'B' => $user->last_name." ".$user->name." ".$user->patronymic,
+                'C' => $user->position, 'D' => $this->group->contractor->name, 'E' => 'Хорошо', 'F' => '', 'G' => ''], false);
+        endforeach;
+        $this->delimeter();
+        $this->signature(['Председатель', $this->group->chairman]);
+        $this->bigDelimeter();
+        $this->signature(['Члены комиссии', $this->group->member1]);
+        $this->delimeter();
+        $this->signature([' ', $this->group->member2]);
+
+        $this->sheet->setBreak('A'.$this->index, \PhpOffice\PhpSpreadsheet\Worksheet\Worksheet::BREAK_ROW);
+
+        // 4 лист
+        $this->index++;
+        $this->header('Выписка из протокола № '.$this->group->protocol.' / '.$this->group->number.' заседания экзаменационной комиссии ООО «ТУЦ»', 18, true);
+        $this->delimeter();
+        $this->dateLine();
+        $this->index++;
+        $this->paragraph('Квалификационная комиссия в составе: ', 25);
+        $this->delimeter();
+        $this->paragraph('Председатель: '.$this->group->chairman2_pos.' '.$this->group->chairman2, 25);
+        $this->delimeter();
+        $this->paragraph('Члены комиссии: '.$this->group->member3_pos.' '.$this->group->member3.($this->group->member4 ? ', '.$this->group->member4_pos.' '.$this->group->member4 : ''), 40);
+        $this->delimeter();
+        $this->paragraph('Секретарь комиссии: '.$this->group->secretary_pos.' '.$this->group->secretary, 25);
+        $this->delimeter();
+        $this->paragraph('Обсудив результаты обучения, промежуточной и итоговой аттестации обучающихся по программе профессионального обучения (повышения квалификации)  «'.($this->course ? $this->course->title : "_________").'» ('.($this->course ? $this->course->length : "___").' часов), решила:', 75);
+        $this->delimeter();
+        $this->paragraph('считать окончившими обучение в ООО «ТУЦ» следующих обучающихся и подтвердившими квалификацию и установленные разряды:', 25);
+        $this->index++;
+        $this->tablerow(['A' => '№ п/п', 'B' => 'Ф.И.О.', 'C' => 'Должность', 'D' => 'Разряд', 'E' => 'Результат проверки знаний',
+            'F' => "Регистрационный\r\nномер (запись о проверке знаний в реестре обученных лиц)", 'G' => "Подпись\r\nпроверяемого"], true);
+        foreach($this->group->users as $i => $user):
+            $this->tablerow(['A' => $i+1, 'B' => $user->last_name." ".$user->name." ".$user->patronymic,
+                'C' => $user->position, 'D' => $this->group->contractor->name, 'E' => 'Хорошо', 'F' => '', 'G' => ''], false);
+        endforeach;
+        $this->delimeter();
+        $this->signature(['Председатель', $this->group->chairman2]);
+        $this->bigDelimeter();
+        $this->signature(['Члены комиссии', $this->group->member3]);
+        $this->delimeter();
+        $this->signature([' ', $this->group->member4]);
+        $this->bigDelimeter();
+        $this->signature(['Секретарь комиссии', $this->group->secretary]);
+
+    }
+
     private function createOrders(){
         $this->setHeaderImage();
         $this->sheet->getRowDimension($this->index)->setRowHeight(150);
@@ -1230,11 +1362,11 @@ class CreateDocument
 
     }
 
-    private function setHeaderImage(){
+    private function setHeaderImage($width=800){
         $drawing = new \PhpOffice\PhpSpreadsheet\Worksheet\HeaderFooterDrawing();
         $drawing->setName('logo');
         $drawing->setPath(public_path('images/header.jpg'));
-        $drawing->setWidth(800);
+        $drawing->setWidth($width);
 
         $this->sheet->getHeaderFooter()->addImage($drawing, \PhpOffice\PhpSpreadsheet\Worksheet\HeaderFooter::IMAGE_HEADER_CENTER);
         $this->sheet->getHeaderFooter()->setOddHeader('&C&G');
