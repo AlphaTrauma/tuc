@@ -13,6 +13,14 @@
         </div>
         <div class="uk-width-1-2">
             <div>
+                <label class="uk-form-label" for="">Номер договора</label>
+                <div class="uk-form-controls">
+                    <input class="uk-input" name="contract" value="{{ $group->contract }}" placeholder="Номер договора" type="text">
+                </div>
+            </div>
+        </div>
+        <div class="uk-width-1-2">
+            <div>
                 <label class="uk-form-label" for="">Обучение, с</label>
                 <div class="uk-form-controls">
                     <input class="uk-input"  name="start_date" value="{{ $group->start_date ? $group->start_date->format('Y-m-d') : '' }}" type="date">
@@ -25,14 +33,6 @@
                 <label class="uk-form-label" for="">Обучение, по</label>
                 <div class="uk-form-controls">
                     <input class="uk-input"  name="end_date" value="{{ $group->end_date ? $group->end_date->format('Y-m-d') : '' }}" type="date">
-                </div>
-            </div>
-        </div>
-        <div class="uk-width-1-2">
-            <div>
-                <label class="uk-form-label" for="">Номер договора</label>
-                <div class="uk-form-controls">
-                    <input class="uk-input" name="contract" value="{{ $group->contract }}" placeholder="Номер договора" type="text">
                 </div>
             </div>
         </div>
