@@ -1,7 +1,7 @@
 <form method="POST" action="{{ route('group.update', $group) }}">
     @csrf
     <div uk-grid class="uk-form-horizontal">
-        <div class="uk-width-1-4">
+        <div class="uk-width-1-2">
             <div>
                 <label class="uk-form-label" for="">Номер группы</label>
                 <div class="uk-form-controls">
@@ -11,7 +11,7 @@
 
 
         </div>
-        <div class="uk-width-1-4">
+        <div class="uk-width-1-2">
             <div>
                 <label class="uk-form-label" for="">Обучение, с</label>
                 <div class="uk-form-controls">
@@ -20,7 +20,7 @@
             </div>
 
         </div>
-        <div class="uk-width-1-4">
+        <div class="uk-width-1-2">
             <div>
                 <label class="uk-form-label" for="">Обучение, по</label>
                 <div class="uk-form-controls">
@@ -28,7 +28,7 @@
                 </div>
             </div>
         </div>
-        <div class="uk-width-1-4">
+        <div class="uk-width-1-2">
             <div>
                 <label class="uk-form-label" for="">Номер договора</label>
                 <div class="uk-form-controls">
@@ -36,7 +36,7 @@
                 </div>
             </div>
         </div>
-        <div class="uk-width-1-4">
+        <div class="uk-width-1-2">
             <div>
                 <label class="uk-form-label" for="">№ протокола</label>
                 <div class="uk-form-controls">
@@ -44,7 +44,7 @@
                 </div>
             </div>
         </div>
-        <div class="uk-width-1-4">
+        <div class="uk-width-1-2">
             <div>
                 <label class="uk-form-label" for="">Выбранный курс</label>
                 <div class="uk-form-controls">
