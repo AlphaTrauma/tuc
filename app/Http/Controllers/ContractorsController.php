@@ -104,7 +104,6 @@ class ContractorsController extends Controller
         if(!$request->hasFile('file')) return back()->with('error', 'Ошибка: не найден загруженный файл');
         $contractor->load('groups.users');
         $ex_users = $contractor->groups->pluck('users')->flatten();
-        dd($ex_users);
         $file = $request->file('file');
         $filePath = $file->getRealPath();
         $spreadsheet = IOFactory::load($filePath);
