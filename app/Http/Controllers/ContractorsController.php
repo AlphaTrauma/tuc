@@ -41,7 +41,7 @@ class ContractorsController extends Controller
 
         $courses = Course::query()->whereNotNull('direction_id')->whereHas('blocks')->orderBy('title')->get();
 
-        $users = $item->groups->pluck('users')[0];
+        $users = $item->groups->pluck('users')->flatten();
         $user_courses = [];
         foreach($item->groups as $group):
             $ids = $group->users->pluck('id');
@@ -103,7 +103,8 @@ class ContractorsController extends Controller
         if(!$contractor) return back()->with('error', 'Ошибка: контрагент не обнаружен');
         if(!$request->hasFile('file')) return back()->with('error', 'Ошибка: не найден загруженный файл');
         $contractor->load('groups.users');
-        $ex_users = $contractor->groups->pluck('users')[0];
+        $ex_users = $contractor->groups->pluck('users')->flatten();
+        dd($ex_users);
         $file = $request->file('file');
         $filePath = $file->getRealPath();
         $spreadsheet = IOFactory::load($filePath);
