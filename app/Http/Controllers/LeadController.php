@@ -74,8 +74,13 @@ class LeadController extends Controller
     }
 
     public function remove_group(LeadsGroup $group){
-        $group->delete();
-        return back()->with('message', 'Группа удалена');
+        if($group->leads->count() < 1):
+            $group->delete();
+            return back()->with('message', 'Группа удалена');
+        else:
+            return back()->with('error', 'В группе уже есть заявки');
+        endif;
+
     }
 
     public function destroy(Lead $lead)
