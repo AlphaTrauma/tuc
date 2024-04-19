@@ -32,13 +32,13 @@ class LeadController extends Controller
     {
         $data = $request->all();
         Lead::create($data);
-        $type = $data['course'] === 'height' ? ' на обучение "Высоте' : ' с сайта';
+        $type = $data['course'] === 'height' ? ' на обучение "Высоте"' : ' с сайта';
         $lead = 'Новая заявка'.$type.PHP_EOL.
             (isset($data['phone']) ? '<b>Телефон:</b> '.$data['phone'].PHP_EOL : '').
             (isset($data['email']) ? '<b>E-mail:</b> '.$data['email'].PHP_EOL : '').
             (isset($data['name']) ? '<b>Имя:</b> '.$data['name'].PHP_EOL : '').
             (isset($data['page']) ? '<b>Страница:</b> '.str_replace("xn--r1acj.xn--p1ai", "туц.рф", $data['page']).PHP_EOL : '').
-            (isset($data['course']) ? '<b>Курс:</b> '.$data['course'].PHP_EOL : '').
+            #(isset($data['course']) ? '<b>Курс:</b> '.$data['course'].PHP_EOL : '').
             (isset($data['comment']) ? '<b>Комментарий:</b> '.$data['comment'] : '');
         $data = [
             'chat_id' => '-1001708032534',
