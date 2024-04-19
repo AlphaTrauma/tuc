@@ -82,51 +82,54 @@
             <span class="uk-text-secondary uk-text-bold">Заявки без указания группы</span>
         </th>
     </tr>
-    @foreach($items[""] as $item)
-        <tr>
-            <td>{{ $item->phone }}</td>
-            <td>{{ $item->name }}</td>
-            <td>{{ $item->email }}</td>
-            <td style="word-wrap: break-word; max-width: 300px;">{{ $item->comment }}</td>
-            <td>{{ $item->created_at->diffForHumans() }}</td>
-            <td>
-                @if(!$item->user)
-                    <a class="uk-button uk-button-small uk-button-danger" type="button" uk-toggle="target: #lead-{{ $item->id }};
+    @isset($items[""] )
+        @foreach($items[""] as $item)
+            <tr>
+                <td>{{ $item->phone }}</td>
+                <td>{{ $item->name }}</td>
+                <td>{{ $item->email }}</td>
+                <td style="word-wrap: break-word; max-width: 300px;">{{ $item->comment }}</td>
+                <td>{{ $item->created_at->diffForHumans() }}</td>
+                <td>
+                    @if(!$item->user)
+                        <a class="uk-button uk-button-small uk-button-danger" type="button" uk-toggle="target: #lead-{{ $item->id }};
                         animation: uk-animation-fade">Зарегистрировать</a>
-                    <div hidden  id="lead-{{ $item->id }}" class="uk-margin-auto-vertical">
-                        <form class="uk-padding-small" enctype=multipart/form-data method="POST" action="{{ route('users.add') }}">
-                            @csrf
+                        <div hidden  id="lead-{{ $item->id }}" class="uk-margin-auto-vertical">
+                            <form class="uk-padding-small" enctype=multipart/form-data method="POST" action="{{ route('users.add') }}">
+                                @csrf
 
-                            <div>
-                                <div uk-grid class="uk-grid-small uk-child-width-1-2@s">
-                                    <input class="uk-input" type="text" name="name" required placeholder="Имя (обязательно)">
-                                    <input class="uk-input" type="text" name="patronymic" placeholder="Отчество">
+                                <div>
+                                    <div uk-grid class="uk-grid-small uk-child-width-1-2@s">
+                                        <input class="uk-input" type="text" name="name" required placeholder="Имя (обязательно)">
+                                        <input class="uk-input" type="text" name="patronymic" placeholder="Отчество">
+                                    </div>
+                                    <div uk-grid class="uk-grid-small uk-child-width-1-2@s">
+                                        <input class="uk-input" type="text" name="last_name" value="{{ $item->name }}" required placeholder="Фамилия (обязательно)">
+                                        <input class="uk-input uk-button-small" type="text" name="phone" value="{{ $item->phone }}" placeholder="Телефон">
+                                    </div>
                                 </div>
-                                <div uk-grid class="uk-grid-small uk-child-width-1-2@s">
-                                    <input class="uk-input" type="text" name="last_name" value="{{ $item->name }}" required placeholder="Фамилия (обязательно)">
-                                    <input class="uk-input uk-button-small" type="text" name="phone" value="{{ $item->phone }}" placeholder="Телефон">
-                                </div>
-                            </div>
-                            <input type="hidden" name="lead_id" value="{{ $item->id }}">
+                                <input type="hidden" name="lead_id" value="{{ $item->id }}">
 
-                            <div class="uk-margin-small uk-text-center">
-                                <input type="submit" class="uk-button uk-button-secondary" value="Зарегистрировать">
-                            </div>
-                        </form>
-                    </div>
-                @else
-                    <a href="{{ route('user.show', $item->user_id) }}" class="uk-button uk-button-small uk-button-success">Пользователь</a>
-                @endif
-            </td>
-            <td>
-                @if(!$item->status)
-                    <a href="{{ route('lead.read', $item) }}" title="Отметить как прочитанную" class="uk-text-danger">Не обработана</a>
-                @else
-                    <span class="uk-text-success">Обработана</span>
-                @endif
-            </td>
-        </tr>
-    @endforeach
+                                <div class="uk-margin-small uk-text-center">
+                                    <input type="submit" class="uk-button uk-button-secondary" value="Зарегистрировать">
+                                </div>
+                            </form>
+                        </div>
+                    @else
+                        <a href="{{ route('user.show', $item->user_id) }}" class="uk-button uk-button-small uk-button-success">Пользователь</a>
+                    @endif
+                </td>
+                <td>
+                    @if(!$item->status)
+                        <a href="{{ route('lead.read', $item) }}" title="Отметить как прочитанную" class="uk-text-danger">Не обработана</a>
+                    @else
+                        <span class="uk-text-success">Обработана</span>
+                    @endif
+                </td>
+            </tr>
+        @endforeach
+    @endisset
+
         </tbody>
     </table>
 
