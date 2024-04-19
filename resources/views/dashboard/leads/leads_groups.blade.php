@@ -5,6 +5,7 @@
 
     <div class="uk-form-horizontal">
         <h2>Список групп для обучения на стенде "Высота"</h2>
+        @include('blocks.errors')
         <div class="uk-margin">
             <label class="uk-form-label" for="list">Список</label>
             <div class="uk-form-controls">
