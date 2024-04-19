@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Models\Direction;
+use App\Models\LeadsGroup;
 use App\Models\Settings;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
@@ -42,9 +43,15 @@ class AppServiceProvider extends ServiceProvider
             $view->with(compact('pages', 'directions', 'contacts', 'pricelist'));
         });
         View::composer('dashboard.navigation', function($view){
-            $leads_count = \App\Models\Lead::where('status', 0)->count();
+            $leads_count = \App\Models\Lead::where('status', 0)->whereNull('course')->count();
+            $height_leads_count = \App\Models\Lead::where('course', 'height')->where('status', 0)->count();
             $types = \App\Models\Type::where('status', 1)->pluck('title', 'id')->toArray();
-            $view->with(compact('leads_count', 'types'));
+            $view->with(compact('leads_count', 'height_leads_count', 'types'));
+        });
+
+        View::composer('blocks.modal', function($view){
+            $leads_groups = LeadsGroup::query()->where('course_date', '>', now())->get(['id', 'course_date']);
+            $view->with(compact('leads_groups'));
         });
     }
 }

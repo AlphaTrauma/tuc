@@ -8,5 +8,4 @@
             <span class="uk-animation-scale-up" uk-icon="icon:receiver; ratio: 2;"></span>
         </div>
     </div>
-
 </div>

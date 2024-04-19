@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Models\Course;
 use App\Models\Image;
+use App\Models\Lead;
 use App\Models\User;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Auth\Events\Registered;
@@ -66,7 +67,8 @@ class RegisteredUserController extends Controller
             'patronymic' => ['nullable', 'string', 'max:25'],
             'phone' => ['nullable', 'string', 'max:15'],
             'organization' => ['nullable', 'string', 'max:255'],
-            'email' => ['nullable', 'string', 'max:255', 'unique:users']
+            'email' => ['nullable', 'string', 'max:255', 'unique:users'],
+            'lead_id' => ['nullable', 'integer']
         ]);
         $email = $request->has('email') && $request['email'] ? $request['email'] :
             strtoupper(($request['name'] ? Str::slug($request['name'])[0] : '').($request['patronymic'] ? Str::slug($request['patronymic'])[0] : '')).Str::slug($request->last_name).\App\Models\User::count();
@@ -83,6 +85,10 @@ class RegisteredUserController extends Controller
         $password = Str::slug($user->last_name).Str::slug($user->name)[0].'@'.$user->id;
         $user->update(['password' => Hash::make($password)]);
 
+        if($request->has('lead_id')):
+            $lead = Lead::find($request->input('lead_id'));
+            $lead->update(['user_id' => $user->id]);
+        endif;
         event(new Registered($user));
 
         $message = 'Регистрация нового пользователя:'.PHP_EOL.

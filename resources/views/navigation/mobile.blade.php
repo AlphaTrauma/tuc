@@ -10,6 +10,8 @@
                     <li><a class="uk-cover-container" href="{{ route('main') }}">Главная</a></li>
                 @endif
                     <li><a href="/height">Аренда: Учебно-тренировочный стенд "Высота"</a></li>
+                    <li><a href="/height2">Обучение: Учебно-тренировочный стенд "Высота"</a></li>
+                    <li><a uk-toggle href="#modal-height">Оставить заявку</a></li>
                 @foreach($directions as $slug => $title)
                         <li><a href="{{ asset('directions/'.$slug) }}">{{ $title }}</a></li>
                 @endforeach

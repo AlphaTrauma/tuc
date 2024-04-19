@@ -45,17 +45,12 @@
                         @if(Route::currentRouteName() === 'main')
                             <div class="uk-navbar-item uk-logo"><img style="max-height: 55px;" src="https://imageup.ru/img6/3890887/logo.png" alt=""></div>
                         @else
-                            <a class="uk-navbar-item uk-logo" itemprop="url" href="{{ route('main') }}"><img style="max-height: 55px;" src="https://imageup.ru/img6/3890887/logo.png" alt=""></a>
+                            <a class="uk-navbar-item uk-logo" title="На главную" itemprop="url" href="{{ route('main') }}"><img style="max-height: 55px;" src="https://imageup.ru/img6/3890887/logo.png" alt=""></a>
                         @endif
                     </div>
                     @endif
                     <div class="uk-navbar-left uk-visible@s">
                         <ul class="uk-navbar-nav uk-text-bold">
-                            @if(Route::currentRouteName() === 'main')
-                                <li class="uk-active"><a>Главная</a></li>
-                            @else
-                                <li><a itemprop="url" href="{{ route('main') }}">Главная</a></li>
-                            @endif
                             <li @isset($page) @if(in_array($page->slug, $pages['teaching'])) class="uk-active" @endif @endisset>
                                 <a uk-icon="icon: chevron-down" href="#">Обучение</a>
                                 <div class="uk-navbar-dropdown uk-text-normal">
@@ -85,9 +80,19 @@
                             @isset($pricelist->document->filepath)
                                 <li><a target="_blank" href="{{ asset($pricelist->document->filepath) }}">Прайс-лист <span uk-icon="icon: download"></span></a></li>
                             @endisset
-                                <li style="max-width: 200px; text-align: center;"><a itemprop="url" href="/height"
-                                         @if(session('impaired')) style="font-size: 15px" @else style="font-size: 12px" @endif>
-                                        Аренда: Учебно-тренировочный стенд "Высота"</a></li>
+                                <li>
+                                    <a class="uk-button uk-button-small uk-button-danger" itemprop="url" href="/height" @if(session('impaired'))
+                                    style="font-size: 15px" @else style="font-size: 12px" @endif>
+                                        Учебно-тренировочный<br>стенд "Высота" <span uk-icon="icon: chevron-down"></span></a>
+                                    <div class="uk-navbar-dropdown uk-text-normal">
+                                        <ul class="uk-nav uk-navbar-dropdown-nav">
+                                            <li><a itemprop="url" href="/height">Аренда</a></li>
+                                            <li><a itemprop="url" href="/height2">Обучение</a></li>
+                                            <li class="uk-nav-divider"></li>
+                                            <li><a class="uk-text-bold uk-text-danger" uk-toggle href="#modal-height">Оставить заявку</a></li>
+                                        </ul>
+                                    </div>
+                                </li>
                             <li @isset($page) @if($page->slug === 'contacts') class="uk-active" @endif @endisset ><a itemprop="url" href="/contacts">Контакты</a></li>
                                 <li class="uk-navbar-item phones">
                                     <ul class="uk-list">

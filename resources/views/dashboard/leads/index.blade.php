@@ -20,7 +20,7 @@
             </tr>
             </thead>
             <tbody>
-            @foreach($items as $item)
+            @foreach($items->items() as $item)
                 <tr @if(!$item->status) class="uk-alert-primary" @endif>
                     <td>{{ $item->phone }}</td>
                     <td>{{ $item->name }}</td>
@@ -40,4 +40,5 @@
     @else
         <p>Заявок пока нет.</p>
     @endif
+    {{ $items->links() }}
 @endsection

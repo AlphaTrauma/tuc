@@ -37,16 +37,31 @@
                 <a class="uk-text-bold"><span class="uk-margin-small-right" uk-icon="icon: folder"></span>Файлы</a>
                 <ul class="uk-nav-sub">
                     <li><a href="{{ route('images.index') }}">Изображения</a></li>
-                    {{-- TODO
-                     <li><a href="">Документы</a></li>
-                     --}}
                 </ul>
             </li>
-            <li><a href="{{ route('leads') }}" class="uk-text-bold"><span class="uk-margin-small-right" uk-icon="icon: commenting"></span>
-                    Заявки
-                    @if($leads_count > 0)
-                        <div class="uk-inline-block uk-width-expand"><span class="uk-badge uk-label-danger uk-float-right">{{$leads_count}}</span></div>
+            <li class="uk-parent">
+                <a class="uk-text-bold" href="#">
+                    @if($height_leads_count > 0)
+                        <span class="uk-badge uk-label-danger uk-margin-small-right">{{ $height_leads_count }}</span>
+                    @else
+                        <span class="uk-margin-small-right" uk-icon="icon: commenting"></span>
                     @endif
+                    "Высота"
+
+                </a>
+                <ul class="uk-nav-sub">
+                    <li><a href="{{ route('leads.byType', 'height') }}">Заявки</a></li>
+                    <li><a href="{{ route('leads.groups') }}">Управление группами</a></li>
+                </ul>
+            </li>
+            <li><a href="{{ route('leads') }}" class="uk-text-bold">
+                    @if($leads_count > 0)
+                        <span class="uk-badge uk-label-danger uk-margin-small-right">{{ $leads_count }}</span>
+                    @else
+                        <span class="uk-margin-small-right" uk-icon="icon: commenting"></span>
+                    @endif
+                    Заявки
+
                 </a></li>
             <li><a href="{{ route('settings') }}" class="uk-text-bold"><span class="uk-margin-small-right" uk-icon="icon: settings"></span>Настройки</a></li>
             <li><a href="{{ route('logs') }}" class="uk-text-bold"><span class="uk-margin-small-right" uk-icon="icon: cog"></span>Технический лог</a></li>

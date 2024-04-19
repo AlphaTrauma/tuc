@@ -29,6 +29,7 @@ require __DIR__.'/auth.php';
 //Route::delete('/vehicles/{id}', [\App\Http\Controllers\VehicleController::class, 'remove']);
 
 Route::get('/height', [\App\Http\Controllers\NewsController::class, 'height'])->name('height');
+Route::get('/height2', [\App\Http\Controllers\NewsController::class, 'height2'])->name('height2');
 Route::get('/news', [\App\Http\Controllers\NewsController::class, 'main'])->name('news.main');
 Route::get('/news/{slug}', [\App\Http\Controllers\NewsController::class, 'show'])->name('news.item');
 
@@ -130,6 +131,7 @@ Route::middleware([\App\Http\Middleware\IsAdmin::class])->group(function () {
     Route::post('/dashboard/question/{id}/set_correct', [\App\Http\Controllers\TestController::class, 'setCorrect']);
 
 
+
     Route::get('/dashboard/documents', [\App\Http\Controllers\DocumentController::class, 'index'])->name('documents.index');
     Route::post('/dashboard/documents', [\App\Http\Controllers\DocumentController::class, 'store'])->name('documents.store');
 
@@ -139,6 +141,11 @@ Route::middleware([\App\Http\Middleware\IsAdmin::class])->group(function () {
     Route::get('/dashboard/remove_person/{person}', [\App\Http\Controllers\SettingsController::class, 'remove_person'])->name('person.remove');
     Route::post('/dashboard/add_position', [\App\Http\Controllers\SettingsController::class, 'add_position'])->name('position.add');
     Route::get('/dashboard/remove_position/{position}', [\App\Http\Controllers\SettingsController::class, 'remove_position'])->name('position.remove');
+
+    Route::get('/dashboard/{type}/leads', [\App\Http\Controllers\LeadController::class, 'indexByType'])->name('leads.byType');
+    Route::get('/dashboard/height/groups', [\App\Http\Controllers\LeadController::class, 'groups'])->name('leads.groups');
+    Route::post('/dashboard/add_group', [\App\Http\Controllers\LeadController::class, 'add_group'])->name('leads_group.add');
+    Route::get('/dashboard/remove_group/{group}', [\App\Http\Controllers\LeadController::class, 'remove_group'])->name('leads_group.remove');
 
 
 
