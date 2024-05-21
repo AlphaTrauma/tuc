@@ -42,6 +42,10 @@ class UserCourse extends Model
         return $this->belongsTo(Course::class);
     }
 
+    public function first_material(){
+        return $this->hasOneThrough(UserMaterial::class, UserBlock::class);
+    }
+
     public function user_blocks()
     {
         return $this->hasMany(UserBlock::class);

@@ -27,6 +27,13 @@
                                     <delete-button action="/dashboard/courses/{{ $user_course->id }}/deleteFromUser" text="Удалить курс"></delete-button>
                                 </ul>
                             </li>
+                        @elseif($user_course->first_material and $user_course->first_material->status)
+                            <li class="uk-text-warning uk-position-relative"><b>{{ $user_course->course->title }}</b>
+                                <br><a href="{{ route("user.results", $user_course) }}" class="uk-link uk-text-secondary" uk-tooltip="Результаты последнего прохождения тестов">Ответы <span uk-icon="file-text"></span></a>
+                                <ul class="uk-iconnav uk-width-small uk-card-badge uk-background-default uk-flex-right">
+                                    <delete-button action="/dashboard/courses/{{ $user_course->id }}/deleteFromUser" text="Удалить курс"></delete-button>
+                                </ul>
+                            </li>
                         @else
                             <li class="uk-position-relative">{{ $user_course->course->title }}
                                 <br><a href="{{ route("user.results", $user_course) }}" class="uk-link uk-text-secondary" uk-tooltip="Результаты последнего прохождения тестов">Ответы <span uk-icon="file-text"></span></a>
