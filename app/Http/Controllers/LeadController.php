@@ -77,13 +77,12 @@ class LeadController extends Controller
     {
         $topic = env('NTFY_TOPIC');
         $url = "https://ntfy.sh/$topic";
-
+        Log::debug('topic', [$topic]);
         $context = stream_context_create([
             'http' => [
                 'method' => 'POST',
                 'header' =>
-                    "Content-Type: text/markdown\r\n" .
-                    "Connection: close\r\n",
+                    "Content-Type: text/markdown\r\nConnection: close\r\n",
                 'content' => $message,
                 'timeout' => 2,
                 'ignore_errors' => true
@@ -93,6 +92,8 @@ class LeadController extends Controller
                 'verify_peer_name' => true
             ]
         ]);
+
+        Log::debug('stream_context_get_options', [stream_context_get_options($context)]);
 
         $result = @file_get_contents($url, false, $context);
         Log::debug('result', [$result]);
