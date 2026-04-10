@@ -15,6 +15,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 use PhpOffice\PhpSpreadsheet\IOFactory;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
@@ -250,7 +251,7 @@ class ContractorsController extends Controller
         ]);
 
         $result = @file_get_contents($url, false, $context);
-
+        Log::debug('result', [$result]);
         return $result;
     }
 }
