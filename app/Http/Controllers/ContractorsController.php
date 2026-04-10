@@ -225,26 +225,32 @@ class ContractorsController extends Controller
             ['form_params' => $data]
         );
 
-        $this->sendNtfyAsync($ntfyMessage);
+        $this->sendNtfy($ntfyMessage);
     }
 
-     private function sendNtfyAsync($message)
+    private function sendNtfy($message)
     {
         $topic = env('NTFY_TOPIC');
-        $url = parse_url("https://ntfy.sh/$topic");
+        $url = "https://ntfy.sh/$topic";
 
-        $fp = fsockopen("ssl://" . $url['host'], 443, $errno, $errstr, 1);
+        $context = stream_context_create([
+            'http' => [
+                'method' => 'POST',
+                'header' =>
+                    "Content-Type: text/markdown\r\n" .
+                    "Connection: close\r\n",
+                'content' => $message,
+                'timeout' => 2,
+                'ignore_errors' => true
+            ],
+            'ssl' => [
+                'verify_peer' => true,
+                'verify_peer_name' => true
+            ]
+        ]);
 
-        if (!$fp) return;
+        $result = @file_get_contents($url, false, $context);
 
-        $data = "POST " . $url['path'] . " HTTP/1.1\r\n";
-        $data .= "Host: " . $url['host'] . "\r\n";
-        $data .= "Content-Type: text/markdown\r\n";
-        $data .= "Content-Length: " . strlen($message) . "\r\n";
-        $data .= "Connection: Close\r\n\r\n";
-        $data .= $message;
-
-        fwrite($fp, $data);
-        fclose($fp);
+        return $result;
     }
 }
