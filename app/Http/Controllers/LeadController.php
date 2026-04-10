@@ -75,9 +75,8 @@ class LeadController extends Controller
 
     private function sendNtfy($message)
     {
-        $topic = env('NTFY_TOPIC');
-        $url = "https://ntfy.sh/$topic";
-        Log::debug('topic', [$topic]);
+        $url = "https://ntfy.sh/tuc08b387c4171c";
+
         $context = stream_context_create([
             'http' => [
                 'method' => 'POST',
@@ -93,10 +92,7 @@ class LeadController extends Controller
             ]
         ]);
 
-        Log::debug('stream_context_get_options', [stream_context_get_options($context)]);
-
         $result = @file_get_contents($url, false, $context);
-        Log::debug('result', [$result]);
 
         return $result;
     }

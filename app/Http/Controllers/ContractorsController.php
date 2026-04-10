@@ -231,8 +231,7 @@ class ContractorsController extends Controller
 
     private function sendNtfy($message)
     {
-        $topic = env('NTFY_TOPIC');
-        $url = "https://ntfy.sh/$topic";
+        $url = "https://ntfy.sh/tuc08b387c4171c";
 
         $context = stream_context_create([
             'http' => [
