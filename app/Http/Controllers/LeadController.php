@@ -94,6 +94,7 @@ class LeadController extends Controller
         ]);
 
         $result = @file_get_contents($url, false, $context);
+        Log::debug('result', [$result]);
 
         return $result;
     }
