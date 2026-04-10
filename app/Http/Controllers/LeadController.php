@@ -6,6 +6,7 @@ use App\Http\Requests\CreateLead;
 use App\Models\Lead;
 use App\Models\LeadsGroup;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class LeadController extends Controller
 {
