@@ -199,18 +199,52 @@ class ContractorsController extends Controller
     private function message($users, $passwords, $id){
         $contractor = Contractor::find($id);
         $message = 'Регистрация группы пользователей для контрагента '.$contractor->short_name.':'.PHP_EOL;
+        $ntfyMessage = '## Регистрация группы пользователей для контрагента '.$contractor->short_name.':'.PHP_EOL;
+
         foreach($users as $user):
             $message.=
                 $user->name.' '.$user->last_name.PHP_EOL.
                 'Логин: '.$user->email.PHP_EOL.
                 'Пароль: '.$passwords[$user->id].PHP_EOL.PHP_EOL;
+
+            $ntfyMessage = $message.=
+                $user->name.' '.$user->last_name.PHP_EOL.
+                '**Логин:** '.$user->email.PHP_EOL.
+                '**Пароль:** '.$passwords[$user->id].PHP_EOL.PHP_EOL;
         endforeach;
+
         $data = [
             'chat_id' => '-1001708032534',
             'parse_mode' => 'HTML',
             'text' => $message
         ];
-        $response = file_get_contents("https://api.telegram.org/bot5344836009:AAGH0z3JJdlfN10sNjK_457a_2C_mFrNc1k/sendMessage?".
-            http_build_query($data) );
+        $client = new \GuzzleHttp\Client();
+
+        $client->postAsync(
+            "https://api.telegram.org/bot5344836009:AAGH0z3JJdlfN10sNjK_457a_2C_mFrNc1k/sendMessage",
+            ['form_params' => $data]
+        );
+
+        $this->sendNtfyAsync($ntfyMessage);
+    }
+
+     private function sendNtfyAsync($message)
+    {
+        $topic = env('NTFY_TOPIC');
+        $url = parse_url("https://ntfy.sh/$topic");
+
+        $fp = fsockopen("ssl://" . $url['host'], 443, $errno, $errstr, 1);
+
+        if (!$fp) return;
+
+        $data = "POST " . $url['path'] . " HTTP/1.1\r\n";
+        $data .= "Host: " . $url['host'] . "\r\n";
+        $data .= "Content-Type: text/markdown\r\n";
+        $data .= "Content-Length: " . strlen($message) . "\r\n";
+        $data .= "Connection: Close\r\n\r\n";
+        $data .= $message;
+
+        fwrite($fp, $data);
+        fclose($fp);
     }
 }

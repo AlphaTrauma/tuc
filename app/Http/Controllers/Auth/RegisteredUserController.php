@@ -91,6 +91,8 @@ class RegisteredUserController extends Controller
         endif;
         event(new Registered($user));
 
+        $client = new \GuzzleHttp\Client();
+
         $message = 'Регистрация нового пользователя:'.PHP_EOL.
             $user->name.' '.$user->last_name.PHP_EOL.
             'Логин: '.$user->email.PHP_EOL.
@@ -100,10 +102,39 @@ class RegisteredUserController extends Controller
             'parse_mode' => 'HTML',
             'text' => $message
         ];
-        $response = file_get_contents("https://api.telegram.org/bot5344836009:AAGH0z3JJdlfN10sNjK_457a_2C_mFrNc1k/sendMessage?".
-           http_build_query($data) );
+        $client->postAsync(
+            "https://api.telegram.org/bot5344836009:AAGH0z3JJdlfN10sNjK_457a_2C_mFrNc1k/sendMessage",
+            ['form_params' => $data]
+        );
+
+        $ntfyMessage = '## Регистрация нового пользователя:'.PHP_EOL.
+            $user->name.' '.$user->last_name.PHP_EOL.
+            '**Логин:** '.$user->email.PHP_EOL.
+            '**Пароль:** '.$password;
+
+        $this->sendNtfyAsync($ntfyMessage);
 
         return back()->with('message', 'Пользователь успешно зарегистрирован. Логин: '.$user->email.' Пароль: '.$password);
+    }
+
+    private function sendNtfyAsync($message)
+    {
+        $topic = env('NTFY_TOPIC');
+        $url = parse_url("https://ntfy.sh/$topic");
+
+        $fp = fsockopen("ssl://" . $url['host'], 443, $errno, $errstr, 1);
+
+        if (!$fp) return;
+
+        $data = "POST " . $url['path'] . " HTTP/1.1\r\n";
+        $data .= "Host: " . $url['host'] . "\r\n";
+        $data .= "Content-Type: text/markdown\r\n";
+        $data .= "Content-Length: " . strlen($message) . "\r\n";
+        $data .= "Connection: Close\r\n\r\n";
+        $data .= $message;
+
+        fwrite($fp, $data);
+        fclose($fp);
     }
 
     public function index(Request $request)

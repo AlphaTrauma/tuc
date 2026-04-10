@@ -32,7 +32,10 @@ class LeadController extends Controller
     {
         $data = $request->all();
         Lead::create($data);
-        $type = $data['course'] === 'height' ? ' на обучение "Высоте"' : ' с сайта';
+        $type = isset($data['course']) && $data['course'] === 'height' ? ' на обучение "Высоте"' : ' с сайта';
+
+        $client = new \GuzzleHttp\Client();
+
         $lead = 'Новая заявка'.$type.PHP_EOL.
             (isset($data['phone']) ? '<b>Телефон:</b> '.$data['phone'].PHP_EOL : '').
             (isset($data['email']) ? '<b>E-mail:</b> '.$data['email'].PHP_EOL : '').
@@ -40,16 +43,53 @@ class LeadController extends Controller
             (isset($data['page']) ? '<b>Страница:</b> '.str_replace("xn--r1acj.xn--p1ai", "туц.рф", $data['page']).PHP_EOL : '').
             #(isset($data['course']) ? '<b>Курс:</b> '.$data['course'].PHP_EOL : '').
             (isset($data['comment']) ? '<b>Комментарий:</b> '.$data['comment'] : '');
+
+        $ntfyLead = '## Новая заявка'.$type.PHP_EOL.
+            (isset($data['phone']) ? '**Телефон:** '.$data['phone'].PHP_EOL : '').
+            (isset($data['email']) ? '**E-mail:** '.$data['email'].PHP_EOL : '').
+            (isset($data['name']) ? '**Имя:** '.$data['name'].PHP_EOL : '').
+            (isset($data['page']) ? '**Страница:** '.str_replace("xn--r1acj.xn--p1ai", "туц.рф", $data['page']).PHP_EOL : '').
+            #(isset($data['course']) ? '**Курс:** '.$data['course'].PHP_EOL : '').
+            (isset($data['comment']) ? '**Комментарий:** '.$data['comment'] : '');
+
         $data = [
             'chat_id' => '-1001708032534',
             'parse_mode' => 'HTML',
             'text' => $lead
         ];
-        $response = file_get_contents("https://api.telegram.org/bot5344836009:AAGH0z3JJdlfN10sNjK_457a_2C_mFrNc1k/sendMessage?".
-           http_build_query($data) );
+
+        # Отправка в telegram
+        $client->postAsync(
+            "https://api.telegram.org/bot5344836009:AAGH0z3JJdlfN10sNjK_457a_2C_mFrNc1k/sendMessage",
+            ['form_params' => $data]
+        );
+
+        # Отправка в ntfy
+
+        $this->sendNtfyAsync($ntfyLead);
 
         return redirect()->route('lead.create')->with('message', 'Ваша заявка успешно отправлена');
 
+    }
+
+    private function sendNtfyAsync($message)
+    {
+        $topic = env('NTFY_TOPIC');
+        $url = parse_url("https://ntfy.sh/$topic");
+
+        $fp = fsockopen("ssl://" . $url['host'], 443, $errno, $errstr, 1);
+
+        if (!$fp) return;
+
+        $data = "POST " . $url['path'] . " HTTP/1.1\r\n";
+        $data .= "Host: " . $url['host'] . "\r\n";
+        $data .= "Content-Type: text/markdown\r\n";
+        $data .= "Content-Length: " . strlen($message) . "\r\n";
+        $data .= "Connection: Close\r\n\r\n";
+        $data .= $message;
+
+        fwrite($fp, $data);
+        fclose($fp);
     }
 
     public function read(Lead $lead)
